@@ -1,0 +1,131 @@
+ <md-card >
+         <md-card-content>
+            <div class="row">
+               <div class="col-md-12">
+                  <table style="width:100%">
+                     <tr>
+                        <td width="60px" align="center">
+                           <img src="https://scontent.flim2-1.fna.fbcdn.net/v/t1.0-9/11351299_10205562590719473_5464316145280688750_n.jpg?oh=ae709bb48e9ef1f74c56ed6645639840&oe=59A295BD" 
+                              class="rounded-circle" width="50px" height="50px"/>
+                        </td>
+                        <td>
+						   <table style="width:100%">
+								<tr>
+									<td valign="middle" align="left"><h5>&nbsp;&nbsp;&nbsp;{{registro.paciente | uppercase}}</h5>
+									</td>
+									<td valign="middle"  align="center" style="color:#BDBDBD;padding:15px">"{{registro.pensamiento}}"</td>
+								</tr>
+						   </table>    
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+            <br/>
+            <div class="row">
+               <div class="col-md-12" style="font-size:14px">
+					{{registro.post}}
+               </div>
+            </div>
+			<br/>
+			<div class="row">
+               <div class="col-md-12" style="font-size:14px">
+				 <h5><span class="badge badge-pill badge-info" *ngFor='let tag of tags' style="margin-left:5px;margin-right:5px">{{tag}}</span></h5>
+               </div>
+            </div>	
+			
+            <!-- BOTONES
+				<div class="row">
+               <div class="col-md-12 text-right">
+				  <a class="readmore" href="#">
+						Like
+				  </a>
+				  &nbsp;
+				  a class="readmore" href="#">
+						Comentar
+				  </a
+               </div>
+            </div>-->
+			<hr/>
+			<div style="margin:0px;padding:0px;text-align: right;">
+				<span style="color:#BDBDBD">&nbsp;&nbsp;&nbsp;&nbsp;{{registro.fechahora |  date:'MM/dd/yyyy HH:mm:ss '}}&nbsp;&nbsp;</span>
+			</div>
+			<hr/>
+            <!-- COMENTARIOS
+			div class="row">
+				<div class="col-md-12 text-right" style="margin-bottom:15px">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <table style="width:100%">
+                           <tr>
+                              <td width="40px" valign="top">
+                                 <img src="https://scontent.flim2-1.fna.fbcdn.net/v/t1.0-9/11351299_10205562590719473_5464316145280688750_n.jpg?oh=ae709bb48e9ef1f74c56ed6645639840&oe=59A295BD" 
+                                   width="40px" height="40px"/>
+                              </td>
+							  <td align="left">
+                                 <div style="display: table-cell;">&nbsp;&nbsp;&nbsp;</div><div
+								 style="display: table-cell;font-size:12px;width:100%"><textarea style="width:100%" fz-elastic placeholder="Escribe un comentario ..."></textarea></div>
+                              </td>
+                           </tr>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 text-right" style="margin-bottom:15px">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <table style="width:100%">
+                           <tr>
+                              <td width="40px" valign="top" rowspan="2">
+                                 <img src="https://scontent.flim2-1.fna.fbcdn.net/v/t1.0-9/11351299_10205562590719473_5464316145280688750_n.jpg?oh=ae709bb48e9ef1f74c56ed6645639840&oe=59A295BD" 
+                                   width="40px" height="40px"/>
+                              </td>
+                              <td align="left">
+								 <h6>&nbsp;&nbsp;&nbsp;Henry Omar Garcia Ortiz</h6>
+                              </td>
+                           </tr>
+						   <tr>
+                              <td align="left" rowspan="2">
+                                 <div style="display: table-cell;">&nbsp;&nbsp;&nbsp;</div><div
+								 style="display: table-cell;font-size:12px">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula sed lectus eget vehicula. 
+								 Nullam in libero consequat, tincidunt augue in, pulvinar tellus. Nam condimentum purus placerat odio ullamcorper, 
+								 id faucibus lorem finibus. Vestibulum vel blandit sapien. Morbi arcu ligula, varius quis lacus quis, interdum eleifend nisi. 
+								 Quisque tristique purus at vestibulum sagittis. Fusce imperdiet in ipsum non varius. In hac habitasse platea dictumst. 
+								 Ut non massa sed arcu interdum rhoncus. Fusce at dolor metus.</div>
+                              </td>
+                           </tr>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+			   <div class="col-md-12 text-right">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <table style="width:100%">
+                           <tr>
+                              <td width="40px" valign="top" rowspan="2">
+                                 <img src="https://scontent.flim2-1.fna.fbcdn.net/v/t1.0-9/11351299_10205562590719473_5464316145280688750_n.jpg?oh=ae709bb48e9ef1f74c56ed6645639840&oe=59A295BD" 
+                                   width="40px" height="40px"/>
+                              </td>
+                              <td align="left">
+								 <h6>&nbsp;&nbsp;&nbsp;Henry Omar Garcia Ortiz</h6>
+                              </td>
+                           </tr>
+						   <tr>
+                              <td align="left" rowspan="2">
+                                 <div style="display: table-cell;">&nbsp;&nbsp;&nbsp;</div><div
+								 style="display: table-cell;font-size:12px">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula sed lectus eget vehicula. 
+								 Nullam in libero consequat, tincidunt augue in, pulvinar tellus. Nam condimentum purus placerat odio ullamcorper, 
+								 id faucibus lorem finibus. Vestibulum vel blandit sapien. Morbi arcu ligula, varius quis lacus quis, interdum eleifend nisi. 
+								 Quisque tristique purus at vestibulum sagittis. Fusce imperdiet in ipsum non varius. In hac habitasse platea dictumst. 
+								 Ut non massa sed arcu interdum rhoncus. Fusce at dolor metus.</div>
+                              </td>
+                           </tr>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div-->
+         </md-card-content>
+      </md-card>
+	  <br/>
