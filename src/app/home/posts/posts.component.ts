@@ -30,6 +30,7 @@ import {
     PostComponent
 } from './post/post.component';
 
+
 @Component({
     selector: 'app-posts',
     templateUrl: './posts.component.html',

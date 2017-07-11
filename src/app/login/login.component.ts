@@ -15,6 +15,7 @@ import {
 } from '@angular/router';
 
 
+
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -32,7 +33,6 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-
 
         // Esto es para cuando no este autenticado y es redirigido al login
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';

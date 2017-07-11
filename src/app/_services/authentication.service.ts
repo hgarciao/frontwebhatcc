@@ -3,6 +3,7 @@ import { Http, Headers, Response, RequestOptions} from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { AuthHttp,tokenNotExpired,JwtHelper} from 'angular2-jwt';
 import {URLSearchParams} from '@angular/http';
+import { environment } from '../../environments/environment';
 
 
 @Injectable()
@@ -18,7 +19,7 @@ export class AuthenticationService {
   	login(username: string, password: string, rememberMe: boolean): Observable<boolean> {
 		let headers = new Headers({ 'Content-Type': 'application/json'});
 		let options = new RequestOptions({ headers: headers });
-        return this.http.post('http://localhost:8080/api/authenticate', JSON.stringify({ username: username, password: password , rememberMe:rememberMe }),options)
+        return this.http.post( environment.urlgtw +'/authenticate', JSON.stringify({ username: username, password: password , rememberMe:rememberMe }),options)
             .map((res: Response) => {
 				
 				let body = res.json();
@@ -54,7 +55,7 @@ export class AuthenticationService {
 	getUsuario():Observable<boolean>{
 		let user = JSON.parse(localStorage.getItem('user'));
 		if(!user.role){
-			return this.authHttp.get('http://localhost:8080/api/users/'+user.username ).map((res: Response) => {console.log(res.json());return false;})		
+			return this.authHttp.get( environment.urlgtw+'/users/'+user.username ).map((res: Response) => {console.log(res.json());return false;})		
 		}
 		
 	}
