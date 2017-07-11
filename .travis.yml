@@ -4,6 +4,6 @@ node_js:
 before_script:
   - npm install -g @angular/cli
 script:
-  - ng build --$TRAVIS_BRANCH
+  - ng build --environment=qa
 after_success:
   - echo 'ok'
