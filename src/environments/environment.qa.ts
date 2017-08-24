@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  urlgtw: '/rest.qa/api',
-  urlmsposts: '/rest.qa/mspostsdev/api'
+  urlgtw: '/restqa/api',
+  urlmsposts: '/restqa/mspostsqa/api'
+  postpagesize: 2
 };

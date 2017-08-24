@@ -28,6 +28,9 @@ export class LoginComponent implements OnInit {
     rememberMe: boolean;
     returnUrl: string;
     resultado: boolean;
+	msgAlert: string;
+	hideAlert: boolean;
+	levelAlert: number;
 
     constructor(private authenticationService: AuthenticationService, private router: Router, private route: ActivatedRoute,private globalService: GlobalService) {
     }
@@ -36,30 +39,35 @@ export class LoginComponent implements OnInit {
 
         // Esto es para cuando no este autenticado y es redirigido al login
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+		this.msgAlert = "";
 
-        console.log(this.returnUrl)
-
-        if (this.authenticationService.isLoggedIn()) {
-            console.log('Ya esta autenticado wey')
-        } else {
-            console.log('No esta autenticado wey')
-        }
     }
 
     login() {
 		this.globalService.displayLoader();
         this.authenticationService.login(this.usuario, this.password, this.rememberMe).subscribe(
-            value => {
-                if (!value) {
-                    console.log('Implementar contraseña incorrecta');
-                } else {
-                    this.router.navigate([this.returnUrl]);
-                }
-				;
-				this.globalService.hideLoader();
-            }
-        );
+				res => { 
+					let body = res.json();
+					let token = body.id_token;
+					if (token) {
+						localStorage.setItem('token',token );
+						//localStorage.setItem('user',JSON.stringify({ username: username}));
+						this.msgAlert = "";
+						this.router.navigate([this.returnUrl]);
+					} else {
+						this.msgAlert = "Contraseña y/o Usuario incorrectos";
+					}
+				},
+				err => { 
+					console.log(err);
+					if(err.status==401){
+						this.msgAlert = "Contraseña y/o Usuario incorrectos";
+					}else{
+						this.msgAlert = "Error conectando al servidor. \n Comunicarse con el administrador ";
+					}
+					this.globalService.hideLoader();
+				}
+		);
 
     }
-
 }

@@ -16,28 +16,10 @@ export class AuthenticationService {
  	this.jwtHelper = new JwtHelper();
   }
   
-  	login(username: string, password: string, rememberMe: boolean): Observable<boolean> {
+  	login(username: string, password: string, rememberMe: boolean): Observable<Response> {
 		let headers = new Headers({ 'Content-Type': 'application/json'});
 		let options = new RequestOptions({ headers: headers });
-        return this.http.post( environment.urlgtw +'/authenticate', JSON.stringify({ username: username, password: password , rememberMe:rememberMe }),options)
-            .map((res: Response) => {
-				
-				let body = res.json();
-				let token = body.id_token;
-				if (token) {
-					this.token = token;
-					localStorage.setItem('token',token );
-					localStorage.setItem('user',JSON.stringify({ username: username}));
-					console.log(token)
-					return true;
-				} else {
-					return false;
-				}
-			})
-			//Aqui debe lanzar un error y ser manejado por un manejador aparte 
-			//Debe devolver falso
-			//Falta modificar
-			.catch(this.handleAuthException);
+        return this.http.post( environment.urlgtw +'/authenticate', JSON.stringify({ username: username, password: password , rememberMe:rememberMe }),options);
     }
 	
 	logout(): void {
@@ -52,6 +34,10 @@ export class AuthenticationService {
 		return this.jwtHelper.decodeToken(localStorage.getItem('token'));
 	}
 	
+	getToken():string{
+		return localStorage.getItem('token');
+	}
+	
 	getUsuario():Observable<boolean>{
 		let user = JSON.parse(localStorage.getItem('user'));
 		if(!user.role){
@@ -59,13 +45,16 @@ export class AuthenticationService {
 		}
 		
 	}
-	
+
+		
 	isLoggedIn() {
 	  return tokenNotExpired('token');
 	}
 	
 	private handleAuthException(res: Response | any){
-		return Observable.throw('Error en autenticacion');
+		var resultado: any = {};
+		resultado.mensaje = "Error durante el inicio de sesión comunicarse con el administrador";
+		resultado.codigo=-1;
 	}	
 	
 	

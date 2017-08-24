@@ -6,5 +6,6 @@
 export const environment = {
   production: false,
   urlgtw: 'http://localhost:8080/api',
-  urlmsposts: 'http://localhost:8080/mspostsdev/api'
+  urlmsposts: 'http://localhost:8080/mspostsdev/api',
+  postpagesize: 2
 };

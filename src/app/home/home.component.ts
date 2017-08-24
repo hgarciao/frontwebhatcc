@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { StompService } from 'ng2-stomp-service';
+import { AuthenticationService} from '../_services/authentication.service';
+
 
 
 
@@ -8,11 +11,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+  
+  pacienteSesion: string;
+  
+  
+  constructor(private authenticationService : AuthenticationService,private stompService: StompService) { }
 
   ngOnInit() {
+	   this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
+	  //configuration 
+		  this.stompService.configure({
+			host:'http://localhost:8081/ws',
+			debug:false,
+			queue:{'init':false},
+			headers: {
+                Authorization: this.authenticationService.getToken()
+            }
+		  });
+		
+		  this.stompService.startConnect().then(() => {
+			this.stompService.done('init');
+			console.log('connected');
+		  });
   }
+  
+    	//response 
+	
   
   private _opened: boolean = false;
   private _modeNum: number = 0;

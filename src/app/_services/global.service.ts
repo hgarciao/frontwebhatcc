@@ -8,7 +8,6 @@ export class GlobalService {
    
   objLoaderStatus: boolean;
 
-
   constructor(private loaderService: LoaderService) { 
           this.objLoaderStatus = false;
 
@@ -25,5 +24,11 @@ export class GlobalService {
   hideLoader(){
 	  this.loaderService.displayLoader(false); // disable spinner
   }
+	
+  displayAlerta() {
+      this.loaderService.displayLoader(true); // enable spinner
+  }	
+  
 
+	
 }

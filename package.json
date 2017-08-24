@@ -12,15 +12,26 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^4.1.3",
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.0.0",
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
+    "@angular/http": "^4.0.0",
+    "@angular/material": "^2.0.0-beta.6",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
+    "@angular/router": "^4.0.0",
     "amdefine": "1.0.1",
+    "angular-inport": "^1.0.1",
     "angular2-elastic": "0.13.0",
-    "angular2-infinite-scroll": "^0.3.5",
     "angular2-jwt": "0.2.3",
     "bootstrap": "^4.0.0-alpha.6",
     "center-align": "0.1.3",
     "code-point-at": "1.1.0",
     "codelyzer": "2.0.1",
     "common-tags": "1.4.0",
+    "core-js": "^2.4.1",
     "css-loader": "0.28.3",
     "del": "2.2.2",
     "denodeify": "1.2.1",
@@ -29,6 +40,7 @@
     "exports-loader": "0.6.4",
     "extract-text-webpack-plugin": "2.1.0",
     "file-loader": "0.10.1",
+    "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
     "html-webpack-plugin": "2.28.0",
     "inflection": "1.12.0",
@@ -47,7 +59,10 @@
     "magic-string": "0.19.1",
     "ng-select": "1.0.0-beta.5",
     "ng2-bs3-modal": "^0.10.4",
+    "ng2-stomp-service": "^1.2.2",
     "ng2-tag-input": "^1.3.3",
+    "ngx-flash-messages": "^1.0.4",
+    "ngx-infinite-scroll": "^0.5.1",
     "node-modules-path": "1.0.1",
     "node-sass": "4.5.3",
     "postcss-loader": "1.3.3",
@@ -59,7 +74,9 @@
     "rxjs": "^5.1.0",
     "sass-loader": "6.0.5",
     "script-loader": "0.7.0",
+    "sockjs-client": "^1.1.4",
     "source-map-loader": "0.1.6",
+    "stompjs": "^2.3.3",
     "style-loader": "0.13.2",
     "stylus": "0.54.5",
     "stylus-loader": "3.0.1",
@@ -76,17 +93,7 @@
     "webpack-dev-server": "2.4.5",
     "webpack-merge": "2.6.1",
     "window-size": "0.1.0",
-    "zone.js": "^0.8.4",
-    "@angular/common": "^4.0.0",
-    "@angular/compiler": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.0.0",
-    "@angular/http": "^4.0.0",
-    "@angular/material": "^2.0.0-beta.6",
-    "@angular/platform-browser": "^4.0.0",
-    "@angular/platform-browser-dynamic": "^4.0.0",
-    "@angular/router": "^4.0.0",
-    "core-js": "^2.4.1"
+    "zone.js": "^0.8.4"
   },
   "devDependencies": {
     "@angular/cli": "1.0.6",
@@ -106,5 +113,16 @@
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
     "typescript": "~2.2.0"
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.6.",
+  "main": "karma.conf.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hgarciao/frontwebhatcc.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/hgarciao/frontwebhatcc/issues"
+  },
+  "homepage": "https://github.com/hgarciao/frontwebhatcc#readme"
 }
