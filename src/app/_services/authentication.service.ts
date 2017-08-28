@@ -23,12 +23,15 @@ export class AuthenticationService {
     }
 	
 	logout(): void {
-        // clear token remove user from local storage to log user out
         this.token = null;
         localStorage.removeItem('user');
         localStorage.removeItem('token');
-
     }
+	
+	updateClickDate(user : any) : Observable<Response> {
+		return this.authHttp.put(environment.urlgtw+'/users/clickdate',user);
+	}
+	
 	
 	decodeToken(): any{
 		return this.jwtHelper.decodeToken(localStorage.getItem('token'));

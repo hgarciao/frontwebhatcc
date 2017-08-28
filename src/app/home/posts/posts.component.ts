@@ -127,6 +127,7 @@ export class PostsComponent implements OnInit {
 
             }
 			registro.eliminado=false;
+			registro.notificar=false;
 			registro.suscritos=[];
 			registro.suscritos.push(this.pacienteSesion);
 			registro.comentarios=[];

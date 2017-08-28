@@ -39,6 +39,7 @@ export class NavbarComponent implements OnInit {
             });
         })
 		
+		
         //TRAE NOTIFICACIONES LA PRIMERA VEZ
         this.postsService.getRegistrosPacientesSuscrito(this.pacienteSesion).subscribe(
             res => {
@@ -87,6 +88,12 @@ export class NavbarComponent implements OnInit {
         }
 
     }
+	//ids: Array < string > = []
+	vioNotificaciones(){
+		console.log(this.authenticationService.decodeToken());
+	}
+	
+	
 
 
 }
