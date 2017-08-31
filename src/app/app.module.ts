@@ -30,6 +30,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FlashMessagesModule } from 'ngx-flash-messages';
 import { StompService } from 'ng2-stomp-service';
 import { NotificacionComponent } from './home/navbar/notificacion/notificacion.component';
+import { SingleComponent } from './home/single/single.component';
 
 
 
@@ -54,7 +55,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     PostsComponent,
     HistorialComponent,
     PostComponent,
-    NotificacionComponent
+    NotificacionComponent,
+    SingleComponent
   ],
   imports: [
     BrowserAnimationsModule,

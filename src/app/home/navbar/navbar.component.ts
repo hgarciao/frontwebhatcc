@@ -26,7 +26,8 @@ export class NavbarComponent implements OnInit {
 
     pacienteSesion: string;
     registros: Array < any > = [];
-	
+	contadorNotificaciones:number;
+
 
     constructor(private authenticationService: AuthenticationService, private stompService: StompService, private postsService: PostsService, private flashMessagesService: FlashMessagesService) {
         this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
@@ -38,13 +39,14 @@ export class NavbarComponent implements OnInit {
                 Authorization: this.authenticationService.getToken()
             });
         })
-		
-		
+
+
         //TRAE NOTIFICACIONES LA PRIMERA VEZ
         this.postsService.getRegistrosPacientesSuscrito(this.pacienteSesion).subscribe(
             res => {
                 this.registros = res.json();
-				console.log(this.registros);
+                console.log(this.registros);
+				this.valorContNotificaciones();
             },
             err => {
                 this.flashMessagesService.show('Error! No se pudieron cargar las notificaciones', {
@@ -68,32 +70,54 @@ export class NavbarComponent implements OnInit {
 
     public procesaNotificacion = (objNotificacion) => {
 
-        //Verifica si tiene suscritos
+        //Verifica si tiene suscritos y tipo de operacion añadir
         if (objNotificacion.suscritos.filter(suscrito => suscrito === this.pacienteSesion)[0]) {
-            //Verifica si tiene comentarios
-            if (objNotificacion.comentarios[objNotificacion.comentarios.length - 1]) {
-                //El que comento es el mismo paciente
-                if (objNotificacion.comentarios[objNotificacion.comentarios.length - 1].paciente == this.pacienteSesion) {
-                    console.log("NO NOTIFICA")
-                    //El que comento es otro paciente
-                } else {
-                    console.log("NOTIFICA")
+                //Verifica si tiene comentarios
+                if (objNotificacion.comentarios[objNotificacion.comentarios.length - 1]) {
+                    
+						this.postsService.getRegistrosPacientesSuscrito(this.pacienteSesion).subscribe(
+							res => {
+								this.registros = res.json();
+								console.log(this.registros);
+								this.valorContNotificaciones();
+							},
+							err => {
+								this.flashMessagesService.show('Error! No se pudieron cargar las notificaciones', {
+									classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+									timeout: 4000, // Default is 3000
+								});
+							}
+						);
+                    //}
                 }
-
-
-            } else {
-                console.log("NO NOTIFICA")
-            }
-            //Revisa otras interacciones
+				
         }
+		
+		
 
     }
-	//ids: Array < string > = []
-	vioNotificaciones(){
-		console.log(this.authenticationService.decodeToken());
+    //ids: Array < string > = []
+    vioNotificaciones() {
+        if (this.contadorNotificaciones>0) {
+            this.authenticationService.updateClickDate(this.pacienteSesion).subscribe(
+                res => {
+                    console.log("actualiza click date");
+                    localStorage.setItem('clickdate', res.json());
+					this.valorContNotificaciones();
+                },
+                err => {
+                    this.flashMessagesService.show('Error! Durante actualizacion de alertas', {
+                        classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+                        timeout: 4000, // Default is 3000
+                    });
+                }
+            );
+        }
+    }
+
+	valorContNotificaciones(){
+		this.contadorNotificaciones = this.registros.filter(registro => registro.fechahoraUpdate > localStorage.getItem('clickdate') && registro.opUpdate=="añadir.comentario").length;
 	}
-	
-	
 
 
 }

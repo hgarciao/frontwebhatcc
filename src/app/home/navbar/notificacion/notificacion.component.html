@@ -1,25 +1,25 @@
 <table style="width:95%;font-size:11px;margin-bottom:4px;margin-left:auto;margin-right:auto">
   <tr style="outline: thin solid">
 	<td width="40px">
-		<img src="../../../../assets/profile-pictures/{{registro.comentarios[0].paciente}}.jpg"
+      <img src="../../../../assets/profile-pictures/{{registro.comentarios[registro.comentarios.length-1].paciente}}.jpg"
                               class="rounded" width="40px" height="40px"/>
 	</td>
 	<td style="padding-left:5px;align:left">
 		<p *ngIf="registro.comentarios.length === 1">
 		<strong>{{registro.comentarios[0].paciente}}</strong>
-		{{' ha comentado tu publicacion : "' + 
-		registro.comentarios[0].contenido.substring(0,25>registro.comentarios[0].contenido.lenght?registro.comentarios[0].contenido.lenght-1:24)
+		{{' ha comentado tu publicacion "' +  registro.pensamiento.substring(0,25>registro.pensamiento.length?registro.pensamiento.length:25) + '" : "'+
+		registro.comentarios[0].contenido.substring(0,25>registro.comentarios[0].contenido.length?registro.comentarios[0].contenido.length:25)
 		+'"'}}</p>
 		<p *ngIf="registro.comentarios.length > 1 && registro.comentarios.length < 3">
-		<strong>{{registro.comentarios[0].paciente}}</strong>&nbsp;y&nbsp;<strong>{{registro.comentarios[1].paciente}}</strong>
-		{{' han comentado tu publicacion : "' + 
-		registro.comentarios[0].contenido.substring(0,25>registro.comentarios[0].contenido.lenght?registro.comentarios[0].contenido.lenght-1:24)
+		<strong>{{registro.comentarios[1].paciente}}</strong>&nbsp;y&nbsp;<strong>{{registro.comentarios[0].paciente}}</strong>
+		{{' ha comentado tu publicacion "' +  registro.pensamiento.substring(0,25>registro.pensamiento.length?registro.pensamiento.length:25) + '" : "'+
+		registro.comentarios[1].contenido.substring(0,25>registro.comentarios[1].contenido.length?registro.comentarios[1].contenido.length:25)
 		+'"'}}</p>
 		<p *ngIf="registro.comentarios.length >=3">
-		<strong>{{registro.comentarios[0].paciente}}</strong>,<strong>{{registro.comentarios[1].paciente}}</strong>
-		&nbsp;y&nbsp;<strong>{{registro.comentarios[2].paciente}}</strong>
-		{{' han comentado tu publicacion : "' + 
-		registro.comentarios[0].contenido.substring(0,25>registro.comentarios[0].contenido.lenght?registro.comentarios[0].contenido.lenght-1:24)
+		<strong>{{registro.comentarios[registro.comentarios.length-1].paciente}}</strong>,<strong>{{registro.comentarios[registro.comentarios.length-2].paciente}}</strong>
+		&nbsp;y&nbsp;<strong>{{registro.comentarios[registro.comentarios.length-3].paciente}}</strong>
+		{{' ha comentado tu publicacion "' +  registro.pensamiento.substring(0,25>registro.pensamiento.length?registro.pensamiento.length:25) + '" : "'+
+		registro.comentarios[registro.comentarios.length-1].contenido.substring(0,25>registro.comentarios[registro.comentarios.length-1].contenido.length?registro.comentarios[registro.comentarios.length-1].contenido.length:25)
 		+'"'}}</p>
 	</td>
   </tr>

@@ -131,6 +131,7 @@ export class PostsComponent implements OnInit {
 			registro.suscritos=[];
 			registro.suscritos.push(this.pacienteSesion);
 			registro.comentarios=[];
+			registro.opUpdate='crear'
             this.isFormLoading=true;
             this.postsService.saveRegistroFormulario(JSON.stringify(registro)).subscribe(
                 res => {

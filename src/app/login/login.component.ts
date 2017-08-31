@@ -49,9 +49,10 @@ export class LoginComponent implements OnInit {
 				res => { 
 					let body = res.json();
 					let token = body.id_token;
+					let clickdate = body.clickdate;
 					if (token) {
 						localStorage.setItem('token',token );
-						//localStorage.setItem('user',JSON.stringify({ username: username}));
+						localStorage.setItem('clickdate',clickdate);
 						this.msgAlert = "";
 						this.router.navigate([this.returnUrl]);
 					} else {

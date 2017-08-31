@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './home/navbar/navbar.component';
 import { SidebarComponent } from './home/sidebar/sidebar.component';
 import { PostsComponent } from './home/posts/posts.component'
+import { SingleComponent } from './home/single/single.component'
 import { HistorialComponent } from './home/historial/historial.component'
 import { CanActivateHome} from './_guards/can-activate-home';
 import { CanActivateLogin} from './_guards/can-activate-login';
@@ -23,7 +24,8 @@ export const router: Routes = [
 				[
 					{ path: '', redirectTo:'posts',pathMatch:'full' },
 					{ path: '', component: NavbarComponent, outlet: 'navbar'},
-					{ path: 'posts', component: PostsComponent}
+					{ path: 'posts', component: PostsComponent},
+					{ path: 'single', component: SingleComponent}
 				]
 			},
             { path: 'terapeuta',component: HomeComponent,canActivate: [CanActivateByRole],data: {

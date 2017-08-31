@@ -28,8 +28,8 @@ export class AuthenticationService {
         localStorage.removeItem('token');
     }
 	
-	updateClickDate(user : any) : Observable<Response> {
-		return this.authHttp.put(environment.urlgtw+'/users/clickdate',user);
+	updateClickDate(user : string) : Observable<Response> {
+		return this.authHttp.put(environment.urlgtw+'/users/clickdate/'+user,'');
 	}
 	
 	
