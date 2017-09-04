@@ -31,6 +31,7 @@ import { FlashMessagesModule } from 'ngx-flash-messages';
 import { StompService } from 'ng2-stomp-service';
 import { NotificacionComponent } from './home/navbar/notificacion/notificacion.component';
 import { SingleComponent } from './home/single/single.component';
+import { ProfileComponent } from './home/profile/profile.component';
 
 
 
@@ -56,7 +57,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     HistorialComponent,
     PostComponent,
     NotificacionComponent,
-    SingleComponent
+    SingleComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserAnimationsModule,

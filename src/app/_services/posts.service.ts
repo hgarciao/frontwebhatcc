@@ -20,6 +20,10 @@ export class PostsService {
     return this.authHttp.get(environment.urlmsposts+'/variables');
   }
   
+  getRegistroById(id:string): Observable<Response> {
+    return this.authHttp.get(environment.urlmsposts+'/registros/'+id);
+  }
+  
   saveRegistroFormulario(post: any) : Observable<Response> {
 	 return this.authHttp.post(environment.urlmsposts+'/registros', post);
   }

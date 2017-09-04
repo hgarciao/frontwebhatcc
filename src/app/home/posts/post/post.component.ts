@@ -41,6 +41,7 @@ export class PostComponent implements OnInit {
 	
 
     ngOnInit() {
+		console.log("POST: " + this.registro)
         let tags = this.tags;
         if (this.registro.campos != null) {
             this.registro.campos.forEach(function(campo) {

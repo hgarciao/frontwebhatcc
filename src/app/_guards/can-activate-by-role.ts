@@ -8,7 +8,6 @@ export class CanActivateByRole implements CanActivate {
 				private authenticationService : AuthenticationService) { }
 				
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        
 		if (this.authenticationService.isLoggedIn()) {
 			var roles = this.authenticationService.decodeToken()['auth'].split(',');
 			if (roles.indexOf(route.data['role'])==-1){

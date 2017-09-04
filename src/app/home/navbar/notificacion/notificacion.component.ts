@@ -1,4 +1,5 @@
 import { Component, OnInit,Input } from '@angular/core';
+import {Router,ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'notificacion',
@@ -9,11 +10,16 @@ export class NotificacionComponent implements OnInit {
 	
   @Input() registro: any;
   
-  constructor() { }
+  constructor(private router: Router,private route:ActivatedRoute) { }
 
   ngOnInit() {
 	  //console.log("hola soy notificacion");
 	  //console.log(this.registro);
   }
+  
+  redirect(){
+	  this.router.navigate(["/home/paciente/single"], {relativeTo: this.route, queryParams: { id: this.registro.post }});
+  }
+  
 
 }

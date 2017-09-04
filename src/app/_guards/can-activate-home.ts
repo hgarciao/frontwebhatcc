@@ -10,6 +10,7 @@ export class CanActivateHome implements CanActivate {
 				private authenticationService : AuthenticationService) { }
 				
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+
         if (this.authenticationService.isLoggedIn()) {
 			
 			if(state.url=="/home"){
