@@ -73,12 +73,12 @@ export class NavbarComponent implements OnInit {
         //Verifica si tiene suscritos y tipo de operacion añadir
         if (objNotificacion.suscritos.filter(suscrito => suscrito === this.pacienteSesion)[0]) {
                 //Verifica si tiene comentarios
-                if (objNotificacion.comentarios[objNotificacion.comentarios.length - 1]) {
+                if (objNotificacion.comentarios[objNotificacion.comentarios.length - 1] && objNotificacion.pacienteUpdate!=this.pacienteSesion) {
                     
 						this.postsService.getRegistrosPacientesSuscrito(this.pacienteSesion).subscribe(
 							res => {
 								this.registros = res.json();
-								console.log(this.registros);
+								console.log("Trae notificaciones");
 								this.valorContNotificaciones();
 							},
 							err => {
@@ -116,7 +116,7 @@ export class NavbarComponent implements OnInit {
     }
 
 	valorContNotificaciones(){
-		this.contadorNotificaciones = this.registros.filter(registro => registro.fechahoraUpdate > localStorage.getItem('clickdate') && registro.opUpdate=="añadir.comentario").length;
+		this.contadorNotificaciones = this.registros.filter(registro => registro.fechahoraUpdate > localStorage.getItem('clickdate') && registro.opUpdate=="añadir.comentario" && registro.pacienteUpdate!=this.pacienteSesion).length;
 	}
 
 

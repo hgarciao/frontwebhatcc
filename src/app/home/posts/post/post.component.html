@@ -64,7 +64,13 @@
 			<hr/>
 			<br/>
             <div class="row">
-               <div class="col-md-12 text-right" style="margin-bottom:15px" *ngFor='let comentario of registro.comentarios'>
+			   <div class="col-md-12" style="margin-bottom:15px;text-align:center"  
+			   *ngIf="registro.comentarios.length>10">
+				<p *ngIf="!mostrarComentarios" style="color:black;text-decoration: underline;cursor:pointer;font-weight:bold" (click)="mostrarComentarios=true">Mostrar comentarios anteriores</p>
+				<p *ngIf="mostrarComentarios"  style="color:black;text-decoration: underline;cursor:pointer;font-weight:bold" (click)="mostrarComentarios=false">Ocultar comentarios anteriores</p>
+			   </div>
+               <div class="col-md-12 text-right" style="margin-bottom:15px" 
+			   *ngFor='let comentario of devuelveComentariosFiltrados(registro.comentarios)'>
                   <div class="row">
                      <div class="col-md-12">
                         <table style="width:100%;table-layout:fixed">

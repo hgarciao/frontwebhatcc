@@ -34,6 +34,7 @@ export class PostComponent implements OnInit {
 	@Output() eliminar:EventEmitter<any> = new EventEmitter();
     tags: Array < string > = [];
 	isCommenting:boolean;
+	mostrarComentarios:boolean;
 
     constructor(private postsService: PostsService,private flashMessagesService: FlashMessagesService,private _el: ElementRef) {
 	}
@@ -42,6 +43,7 @@ export class PostComponent implements OnInit {
 
     ngOnInit() {
 		console.log("POST: " + this.registro)
+		this.mostrarComentarios=false;
         let tags = this.tags;
         if (this.registro.campos != null) {
             this.registro.campos.forEach(function(campo) {
@@ -67,7 +69,8 @@ export class PostComponent implements OnInit {
             comment.contenido = comentario.value;
             comment.paciente = this.pacienteSesion;
 			copia.comentarios.push(comment);
-			copia.opUpdate="añadir.comentario"
+			copia.opUpdate="añadir.comentario";
+			copia.pacienteUpdate=this.pacienteSesion;
 			this.isCommenting=true;
             this.postsService.updateRegistroPacienteAddComentario(JSON.stringify(copia)).subscribe(
                     res => {
@@ -96,7 +99,8 @@ export class PostComponent implements OnInit {
 		let copia = <any> JSON.parse(JSON.stringify(this.registro));
 		let index = copia.comentarios.indexOf(copia.comentarios.filter(comentario => comentario.id == id)[0]);
 		copia.comentarios.splice(index, 1);
-		copia.opUpdate='borrar.comentario'
+		copia.opUpdate='borrar.comentario';
+		copia.pacienteUpdate=this.pacienteSesion;
 		this.postsService.updateRegistroPaciente(JSON.stringify(copia)).subscribe(
                     res => {
 						//this.registro = res.json();
@@ -128,6 +132,15 @@ export class PostComponent implements OnInit {
 			console.log(this.registro.pensamiento +  " : desaparece")
 		}else{
 			console.log(this.registro.pensamiento + "  : viewport")
+		}
+		
+	}
+	
+	devuelveComentariosFiltrados(comentarios: Array<any>):any[]{
+		if(comentarios.length>10 && !this.mostrarComentarios){
+			return comentarios.filter(comentario=> comentarios.indexOf(comentario)+1>(comentarios.length*0.8));
+		}else{
+			return comentarios;
 		}
 		
 	}

@@ -43,6 +43,7 @@ export class PostsComponent implements OnInit {
 
     variables: Array < any > = [];
     registros: Array < any > = [];
+	pendientes: Array < any > = [];
     @ViewChild('form') form;
     @ViewChild('modal') modal;
     submitted: boolean;
@@ -131,7 +132,8 @@ export class PostsComponent implements OnInit {
 			registro.suscritos=[];
 			registro.suscritos.push(this.pacienteSesion);
 			registro.comentarios=[];
-			registro.opUpdate='crear'
+			registro.opUpdate='crear';
+			registro.pacienteUpdate=this.pacienteSesion;
             this.isFormLoading=true;
             this.postsService.saveRegistroFormulario(JSON.stringify(registro)).subscribe(
                 res => {
@@ -260,9 +262,10 @@ export class PostsComponent implements OnInit {
 	}
 	
 	public procesaNotificacion = (objNotificacion) => {
-	 
-	 this.registros[this.registros.indexOf(this.registros.filter(registro => registro.id === objNotificacion.id)[0])]=objNotificacion;
-
+		
+	 if(objNotificacion.opUpdate!="crear"){
+		  this.registros[this.registros.indexOf(this.registros.filter(registro => registro.id === objNotificacion.id)[0])]=objNotificacion;
+	 }
 	  
 	}
 
