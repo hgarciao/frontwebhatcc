@@ -30,8 +30,9 @@ export class PostsService {
   
   //Este metodo debe tener la logica de cargar otros registros de otras personas according to logica
   //Al inicio solo jalara los mas recientes de todos
-  getRegistrosPacientes(paciente:string,page: number,pagesize:number): Observable<Response> {
-	  return this.authHttp.get(environment.urlmsposts+'/registros/pacientes/'+paciente+"/"+ page +"/"+pagesize);	  
+  getRegistrosPacientes(parametros:any): Observable<Response> {
+	  //return this.authHttp.get(environment.urlmsposts+'/registros/pacientes/'+paciente+"/"+ page +"/"+pagesize);
+	  return this.authHttp.post(environment.urlmsposts+'/registros/pacientes/wall',parametros);	    
   }
   
   updateRegistroPacienteAddComentario(post:any):Observable<Response> {

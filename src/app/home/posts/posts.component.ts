@@ -265,6 +265,8 @@ export class PostsComponent implements OnInit {
 		
 	 if(objNotificacion.opUpdate!="crear"){
 		  this.registros[this.registros.indexOf(this.registros.filter(registro => registro.id === objNotificacion.id)[0])]=objNotificacion;
+	 }else{
+		 this.registros.unshift(objNotificacion);
 	 }
 	  
 	}
