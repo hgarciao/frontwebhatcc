@@ -1,6 +1,7 @@
 import {
     Component,
     OnInit,
+	OnDestroy,
     HostListener,
     ViewChild
 } from '@angular/core';
@@ -43,41 +44,51 @@ export class PostsComponent implements OnInit {
 
     variables: Array < any > = [];
     registros: Array < any > = [];
-	pendientes: Array < any > = [];
     @ViewChild('form') form;
     @ViewChild('modal') modal;
     submitted: boolean;
-	currentPostPage: number;
 	pacienteSesion: string;
 	isFormLoaded: boolean;
 	isFormLoading:boolean;
 	isPostsLoading:boolean;
+	subscription:any;
 	
 
     constructor(private postsService: PostsService, private authenticationService: AuthenticationService, private globalService: GlobalService,private flashMessagesService: FlashMessagesService,private stompService: StompService) {
+		this.globalService.displayLoader();
 		this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
 		this.stompService.after('init').then(()=>{
-			console.log("suscribiendo posts");
-			this.stompService.subscribe('/topic/registros', this.procesaNotificacion ,{
+			this.subscription = this.stompService.subscribe('/topic/registros', this.procesaNotificacion ,{
                 Authorization: this.authenticationService.getToken()
             });
-		  })
+		  });
+		
+		var parametros: any = {};
+		parametros.paciente=this.pacienteSesion;
+		parametros.pagesize=environment.postpagesize;
+		// parametros.fechahora; No se setea por ser primera llamada
+        this.postsService.getRegistrosWall(parametros).subscribe(
+            res => {
+				this.registros=res.json();
+				this.globalService.hideLoader();
+            },
+			err =>{
+				this.globalService.hideLoader();
+				this.flashMessagesService.show('Error! No se pudieron cargar las publicaciones', {
+						  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+						  timeout: 4000, // Default is 3000
+						});
+			}
+        );
+		  
 	}
 
 
 
     ngOnInit() {
-		
-		this.currentPostPage=0;
-		this.registros = new Array();
-		//Arreglar
-		this.getPostsBlock(true);
-		//Traer ids de registros a los que esta suscrito
 		this.isFormLoaded=false;
 		this.isFormLoading=false;
 		this.isPostsLoading=false;
-		
-		
     }
 
     guardaRegistroPost(form: any) {
@@ -132,12 +143,10 @@ export class PostsComponent implements OnInit {
 			registro.suscritos=[];
 			registro.suscritos.push(this.pacienteSesion);
 			registro.comentarios=[];
-			registro.opUpdate='crear';
 			registro.pacienteUpdate=this.pacienteSesion;
             this.isFormLoading=true;
             this.postsService.saveRegistroFormulario(JSON.stringify(registro)).subscribe(
                 res => {
-					this.registros.unshift(res.json());
                     this.isFormLoading=false;
 					this.modal.dismiss();
 					this.flashMessagesService.show('Se realizó publicación', {
@@ -165,34 +174,7 @@ export class PostsComponent implements OnInit {
 		this.variables.forEach(function(p,i,vars) {
 			vars[i].invalid=true;
 		});
-    }
-
-	
-	getPostsBlock(init:boolean){
-		if(init){
-			this.globalService.displayLoader();}
-		else{
-			this.isPostsLoading=true;
-		}
-        this.postsService.getRegistrosPacientes(this.pacienteSesion,this.currentPostPage,environment.postpagesize).subscribe(
-            res => {
-				for (let elemen of res.json()) {
-					this.registros.push(elemen);
-				}
-				this.currentPostPage = this.currentPostPage + 1 ;
-				if(init){this.globalService.hideLoader();}else{this.isPostsLoading=false;}	
-            },
-			err =>{
-				if(init){this.globalService.hideLoader();}else{this.isPostsLoading=false;}	
-				this.flashMessagesService.show('Error! No se pudieron cargar las publicaciones', {
-						  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-						  timeout: 4000, // Default is 3000
-						});
-			}
-        );
-		
-	}
-	
+    }	
 	
 	onSelectedVariable(id: string){
 		this.variables.filter(variable => variable.id == id)[0].invalid=false;
@@ -202,21 +184,29 @@ export class PostsComponent implements OnInit {
 		this.variables.filter(variable => variable.id == id)[0].invalid=true;
 	}
 	
-	reloadPosts(){
-		this.registros = new Array();
-		this.currentPostPage=0;
-		this.getPostsBlock(false);
-	}
-	
 	onScrollDown(){
 	  if(window.pageYOffset+ window.innerHeight>=document.body.offsetHeight){
-		  this.getPostsBlock(false);
-	  }
-	}
-	
-	onScrollUp(){
-	  if(window.pageYOffset==0){
-		console.log("actualizar");
+			this.isPostsLoading=true;
+			var parametros: any = {};
+			parametros.paciente=this.pacienteSesion;
+			parametros.pagesize=environment.postpagesize;
+			parametros.fechahora=this.registros[this.registros.length-1]?this.registros[this.registros.length-1].fechahora:null;
+			this.postsService.getRegistrosWall(parametros).subscribe(
+				res => {
+					var registrosold =res.json();
+					for(let registro of registrosold){
+						this.registros.push(registro);
+					}
+					this.isPostsLoading=false;
+				},
+				err =>{
+					this.isPostsLoading=false;
+					this.flashMessagesService.show('Error! No se pudieron traer publicaciones antiguas', {
+							  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+							  timeout: 4000, // Default is 3000
+							});
+				}
+			);
 	  }
 	}
 	
@@ -258,17 +248,38 @@ export class PostsComponent implements OnInit {
 	}
 	
 	eliminarPost(event:any){
-		console.log("Eliminar "+ event.id);
+		//console.log(event.registro);
+		this.postsService.updateRegistroPacienteDelete(event.registro).subscribe(
+				res => {
+					//console.log("eliminacion exitosa");
+				},
+				err =>{
+					this.isPostsLoading=false;
+					this.flashMessagesService.show('Error! no se pudo eliminar la publicación', {
+							  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+							  timeout: 4000, // Default is 3000
+							});
+				}
+			);
 	}
 	
 	public procesaNotificacion = (objNotificacion) => {
 		
-	 if(objNotificacion.opUpdate!="crear"){
+	 if(objNotificacion.opUpdate=="crear"){
 		  this.registros[this.registros.indexOf(this.registros.filter(registro => registro.id === objNotificacion.id)[0])]=objNotificacion;
+	 }else if(objNotificacion.opUpdate=="eliminar"){
+		 var index = this.registros.indexOf(this.registros.filter(registro => registro.id === objNotificacion.id)[0]);
+		 if (index > -1) {
+			this.registros.splice(index, 1);
+		 }
 	 }else{
 		 this.registros.unshift(objNotificacion);
 	 }
 	  
+	}
+	
+	ngOnDestroy (){
+		this.subscription.unsubscribe();
 	}
 
 }

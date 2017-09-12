@@ -69,7 +69,6 @@ export class PostComponent implements OnInit {
             comment.contenido = comentario.value;
             comment.paciente = this.pacienteSesion;
 			copia.comentarios.push(comment);
-			copia.opUpdate="añadir.comentario";
 			copia.pacienteUpdate=this.pacienteSesion;
 			this.isCommenting=true;
             this.postsService.updateRegistroPacienteAddComentario(JSON.stringify(copia)).subscribe(
@@ -99,9 +98,8 @@ export class PostComponent implements OnInit {
 		let copia = <any> JSON.parse(JSON.stringify(this.registro));
 		let index = copia.comentarios.indexOf(copia.comentarios.filter(comentario => comentario.id == id)[0]);
 		copia.comentarios.splice(index, 1);
-		copia.opUpdate='borrar.comentario';
 		copia.pacienteUpdate=this.pacienteSesion;
-		this.postsService.updateRegistroPaciente(JSON.stringify(copia)).subscribe(
+		this.postsService.updateRegistroPacienteDeleteComentario(JSON.stringify(copia)).subscribe(
                     res => {
 						//this.registro = res.json();
 					},
@@ -121,7 +119,7 @@ export class PostComponent implements OnInit {
 	
 	eliminarPost(id:string,event:any){
 		event.preventDefault();
-		this.eliminar.emit({id:id})
+		this.eliminar.emit({registro:this.registro})
 	}
 	
 	onScrollDown(event:any){

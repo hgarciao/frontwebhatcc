@@ -1,6 +1,7 @@
 import {
     Component,
-    OnInit
+    OnInit,
+	OnDestroy
 } from '@angular/core';
 import {
     AuthenticationService
@@ -27,6 +28,7 @@ export class NavbarComponent implements OnInit {
     pacienteSesion: string;
     registros: Array < any > = [];
 	contadorNotificaciones:number;
+	subscription:any;
 
 
     constructor(private authenticationService: AuthenticationService, private stompService: StompService, private postsService: PostsService, private flashMessagesService: FlashMessagesService) {
@@ -116,8 +118,12 @@ export class NavbarComponent implements OnInit {
     }
 
 	valorContNotificaciones(){
-		this.contadorNotificaciones = this.registros.filter(registro => registro.fechahoraUpdate > localStorage.getItem('clickdate') && registro.opUpdate=="añadir.comentario" && registro.pacienteUpdate!=this.pacienteSesion).length;
+		this.contadorNotificaciones = this.registros.filter(registro => registro.fechahoraUpdate > localStorage.getItem('clickdate') && registro.opUpdate=="crear.comentario" && registro.pacienteUpdate!=this.pacienteSesion).length;
 	}
 
-
+	ngOnDestroy (){
+		console.log('destruyendo navbar');
+		this.subscription.unsubscribe();
+	}
+	
 }

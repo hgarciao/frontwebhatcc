@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { StompService } from 'ng2-stomp-service';
 import { AuthenticationService} from '../_services/authentication.service';
 
@@ -35,7 +35,9 @@ export class HomeComponent implements OnInit {
 		  });
   }
   
-    	//response 
+   ngOnDestroy (){
+		console.log('destruyendo HOMEEEEE');
+	}
 	
   
   private _opened: boolean = false;
