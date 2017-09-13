@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
 
         // Esto es para cuando no este autenticado y es redirigido al login
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+		console.log(this.returnUrl);
 		this.msgAlert = "";
 
     }
@@ -66,7 +67,8 @@ export class LoginComponent implements OnInit {
 					console.log(err);
 					if(err.status==401){
 						this.msgAlert = "Contraseña y/o Usuario incorrectos";
-					}else{
+					}
+					else{
 						this.msgAlert = "Error conectando al servidor. \n Comunicarse con el administrador ";
 					}
 					this.globalService.hideLoader();

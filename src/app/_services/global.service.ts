@@ -27,8 +27,5 @@ export class GlobalService {
 	
   displayAlerta() {
       this.loaderService.displayLoader(true); // enable spinner
-  }	
-  
-
-	
+  }		
 }

@@ -57,11 +57,7 @@ export class PostsComponent implements OnInit {
     constructor(private postsService: PostsService, private authenticationService: AuthenticationService, private globalService: GlobalService,private flashMessagesService: FlashMessagesService,private stompService: StompService) {
 		this.globalService.displayLoader();
 		this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
-		this.stompService.after('init').then(()=>{
-			this.subscription = this.stompService.subscribe('/topic/registros', this.procesaNotificacion ,{
-                Authorization: this.authenticationService.getToken()
-            });
-		  });
+		
 		
 		var parametros: any = {};
 		parametros.paciente=this.pacienteSesion;
@@ -89,6 +85,11 @@ export class PostsComponent implements OnInit {
 		this.isFormLoaded=false;
 		this.isFormLoading=false;
 		this.isPostsLoading=false;
+		this.stompService.after('init').then(()=>{
+			this.subscription = this.stompService.subscribe('/topic/registros', this.procesaNotificacion ,{
+                Authorization: this.authenticationService.getToken()
+            });
+		  });
     }
 
     guardaRegistroPost(form: any) {

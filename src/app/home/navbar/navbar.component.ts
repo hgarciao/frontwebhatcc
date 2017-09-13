@@ -34,14 +34,6 @@ export class NavbarComponent implements OnInit {
     constructor(private authenticationService: AuthenticationService, private stompService: StompService, private postsService: PostsService, private flashMessagesService: FlashMessagesService) {
         this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
 
-        // SE CONECTA AL WEBSOCKET
-        this.stompService.after('init').then(() => {
-            console.log("suscribiendo navbar");
-            this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
-                Authorization: this.authenticationService.getToken()
-            });
-        })
-
 
         //TRAE NOTIFICACIONES LA PRIMERA VEZ
         this.postsService.getRegistrosPacientesSuscrito(this.pacienteSesion).subscribe(
@@ -60,12 +52,18 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
-
+		  // SE CONECTA AL WEBSOCKET
+        this.stompService.after('init').then(() => {
+            console.log("suscribiendo navbar");
+            this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
+                Authorization: this.authenticationService.getToken()
+            });
+        })
     }
 
     logout(): void {
-        console.log("Colocar evento para cerrar socket madafaca");
-        console.log('Cerrar sesion')
+        //console.log("Colocar evento para cerrar socket madafaca");
+        //console.log('Cerrar sesion')
         this.authenticationService.logout()
         //Redigir al login
     }
@@ -109,10 +107,16 @@ export class NavbarComponent implements OnInit {
 					this.valorContNotificaciones();
                 },
                 err => {
-                    this.flashMessagesService.show('Error! Durante actualizacion de alertas', {
+					if(!this.authenticationService.isLoggedIn()){
+						window.location.reload();
+					}
+					else{
+						this.flashMessagesService.show('Error durante actualizacion de notificaciones', {
                         classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
                         timeout: 4000, // Default is 3000
-                    });
+						});
+					}
+                   
                 }
             );
         }

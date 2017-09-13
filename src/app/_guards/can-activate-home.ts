@@ -12,7 +12,6 @@ export class CanActivateHome implements CanActivate {
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
         if (this.authenticationService.isLoggedIn()) {
-			
 			if(state.url=="/home"){
 				var roles = this.authenticationService.decodeToken()['auth'].split(',');
 				if (roles.indexOf('ROLE_ADMIN')!=-1){
@@ -20,7 +19,8 @@ export class CanActivateHome implements CanActivate {
 					this.router.navigate(['/home/admin']);
 				}
 				if (roles.indexOf('ROLE_PACIENTE')!=-1){
-					console.log('admin paciente');				
+					console.log('admin paciente');		
+					console.log(route);
 					this.router.navigate(['/home/paciente']);
 				}
 				if (roles.indexOf('ROLE_TERAPEUTA')!=-1){
@@ -35,7 +35,9 @@ export class CanActivateHome implements CanActivate {
 			
         }else{
 			console.log('No autenticado intenta acceder al home - redirijo');
-			this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+			console.log(route);
+			console.log(state);
+			this.router.navigate(['/login'], { queryParams: { returnUrl: state.url , params: route.queryParams }});
 			return false;
 		}
         

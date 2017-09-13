@@ -24,7 +24,7 @@ import {SelectModule} from 'ng-select';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { PostComponent } from './home/posts/post/post.component';
-import { TagInputModule } from 'ng2-tag-input';
+import { TagInputModule } from 'ngx-chips';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FlashMessagesModule } from 'ngx-flash-messages';

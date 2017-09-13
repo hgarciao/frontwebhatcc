@@ -36,7 +36,7 @@ export class SingleComponent implements OnInit {
 
     constructor(private activatedRoute: ActivatedRoute, private router: Router,
         private postsService: PostsService, private flashMessagesService: FlashMessagesService, private globalService: GlobalService, private authenticationService: AuthenticationService, private stompService: StompService) {
-
+		console.log('singkle');
         let registroId = this.activatedRoute.snapshot.queryParams['id'];
         if (registroId) {
             this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
