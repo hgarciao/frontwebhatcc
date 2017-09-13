@@ -75,12 +75,13 @@ export class NavbarComponent implements OnInit {
         //Verifica si tiene suscritos y tipo de operacion añadir
         if (objNotificacion.suscritos.filter(suscrito => suscrito === this.pacienteSesion)[0]) {
                 //Verifica si tiene comentarios
-                if (objNotificacion.comentarios[objNotificacion.comentarios.length - 1] && objNotificacion.pacienteUpdate!=this.pacienteSesion) {
+                if ((objNotificacion.comentarios[objNotificacion.comentarios.length - 1] && objNotificacion.pacienteUpdate!=this.pacienteSesion) || objNotificacion.opUpdate=='eliminar.comentario') {
                     
 						this.postsService.getRegistrosPacientesSuscrito(this.pacienteSesion).subscribe(
 							res => {
 								this.registros = res.json();
 								console.log("Trae notificaciones");
+								console.log(this.registros);
 								this.valorContNotificaciones();
 							},
 							err => {
@@ -118,7 +119,11 @@ export class NavbarComponent implements OnInit {
     }
 
 	valorContNotificaciones(){
-		this.contadorNotificaciones = this.registros.filter(registro => registro.fechahoraUpdate > localStorage.getItem('clickdate') && registro.opUpdate=="crear.comentario" && registro.pacienteUpdate!=this.pacienteSesion).length;
+		/*console.log(new Date(this.registros[0].fechahoraUpdate));
+		console.log(new Date(this.registros[0].fechahoraUpdate)>new Date(localStorage.getItem('clickdate')));*/
+		this.contadorNotificaciones = this.registros.filter(registro => 
+		new Date(this.registros[0].fechahoraUpdate)>new Date(localStorage.getItem('clickdate')) && registro.opUpdate=="crear.comentario" && registro.pacienteUpdate!=this.pacienteSesion).length;
+		console.log(this.contadorNotificaciones);
 	}
 
 	ngOnDestroy (){

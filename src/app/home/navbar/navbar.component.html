@@ -12,7 +12,8 @@
           <i class="fa fa-bell"  style="font-size:20px;"><div class="num" *ngIf="contadorNotificaciones>0">{{contadorNotificaciones}}</div></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="width:350px;max-height:600px;overflow-y: scroll;">
-          <notificacion [registro]="registro" *ngFor='let registro of registros'>Notificaciones</notificacion>
+          <div *ngIf="registros.length==0" style="text-align:center;font-size:14px"><strong>Por el momento, no tienes notificaciones</strong>&nbsp;<i class="fa fa-frown-o" aria-hidden="true"></i></div>
+		  <notificacion [registro]="registro" *ngFor='let registro of registros'>Notificaciones</notificacion>
         </div>
       </li>
 	  &nbsp;

@@ -42,7 +42,6 @@ export class PostComponent implements OnInit {
 	
 
     ngOnInit() {
-		console.log("POST: " + this.registro)
 		this.mostrarComentarios=false;
         let tags = this.tags;
         if (this.registro.campos != null) {

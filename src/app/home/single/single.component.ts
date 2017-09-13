@@ -40,12 +40,6 @@ export class SingleComponent implements OnInit {
         let registroId = this.activatedRoute.snapshot.queryParams['id'];
         if (registroId) {
             this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
-            this.stompService.after('init').then(() => {
-                console.log("suscribiendo single");
-                this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
-                    Authorization: this.authenticationService.getToken()
-                });
-            })
             this.globalService.displayLoader();
             this.postsService.getRegistroById(registroId).subscribe(
                 res => {
@@ -72,7 +66,13 @@ export class SingleComponent implements OnInit {
 
     ngOnInit() {
 
-
+this.stompService.after('init').then(() => {
+                //console.log("suscribiendo single: " + this.authenticationService.getToken());
+				let token = this.authenticationService.getToken();
+                this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
+                    Authorization: token
+                });
+            });
     }
 
     public procesaNotificacion = (objNotificacion) => {

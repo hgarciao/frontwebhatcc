@@ -52,6 +52,9 @@ export class LoginComponent implements OnInit {
 					let clickdate = body.clickdate;
 					if (token) {
 						localStorage.setItem('token',token );
+						if(!clickdate){
+							clickdate = new Date('1968-11-16T00:00:00');
+						}
 						localStorage.setItem('clickdate',clickdate);
 						this.msgAlert = "";
 						this.router.navigate([this.returnUrl]);

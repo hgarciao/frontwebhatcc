@@ -266,14 +266,15 @@ export class PostsComponent implements OnInit {
 	public procesaNotificacion = (objNotificacion) => {
 		
 	 if(objNotificacion.opUpdate=="crear"){
-		  this.registros[this.registros.indexOf(this.registros.filter(registro => registro.id === objNotificacion.id)[0])]=objNotificacion;
+		 this.registros.unshift(objNotificacion);
 	 }else if(objNotificacion.opUpdate=="eliminar"){
 		 var index = this.registros.indexOf(this.registros.filter(registro => registro.id === objNotificacion.id)[0]);
 		 if (index > -1) {
 			this.registros.splice(index, 1);
 		 }
 	 }else{
-		 this.registros.unshift(objNotificacion);
+		 
+		  this.registros[this.registros.indexOf(this.registros.filter(registro => registro.id === objNotificacion.id)[0])]=objNotificacion;
 	 }
 	  
 	}
