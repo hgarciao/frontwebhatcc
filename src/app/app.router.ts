@@ -22,10 +22,9 @@ export const router: Routes = [
 			{ path: 'paciente',component: HomeComponent,canActivate: [CanActivateByRole],data: {
 			  role: 'ROLE_PACIENTE'},children :
 				[
-					{ path: '', redirectTo:'posts',pathMatch:'full' },
 					{ path: '', component: NavbarComponent, outlet: 'navbar'},
-					{ path: 'posts', component: PostsComponent},
-					{ path: 'single', component: SingleComponent}
+					{ path: 'posts', component: PostsComponent, outlet: 'contenido'},
+					{ path: 'single', component: SingleComponent, outlet: 'contenido'}
 				]
 			},
             { path: 'terapeuta',component: HomeComponent,canActivate: [CanActivateByRole],data: {

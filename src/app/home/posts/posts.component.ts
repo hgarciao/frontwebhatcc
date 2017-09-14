@@ -70,10 +70,13 @@ export class PostsComponent implements OnInit {
             },
 			err =>{
 				this.globalService.hideLoader();
+				if(!this.authenticationService.isLoggedIn()){
+							window.location.reload();
+						}else{
 				this.flashMessagesService.show('Error! No se pudieron cargar las publicaciones', {
 						  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
 						  timeout: 4000, // Default is 3000
-						});
+						});}
 			}
         );
 		  
@@ -85,11 +88,15 @@ export class PostsComponent implements OnInit {
 		this.isFormLoaded=false;
 		this.isFormLoading=false;
 		this.isPostsLoading=false;
-		this.stompService.after('init').then(()=>{
-			this.subscription = this.stompService.subscribe('/topic/registros', this.procesaNotificacion ,{
-                Authorization: this.authenticationService.getToken()
-            });
-		  });
+		if(this.authenticationService.isLoggedIn()){
+			this.stompService.after('init').then(()=>{
+				this.subscription = this.stompService.subscribe('/topic/registros', this.procesaNotificacion ,{
+					Authorization: this.authenticationService.getToken()
+				});
+			});
+		}else{
+			window.location.reload();
+		}
     }
 
     guardaRegistroPost(form: any) {
@@ -158,10 +165,13 @@ export class PostsComponent implements OnInit {
 				err =>{
 					this.isFormLoading=false;
 					this.modal.dismiss();
+					if(!this.authenticationService.isLoggedIn()){
+							window.location.reload();
+						}else{
 					this.flashMessagesService.show('Error! No se realizó la publicación', {
 						  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
 						  timeout: 4000, // Default is 3000
-					});
+						});}
 				}
             );
 			
@@ -202,10 +212,13 @@ export class PostsComponent implements OnInit {
 				},
 				err =>{
 					this.isPostsLoading=false;
+					if(!this.authenticationService.isLoggedIn()){
+							window.location.reload();
+						}else{
 					this.flashMessagesService.show('Error! No se pudieron traer publicaciones antiguas', {
 							  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
 							  timeout: 4000, // Default is 3000
-							});
+						});}
 				}
 			);
 	  }
@@ -235,10 +248,13 @@ export class PostsComponent implements OnInit {
 						this.isFormLoading=false;
 						this.isFormLoaded=false;
 						this.modal.dismiss();
+						if(!this.authenticationService.isLoggedIn()){
+							window.location.reload();
+						}else{
 						this.flashMessagesService.show('Error! No se pudo cargar el formulario', {
 						  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
 						  timeout: 4000, // Default is 3000
-						});
+						});}
 					}
                 );
 		}
@@ -256,10 +272,13 @@ export class PostsComponent implements OnInit {
 				},
 				err =>{
 					this.isPostsLoading=false;
+					if(!this.authenticationService.isLoggedIn()){
+							window.location.reload();
+						}else{
 					this.flashMessagesService.show('Error! no se pudo eliminar la publicación', {
 							  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
 							  timeout: 4000, // Default is 3000
-							});
+						});}
 				}
 			);
 	}

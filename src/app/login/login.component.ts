@@ -13,7 +13,7 @@ import {
     Router,
     ActivatedRoute
 } from '@angular/router';
-
+import { SlicePipe } from '@angular/common';
 
 
 @Component({
@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
     password: string;
     rememberMe: boolean;
     returnUrl: string;
+	returnUrlParams:  any;
     resultado: boolean;
 	msgAlert: string;
 	hideAlert: boolean;
@@ -39,6 +40,16 @@ export class LoginComponent implements OnInit {
 
         // Esto es para cuando no este autenticado y es redirigido al login
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+		/*if(this.returnUrl.indexOf('?')!=-1){
+			this.returnUrlParams ={};
+			let tmp = this.returnUrl.substring(this.returnUrl.indexOf('?')+1,this.returnUrl.length).split('&');
+			for (var i = 0; i < tmp.length; i++) {
+				this.returnUrlParams[tmp[i].split('=')[0]] = tmp[i].split('=')[1];
+			}
+			this.returnUrl = this.returnUrl.substring(0,this.returnUrl.indexOf('?'));
+			console.log(this.returnUrl);
+			console.log(this.returnUrlParams);
+		}*/
 		console.log(this.returnUrl);
 		this.msgAlert = "";
 
@@ -58,7 +69,12 @@ export class LoginComponent implements OnInit {
 						}
 						localStorage.setItem('clickdate',clickdate);
 						this.msgAlert = "";
-						this.router.navigate([this.returnUrl]);
+						/*if(this.returnUrlParams){
+							this.router.navigate([this.returnUrl], { queryParams: this.returnUrlParams});
+						}else{
+							this.router.navigate([this.returnUrl]);
+						}*/
+						this.router.navigateByUrl(this.returnUrl);
 					} else {
 						this.msgAlert = "Contraseña y/o Usuario incorrectos";
 					}

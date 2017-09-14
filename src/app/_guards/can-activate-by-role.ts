@@ -15,6 +15,10 @@ export class CanActivateByRole implements CanActivate {
 				console.log('false')
 				this.router.navigate(['/home']);
 				return false
+			}else{
+				if (state.url=='/home/paciente'){
+					this.router.navigateByUrl("/home/paciente/(contenido:posts)");
+				}
 			}
 			return true
         }else{

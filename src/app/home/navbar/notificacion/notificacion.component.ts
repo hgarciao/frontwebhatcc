@@ -18,7 +18,7 @@ export class NotificacionComponent implements OnInit {
   }
   
   redirect(){
-	  this.router.navigate(["/home/paciente/single"], {relativeTo: this.route, queryParams: { id: this.registro.post }});
+	  this.router.navigateByUrl("/home/paciente/(contenido:single)?id="+this.registro.post);
   }
   
 

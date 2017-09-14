@@ -43,22 +43,29 @@ export class NavbarComponent implements OnInit {
 				this.valorContNotificaciones();
             },
             err => {
+				if(!this.authenticationService.isLoggedIn()){
+							window.location.reload();
+						}else{
                 this.flashMessagesService.show('Error! No se pudieron cargar las notificaciones', {
                     classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
                     timeout: 4000, // Default is 3000
-                });
+						});}
             }
         );
     }
 
     ngOnInit() {
-		  // SE CONECTA AL WEBSOCKET
-        this.stompService.after('init').then(() => {
+		if(this.authenticationService.isLoggedIn()){
+			this.stompService.after('init').then(() => {
             console.log("suscribiendo navbar");
             this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
                 Authorization: this.authenticationService.getToken()
             });
-        })
+        });
+		}else{
+			window.location.reload();
+		}
+        
     }
 
     logout(): void {
@@ -83,10 +90,13 @@ export class NavbarComponent implements OnInit {
 								this.valorContNotificaciones();
 							},
 							err => {
+								if(!this.authenticationService.isLoggedIn()){
+							window.location.reload();
+						}else{
 								this.flashMessagesService.show('Error! No se pudieron cargar las notificaciones', {
 									classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
 									timeout: 4000, // Default is 3000
-								});
+						});}
 							}
 						);
                     //}

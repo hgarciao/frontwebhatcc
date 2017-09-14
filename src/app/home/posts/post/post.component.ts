@@ -17,7 +17,9 @@ import {
     PostsService
 } from '../../../_services/posts.service';
 import { FlashMessagesService } from 'ngx-flash-messages';
-
+import {
+    AuthenticationService
+} from '../../../_services/authentication.service';
 
 
 @Component({
@@ -36,7 +38,7 @@ export class PostComponent implements OnInit {
 	isCommenting:boolean;
 	mostrarComentarios:boolean;
 
-    constructor(private postsService: PostsService,private flashMessagesService: FlashMessagesService,private _el: ElementRef) {
+    constructor(private postsService: PostsService,private flashMessagesService: FlashMessagesService,private _el: ElementRef, private authenticationService: AuthenticationService) {
 	}
 	
 	
@@ -76,12 +78,17 @@ export class PostComponent implements OnInit {
 						this.isCommenting=false;
 						comentario.value="";
 					},
-					err=>{
+					err=>{	
 						this.isCommenting=false;
-						this.flashMessagesService.show('Error realizando comentario', {
+						if(!this.authenticationService.isLoggedIn()){
+							window.location.reload();
+						}else{
+							this.flashMessagesService.show('Error realizando comentario', {
 						  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
 						  timeout: 3000, // Default is 3000
 						});
+						}
+						
 					}
             );
 			
@@ -103,10 +110,14 @@ export class PostComponent implements OnInit {
 						//this.registro = res.json();
 					},
 					err=>{
-						this.flashMessagesService.show('Error eliminando comentario', {
-						  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-						  timeout: 3000, // Default is 3000
-						});
+						if(!this.authenticationService.isLoggedIn()){
+							window.location.reload();
+						}else{
+							this.flashMessagesService.show('Error eliminando comentario', {
+							  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+							  timeout: 3000, // Default is 3000
+							});
+						}
 					}
             );
 	}

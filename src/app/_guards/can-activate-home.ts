@@ -22,6 +22,7 @@ export class CanActivateHome implements CanActivate {
 					console.log('admin paciente');		
 					console.log(route);
 					this.router.navigate(['/home/paciente']);
+					//this.router.navigateByUrl("/home/paciente(contenido:posts)");
 				}
 				if (roles.indexOf('ROLE_TERAPEUTA')!=-1){
 					console.log('admin terapeuta');			
@@ -29,15 +30,13 @@ export class CanActivateHome implements CanActivate {
 				}
 				return false;
 			}else{
-				console.log('ya no redirecciono solo dejo pasar')
+				console.log('ya no redirecciono solo dejo pasar : '+ state.url)
 				return true;
 			}
 			
         }else{
 			console.log('No autenticado intenta acceder al home - redirijo');
-			console.log(route);
-			console.log(state);
-			this.router.navigate(['/login'], { queryParams: { returnUrl: state.url , params: route.queryParams }});
+			this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
 			return false;
 		}
         
