@@ -10,9 +10,9 @@ export class CanActivateHome implements CanActivate {
 				private authenticationService : AuthenticationService) { }
 				
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-
         if (this.authenticationService.isLoggedIn()) {
-			if(state.url=="/home"){
+			let url = state.url.indexOf('/home?')!=-1?state.url.substring(0,state.url.indexOf('?')):state.url ;
+			if( url=="/home" ){
 				var roles = this.authenticationService.decodeToken()['auth'].split(',');
 				if (roles.indexOf('ROLE_ADMIN')!=-1){
 					console.log('admin home');
@@ -30,12 +30,13 @@ export class CanActivateHome implements CanActivate {
 				}
 				return false;
 			}else{
-				console.log('ya no redirecciono solo dejo pasar : '+ state.url)
+				console.log('ya no redirecciono solo dejo pasar : '+ url)
 				return true;
 			}
 			
         }else{
-			console.log('No autenticado intenta acceder al home - redirijo');
+			console.log('No autenticado intenta acceder al home');
+			//console.log(state);
 			this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
 			return false;
 		}

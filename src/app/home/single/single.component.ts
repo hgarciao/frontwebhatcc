@@ -22,6 +22,9 @@ import {
 import {
     StompService
 } from 'ng2-stomp-service';
+import {
+    Observable
+} from 'rxjs/Observable';
 
 
 @Component({
@@ -33,77 +36,96 @@ export class SingleComponent implements OnInit {
 
     registro: any;
     pacienteSesion: any;
+	timersubs: any;
 
     constructor(private activatedRoute: ActivatedRoute, private router: Router,
         private postsService: PostsService, private flashMessagesService: FlashMessagesService, private globalService: GlobalService, private authenticationService: AuthenticationService, private stompService: StompService) {
+        console.log("single");
         let registroId = this.activatedRoute.snapshot.queryParams['id'];
+        this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
         if (registroId) {
-            this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
-            this.globalService.displayLoader();
-            this.postsService.getRegistroById(registroId).subscribe(
-                res => {
-                    this.registro = res.json();
-					//SI NO TRAE NADA????????????
-                    this.globalService.hideLoader();
-                },
-                err => {
-                    this.globalService.hideLoader();
-					if(!this.authenticationService.isLoggedIn()){
-							window.location.reload();
-						}else{
-                    this.flashMessagesService.show('Error! No se pudo cargar el registro', {
-                        classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-                        timeout: 4000, // Default is 3000
-						});}
-                }
-            );
+			
+            this.activatedRoute.queryParams.subscribe(qparams => {
+
+				
+                this.globalService.displayLoader();
+                this.postsService.getRegistroByIdByPaciente(qparams['id'], this.pacienteSesion).subscribe(
+                    res => {
+                        console.log('hsey');
+						this.registro = res.json();
+                        //SI NO TRAE NADA????????????
+                        this.globalService.hideLoader();
+                    },
+                    err => {
+						console.log('hsey');
+                        this.globalService.hideLoader();
+                        if (!this.authenticationService.isLoggedIn()) {
+                            window.location.reload();
+                        } else {
+                            if (err.status == 404) {
+                                this.flashMessagesService.show('Publicacion ya no existe', {
+                                    classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+                                    timeout: 3000, // Default is 3000
+                                });
+								console.log('hoy');
+                                let timer = Observable.timer(3000, 1000);
+                                this.timersubs = timer.subscribe(t => this.router.navigateByUrl("/home/paciente/(contenido:posts)"));
+                            } else {
+                                this.flashMessagesService.show('Error! No se pudo cargar el registro', {
+                                    classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+                                    timeout: 3000, // Default is 3000
+                                });
+                            }
+                        }
+                    }
+                );
+
+
+
+            });
         } else {
+			console.log('hey');
             this.router.navigateByUrl("/home/paciente/(contenido:posts)");
         }
     }
-
+	
+	ngOnDestroy(){
+		this.timersubs.unsubscribe();
+		console.log('single destruido');
+	}
 
 
     ngOnInit() {
-if(this.authenticationService.isLoggedIn()){
-			this.stompService.after('init').then(() => {
-                //console.log("suscribiendo single: " + this.authenticationService.getToken());
-				let token = this.authenticationService.getToken();
+        if (this.authenticationService.isLoggedIn()) {
+            this.stompService.after('init').then(() => {
+                let token = this.authenticationService.getToken();
                 this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
                     Authorization: token
                 });
             });
-		}else{
-			window.location.reload();
-		}
-	
-			
-			this.activatedRoute.queryParams.subscribe(qparams => {
-		this.globalService.displayLoader();
-            this.postsService.getRegistroById(qparams['id']).subscribe(
-                res => {
-                    this.registro = res.json();
-					//SI NO TRAE NADA????????????
-                    this.globalService.hideLoader();
-                },
-                err => {
-                    this.globalService.hideLoader();
-					if(!this.authenticationService.isLoggedIn()){
-							window.location.reload();
-						}else{
-                    this.flashMessagesService.show('Error! No se pudo cargar el registro', {
-                        classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-                        timeout: 4000, // Default is 3000
-						});}
-                }
-            );
-	   });
+        } else {
+            window.location.reload();
+        }
+
+
     }
 
     public procesaNotificacion = (objNotificacion) => {
 
         if (this.registro.id == objNotificacion.id) {
-            this.registro = objNotificacion;
+            console.log(objNotificacion);
+            if ((objNotificacion.opUpdate == 'ocultar' && objNotificacion.paciente != this.pacienteSesion) ||
+                (objNotificacion.opUpdate == 'eliminar')) {
+                this.registro = null;
+                this.flashMessagesService.show('Publicacion ya no existe', {
+                    classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+                    timeout: 3000, // Default is 3000
+                });
+				let timer = Observable.timer(3000, 1000);
+                this.timersubs = timer.subscribe(t => this.router.navigateByUrl("/home/paciente/(contenido:posts)"));
+            } else {
+                this.registro = objNotificacion;
+            }
         }
 
     }

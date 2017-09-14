@@ -32,8 +32,6 @@ export class PostComponent implements OnInit {
 
     @Input() registro: any;
     @Input() pacienteSesion: any;
-	@Output() ocultar:EventEmitter<any> = new EventEmitter();
-	@Output() eliminar:EventEmitter<any> = new EventEmitter();
     tags: Array < string > = [];
 	isCommenting:boolean;
 	mostrarComentarios:boolean;
@@ -122,14 +120,40 @@ export class PostComponent implements OnInit {
             );
 	}
 
-	ocultarPost(id:string){
+	ocultarPost(){
 		event.preventDefault();
-		this.ocultar.emit({id:id});
+		this.postsService.updateRegistroPacienteHide(this.registro).subscribe(
+				res => {
+					//console.log("ocultacion exitosa");
+				},
+				err =>{
+					if(!this.authenticationService.isLoggedIn()){
+							window.location.reload();
+						}else{
+					this.flashMessagesService.show('Error! no se pudo ocultar la publicación', {
+							  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+							  timeout: 4000, // Default is 3000
+						});}
+				}
+			);
 	}
 	
-	eliminarPost(id:string,event:any){
+	eliminarPost(){
 		event.preventDefault();
-		this.eliminar.emit({registro:this.registro})
+		this.postsService.updateRegistroPacienteDelete(this.registro).subscribe(
+				res => {
+					//console.log("eliminacion exitosa");
+				},
+				err =>{
+					if(!this.authenticationService.isLoggedIn()){
+							window.location.reload();
+						}else{
+					this.flashMessagesService.show('Error! no se pudo eliminar la publicación', {
+							  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+							  timeout: 4000, // Default is 3000
+						});}
+				}
+			);
 	}
 	
 	onScrollDown(event:any){

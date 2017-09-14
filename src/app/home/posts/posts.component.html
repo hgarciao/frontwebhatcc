@@ -58,7 +58,7 @@
 			</div>
          </modal-body>
       </modal>
-      <post [registro]="registro" [pacienteSesion]="pacienteSesion" *ngFor='let registro of registros' (ocultar)=ocultarPost($event) (eliminar)=eliminarPost($event)> </post>
+      <post [registro]="registro" [pacienteSesion]="pacienteSesion" *ngFor='let registro of registros'> </post>
 	  <div class="spinner-message" style="width:100%;text-align:center;" *ngIf="isPostsLoading">
 		<md-spinner mode="indeterminate" style="margin:0 auto;"></md-spinner>
 		<br/>

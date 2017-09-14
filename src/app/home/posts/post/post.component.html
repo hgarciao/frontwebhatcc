@@ -1,4 +1,4 @@
- <md-card *ngIf="!registro.oculto">
+ <md-card>
 		 <md-card-header *ngIf="pacienteSesion==registro.paciente">
 			<div style="width:100%;text-align:right">
 				<div class="dropdown">
@@ -6,8 +6,8 @@
 				 	<img src="assets/dots.png" width="15px" height="20px"/>
 				  </button>
 				  <div class="dropdown-menu dropdown-menu-right" style="font-size:12px"  aria-labelledby="dropdownMenuButton">
-				 	<!--a class="dropdown-item" href="#" (click)="ocultarPost(registro.id,$event)">Ocultar</a-->
-				 	<a class="dropdown-item" href="#" (click)="eliminarPost(registro.id,$event)">Eliminar</a>
+				 	<a class="dropdown-item" href="#" (click)="ocultarPost()">Ocultar</a>
+				 	<a class="dropdown-item" href="#" (click)="eliminarPost()">Eliminar</a>
 				  </div>
 				</div>
 			</div>

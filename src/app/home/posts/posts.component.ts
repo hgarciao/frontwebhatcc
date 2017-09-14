@@ -196,7 +196,7 @@ export class PostsComponent implements OnInit {
 	}
 	
 	onScrollDown(){
-	  if(window.pageYOffset+ window.innerHeight>=document.body.offsetHeight){
+	  if(window.pageYOffset+ window.innerHeight>=document.body.offsetHeight && !this.isPostsLoading){
 			this.isPostsLoading=true;
 			var parametros: any = {};
 			parametros.paciente=this.pacienteSesion;
@@ -260,34 +260,12 @@ export class PostsComponent implements OnInit {
 		}
 	}
 	
-	ocultarPost(event:any){
-		console.log("Ocultar "+event.id);
-	}
-	
-	eliminarPost(event:any){
-		//console.log(event.registro);
-		this.postsService.updateRegistroPacienteDelete(event.registro).subscribe(
-				res => {
-					//console.log("eliminacion exitosa");
-				},
-				err =>{
-					this.isPostsLoading=false;
-					if(!this.authenticationService.isLoggedIn()){
-							window.location.reload();
-						}else{
-					this.flashMessagesService.show('Error! no se pudo eliminar la publicación', {
-							  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-							  timeout: 4000, // Default is 3000
-						});}
-				}
-			);
-	}
 	
 	public procesaNotificacion = (objNotificacion) => {
 		
 	 if(objNotificacion.opUpdate=="crear"){
 		 this.registros.unshift(objNotificacion);
-	 }else if(objNotificacion.opUpdate=="eliminar"){
+	 }else if(objNotificacion.opUpdate=="eliminar" || objNotificacion.opUpdate=="ocultar" ){
 		 var index = this.registros.indexOf(this.registros.filter(registro => registro.id === objNotificacion.id)[0]);
 		 if (index > -1) {
 			this.registros.splice(index, 1);

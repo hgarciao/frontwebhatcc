@@ -88,6 +88,13 @@ export class NavbarComponent implements OnInit {
 								console.log("Trae notificaciones");
 								console.log(this.registros);
 								this.valorContNotificaciones();
+								console.log(this.contadorNotificaciones);
+								if(this.contadorNotificaciones>0){
+									this.flashMessagesService.show('Tienes una nueva notificacion', {
+									classes: ['alert', 'alert-success'], // You can pass as many classes as you need
+									timeout: 3000, // Default is 3000
+									});
+								}
 							},
 							err => {
 								if(!this.authenticationService.isLoggedIn()){

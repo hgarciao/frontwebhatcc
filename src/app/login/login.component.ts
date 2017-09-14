@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
 			console.log(this.returnUrl);
 			console.log(this.returnUrlParams);
 		}*/
-		console.log(this.returnUrl);
+		//console.log(this.returnUrl);
 		this.msgAlert = "";
 
     }
@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
 		this.globalService.displayLoader();
         this.authenticationService.login(this.usuario, this.password, this.rememberMe).subscribe(
 				res => { 
+					this.globalService.hideLoader();
 					let body = res.json();
 					let token = body.id_token;
 					let clickdate = body.clickdate;

@@ -20,8 +20,8 @@ export class PostsService {
     return this.authHttp.get(environment.urlmsposts+'/variables');
   }
   
-  getRegistroById(id:string): Observable<Response> {
-    return this.authHttp.get(environment.urlmsposts+'/registros/'+id);
+  getRegistroByIdByPaciente(id:string,paciente:string): Observable<Response> {
+    return this.authHttp.get(environment.urlmsposts+'/registros/'+paciente+'/'+id);
   }
   
   saveRegistroFormulario(post: any) : Observable<Response> {
@@ -45,6 +45,10 @@ export class PostsService {
   
   updateRegistroPacienteDelete(post:any):Observable<Response> {
 	 return this.authHttp.put(environment.urlmsposts+'/registros/2', post);
+  }
+  
+  updateRegistroPacienteHide(post:any):Observable<Response> {
+	 return this.authHttp.put(environment.urlmsposts+'/registros/3', post);
   }
   
   getRegistrosPacientesSuscrito(paciente:string):Observable<Response> {
