@@ -15,27 +15,27 @@ export class CanActivateHome implements CanActivate {
 			if( url=="/home" ){
 				var roles = this.authenticationService.decodeToken()['auth'].split(',');
 				if (roles.indexOf('ROLE_ADMIN')!=-1){
-					console.log('admin home');
+					//console.log('admin home');
 					this.router.navigate(['/home/admin']);
 				}
 				if (roles.indexOf('ROLE_PACIENTE')!=-1){
-					console.log('admin paciente');		
-					console.log(route);
+					//console.log('admin paciente');		
+					//console.log(route);
 					this.router.navigate(['/home/paciente']);
 					//this.router.navigateByUrl("/home/paciente(contenido:posts)");
 				}
 				if (roles.indexOf('ROLE_TERAPEUTA')!=-1){
-					console.log('admin terapeuta');			
+					//console.log('admin terapeuta');			
 					this.router.navigate(['/home/terapeuta']);
 				}
 				return false;
 			}else{
-				console.log('ya no redirecciono solo dejo pasar : '+ url)
+				//console.log('ya no redirecciono solo dejo pasar : '+ url)
 				return true;
 			}
 			
         }else{
-			console.log('No autenticado intenta acceder al home');
+			//console.log('No autenticado intenta acceder al home');
 			//console.log(state);
 			this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
 			return false;

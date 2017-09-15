@@ -20,19 +20,25 @@ export class PostsService {
     return this.authHttp.get(environment.urlmsposts+'/variables');
   }
   
-  getRegistroByIdByPaciente(id:string,paciente:string): Observable<Response> {
-    return this.authHttp.get(environment.urlmsposts+'/registros/'+paciente+'/'+id);
-  }
+  
   
   saveRegistroFormulario(post: any) : Observable<Response> {
 	 return this.authHttp.post(environment.urlmsposts+'/registros', post);
   }
   
-  //Este metodo debe tener la logica de cargar otros registros de otras personas according to logica
-  //Al inicio solo jalara los mas recientes de todos
+  //Trae el registro de single
+  getRegistroByIdByPaciente(id:string,paciente:string): Observable<Response> {
+    return this.authHttp.get(environment.urlmsposts+'/registros/'+paciente+'/'+id);
+  }	
+
+  //Trae registros del muro  
   getRegistrosWall(parametros:any): Observable<Response> {
-	  //return this.authHttp.get(environment.urlmsposts+'/registros/pacientes/'+paciente+"/"+ page +"/"+pagesize);
 	  return this.authHttp.post(environment.urlmsposts+'/registros/pacientes/wall',parametros);	    
+  }
+  
+  //Trae notificaciones
+  getRegistrosPacientesSuscrito(paciente:string):Observable<Response> {
+	  return this.authHttp.get(environment.urlmsposts+'/registros/pacientes/'+paciente);	  
   }
   
   updateRegistroPacienteAddComentario(post:any):Observable<Response> {
@@ -51,8 +57,10 @@ export class PostsService {
 	 return this.authHttp.put(environment.urlmsposts+'/registros/3', post);
   }
   
-  getRegistrosPacientesSuscrito(paciente:string):Observable<Response> {
-	  return this.authHttp.get(environment.urlmsposts+'/registros/pacientes/'+paciente);	  
+  updateRegistroPacienteUnhide(post:any):Observable<Response> {
+	 return this.authHttp.put(environment.urlmsposts+'/registros/4', post);
   }
+  
+  
 
 }

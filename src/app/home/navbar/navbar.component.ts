@@ -15,7 +15,7 @@ import {
 import {
     FlashMessagesService
 } from 'ngx-flash-messages';
-
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -31,15 +31,15 @@ export class NavbarComponent implements OnInit {
 	subscription:any;
 
 
-    constructor(private authenticationService: AuthenticationService, private stompService: StompService, private postsService: PostsService, private flashMessagesService: FlashMessagesService) {
+    constructor(private authenticationService: AuthenticationService, private stompService: StompService, private postsService: PostsService, private flashMessagesService: FlashMessagesService
+	,private router: Router) {
         this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
-
-
+		
         //TRAE NOTIFICACIONES LA PRIMERA VEZ
         this.postsService.getRegistrosPacientesSuscrito(this.pacienteSesion).subscribe(
             res => {
                 this.registros = res.json();
-                console.log(this.registros);
+                //console.log(this.registros);
 				this.valorContNotificaciones();
             },
             err => {
@@ -48,7 +48,7 @@ export class NavbarComponent implements OnInit {
 						}else{
                 this.flashMessagesService.show('Error! No se pudieron cargar las notificaciones', {
                     classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-                    timeout: 4000, // Default is 3000
+                    timeout: 2000, // Default is 3000
 						});}
             }
         );
@@ -57,8 +57,8 @@ export class NavbarComponent implements OnInit {
     ngOnInit() {
 		if(this.authenticationService.isLoggedIn()){
 			this.stompService.after('init').then(() => {
-            console.log("suscribiendo navbar");
-            this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
+            //console.log("suscribiendo navbar");
+            this.subscription= this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
                 Authorization: this.authenticationService.getToken()
             });
         });
@@ -92,7 +92,7 @@ export class NavbarComponent implements OnInit {
 								if(this.contadorNotificaciones>0){
 									this.flashMessagesService.show('Tienes una nueva notificacion', {
 									classes: ['alert', 'alert-success'], // You can pass as many classes as you need
-									timeout: 3000, // Default is 3000
+									timeout: 2000, // Default is 3000
 									});
 								}
 							},
@@ -102,7 +102,7 @@ export class NavbarComponent implements OnInit {
 						}else{
 								this.flashMessagesService.show('Error! No se pudieron cargar las notificaciones', {
 									classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-									timeout: 4000, // Default is 3000
+									timeout: 2000, // Default is 3000
 						});}
 							}
 						);
@@ -119,7 +119,7 @@ export class NavbarComponent implements OnInit {
         if (this.contadorNotificaciones>0) {
             this.authenticationService.updateClickDate(this.pacienteSesion).subscribe(
                 res => {
-                    console.log("actualiza click date");
+                    //console.log("actualiza click date");
                     localStorage.setItem('clickdate', res.json());
 					this.valorContNotificaciones();
                 },
@@ -130,7 +130,7 @@ export class NavbarComponent implements OnInit {
 					else{
 						this.flashMessagesService.show('Error durante actualizacion de notificaciones', {
                         classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-                        timeout: 4000, // Default is 3000
+                        timeout: 2000, // Default is 3000
 						});
 					}
                    
@@ -140,16 +140,22 @@ export class NavbarComponent implements OnInit {
     }
 
 	valorContNotificaciones(){
-		/*console.log(new Date(this.registros[0].fechahoraUpdate));
-		console.log(new Date(this.registros[0].fechahoraUpdate)>new Date(localStorage.getItem('clickdate')));*/
 		this.contadorNotificaciones = this.registros.filter(registro => 
 		new Date(this.registros[0].fechahoraUpdate)>new Date(localStorage.getItem('clickdate')) && registro.opUpdate=="crear.comentario" && registro.pacienteUpdate!=this.pacienteSesion).length;
-		console.log(this.contadorNotificaciones);
+		//console.log(this.contadorNotificaciones);
 	}
 
 	ngOnDestroy (){
 		console.log('destruyendo navbar');
 		this.subscription.unsubscribe();
 	}
+	
+	redirectHome(event:any){
+		event.preventDefault();
+		//console.log('hey')
+		this.router.navigateByUrl("/home/paciente/(contenido:posts)");
+	}
+	
+		
 	
 }

@@ -20,6 +20,7 @@ import { FlashMessagesService } from 'ngx-flash-messages';
 import {
     AuthenticationService
 } from '../../../_services/authentication.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -35,8 +36,10 @@ export class PostComponent implements OnInit {
     tags: Array < string > = [];
 	isCommenting:boolean;
 	mostrarComentarios:boolean;
+	color:string = 'black';
 
-    constructor(private postsService: PostsService,private flashMessagesService: FlashMessagesService,private _el: ElementRef, private authenticationService: AuthenticationService) {
+    constructor(private postsService: PostsService,private flashMessagesService: FlashMessagesService
+	,private _el: ElementRef, private authenticationService: AuthenticationService,private router: Router) {
 	}
 	
 	
@@ -83,7 +86,7 @@ export class PostComponent implements OnInit {
 						}else{
 							this.flashMessagesService.show('Error realizando comentario', {
 						  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-						  timeout: 3000, // Default is 3000
+						  timeout: 2000, // Default is 3000
 						});
 						}
 						
@@ -113,14 +116,32 @@ export class PostComponent implements OnInit {
 						}else{
 							this.flashMessagesService.show('Error eliminando comentario', {
 							  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-							  timeout: 3000, // Default is 3000
+							  timeout: 2000, // Default is 3000
 							});
 						}
 					}
             );
 	}
-
-	ocultarPost(){
+		
+	mostrarPost(event:any){
+		event.preventDefault();
+		this.postsService.updateRegistroPacienteUnhide(this.registro).subscribe(
+				res => {
+					//console.log("ocultacion exitosa");
+				},
+				err =>{
+					if(!this.authenticationService.isLoggedIn()){
+							window.location.reload();
+						}else{
+					this.flashMessagesService.show('Error! no se pudo mostrar de nuevo la publicación', {
+							  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+							  timeout: 2000, // Default is 3000
+						});}
+				}
+			);
+	}	
+		
+	ocultarPost(event:any){
 		event.preventDefault();
 		this.postsService.updateRegistroPacienteHide(this.registro).subscribe(
 				res => {
@@ -132,13 +153,13 @@ export class PostComponent implements OnInit {
 						}else{
 					this.flashMessagesService.show('Error! no se pudo ocultar la publicación', {
 							  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-							  timeout: 4000, // Default is 3000
+							  timeout: 2000, // Default is 3000
 						});}
 				}
 			);
 	}
 	
-	eliminarPost(){
+	eliminarPost(event:any){
 		event.preventDefault();
 		this.postsService.updateRegistroPacienteDelete(this.registro).subscribe(
 				res => {
@@ -150,7 +171,7 @@ export class PostComponent implements OnInit {
 						}else{
 					this.flashMessagesService.show('Error! no se pudo eliminar la publicación', {
 							  classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-							  timeout: 4000, // Default is 3000
+							  timeout: 2000, // Default is 3000
 						});}
 				}
 			);
@@ -177,5 +198,12 @@ export class PostComponent implements OnInit {
 		
 	}
 	
+	filtrar(event:any){
+		this.router.navigateByUrl("/home/paciente/(contenido:posts)?paciente="+this.registro.paciente);
+	}
+	
+	changeStyle($event){
+	  this.color = $event.type == 'mouseover' ? 'blue' : 'black';
+	}
 
 }

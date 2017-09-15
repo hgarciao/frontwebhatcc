@@ -9,10 +9,10 @@ export class CanActivateByRole implements CanActivate {
 				
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 		if (this.authenticationService.isLoggedIn()) {
-			console.log('byrole')
+			//console.log('byrole')
 			var roles = this.authenticationService.decodeToken()['auth'].split(',');
 			if (roles.indexOf(route.data['role'])==-1){
-				console.log('false')
+				//console.log('false')
 				this.router.navigate(['/home']);
 				return false
 			}else{

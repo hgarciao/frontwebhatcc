@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
 		
 		  this.stompService.startConnect().then(() => {
 			this.stompService.done('init');
-			console.log('connected');
+			//console.log('connected');
 		  });
   }
   

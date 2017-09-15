@@ -37,10 +37,10 @@ export class SingleComponent implements OnInit {
     registro: any;
     pacienteSesion: any;
 	timersubs: any;
+	subscription:any;
 
     constructor(private activatedRoute: ActivatedRoute, private router: Router,
         private postsService: PostsService, private flashMessagesService: FlashMessagesService, private globalService: GlobalService, private authenticationService: AuthenticationService, private stompService: StompService) {
-        console.log("single");
         let registroId = this.activatedRoute.snapshot.queryParams['id'];
         this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
         if (registroId) {
@@ -51,9 +51,7 @@ export class SingleComponent implements OnInit {
                 this.globalService.displayLoader();
                 this.postsService.getRegistroByIdByPaciente(qparams['id'], this.pacienteSesion).subscribe(
                     res => {
-                        console.log('hsey');
 						this.registro = res.json();
-                        //SI NO TRAE NADA????????????
                         this.globalService.hideLoader();
                     },
                     err => {
@@ -65,15 +63,15 @@ export class SingleComponent implements OnInit {
                             if (err.status == 404) {
                                 this.flashMessagesService.show('Publicacion ya no existe', {
                                     classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-                                    timeout: 3000, // Default is 3000
+                                    timeout: 2000, // Default is 3000
                                 });
 								console.log('hoy');
-                                let timer = Observable.timer(3000, 1000);
+                                let timer = Observable.timer(2000, 1000);
                                 this.timersubs = timer.subscribe(t => this.router.navigateByUrl("/home/paciente/(contenido:posts)"));
                             } else {
                                 this.flashMessagesService.show('Error! No se pudo cargar el registro', {
                                     classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-                                    timeout: 3000, // Default is 3000
+                                    timeout: 2000, // Default is 3000
                                 });
                             }
                         }
@@ -90,8 +88,11 @@ export class SingleComponent implements OnInit {
     }
 	
 	ngOnDestroy(){
-		this.timersubs.unsubscribe();
-		console.log('single destruido');
+		//console.log('Destruyendo single');
+		if(this.timersubs){
+			this.timersubs.unsubscribe();
+		}
+		this.subscription.unsubscribe();
 	}
 
 
@@ -99,7 +100,7 @@ export class SingleComponent implements OnInit {
         if (this.authenticationService.isLoggedIn()) {
             this.stompService.after('init').then(() => {
                 let token = this.authenticationService.getToken();
-                this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
+                this.subscription = this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
                     Authorization: token
                 });
             });
@@ -113,15 +114,14 @@ export class SingleComponent implements OnInit {
     public procesaNotificacion = (objNotificacion) => {
 
         if (this.registro.id == objNotificacion.id) {
-            console.log(objNotificacion);
             if ((objNotificacion.opUpdate == 'ocultar' && objNotificacion.paciente != this.pacienteSesion) ||
                 (objNotificacion.opUpdate == 'eliminar')) {
                 this.registro = null;
                 this.flashMessagesService.show('Publicacion ya no existe', {
                     classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-                    timeout: 3000, // Default is 3000
+                    timeout: 2000, // Default is 3000
                 });
-				let timer = Observable.timer(3000, 1000);
+				let timer = Observable.timer(2000, 1000);
                 this.timersubs = timer.subscribe(t => this.router.navigateByUrl("/home/paciente/(contenido:posts)"));
             } else {
                 this.registro = objNotificacion;

@@ -6,8 +6,9 @@
 				 	<img src="assets/dots.png" width="15px" height="20px"/>
 				  </button>
 				  <div class="dropdown-menu dropdown-menu-right" style="font-size:12px"  aria-labelledby="dropdownMenuButton">
-				 	<a class="dropdown-item" href="#" (click)="ocultarPost()">Ocultar</a>
-				 	<a class="dropdown-item" href="#" (click)="eliminarPost()">Eliminar</a>
+				 	<a class="dropdown-item" href="#" (click)="mostrarPost($event)" *ngIf="registro.oculto" >Mostrar</a>
+					<a class="dropdown-item" href="#" (click)="ocultarPost($event)" *ngIf="!registro.oculto" >Ocultar</a>
+				 	<a class="dropdown-item" href="#" (click)="eliminarPost($event)">Eliminar</a>
 				  </div>
 				</div>
 			</div>
@@ -24,9 +25,12 @@
                         <td>
 						   <table>
 								<tr>
-									<td valign="middle" align="left" style="margin-left:15px"><span style="font-size:20px">{{registro.paciente | uppercase}}</span>
+									<td valign="middle" align="left" style="margin-left:15px"><span style="font-size:20px;cursor: pointer;" [style.color]="color" 
+									(click)="filtrar($event)" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"> {{registro.paciente | uppercase}}</span>
 									<br/>
 									<span style="color:#BDBDBD">{{registro.fechahora |  date:'dd/MM/yyyy HH:mm:ss '}}</span>
+									<br *ngIf="registro.oculto" />
+									<span style="color:#BDBDBD" *ngIf="registro.oculto">( Publicacion oculta )</span>
 									</td>
 									<td valign="middle"  align="left" style="color:#BDBDBD;padding:15px;margin-left:15px">"{{registro.pensamiento}}"</td>
 								</tr>
