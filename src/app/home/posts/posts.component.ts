@@ -239,10 +239,12 @@ export class PostsComponent implements OnInit {
     }
 
     onScrollDown() {
-        if (window.pageYOffset + window.innerHeight >= document.body.offsetHeight && !this.isPostsLoading) {
+        /*if (window.pageYOffset + window.innerHeight >= document.body.offsetHeight && !this.isPostsLoading) {
             this.getOlderPosts();
-        }
+        }*/
     }
+	
+	
 
 	
 	//Modificar
