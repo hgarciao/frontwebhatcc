@@ -72,8 +72,11 @@ export class PostsComponent implements OnInit {
     constructor(private postsService: PostsService, private authenticationService: AuthenticationService, private globalService: GlobalService, private flashMessagesService: FlashMessagesService, private stompService: StompService, private activatedRoute: ActivatedRoute, private router: Router) {
         this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
         this.globalService.displayLoader();
-
+		
+		
         /**/
+		
+		
 		
         this.activatedRoute.queryParams.subscribe(qparams => {
 			this.pacienteParam = this.activatedRoute.snapshot.queryParams['paciente'];
@@ -98,7 +101,7 @@ export class PostsComponent implements OnInit {
                                 timeout: 2000, // Default is 3000
                             });
 							let timer = Observable.timer(2000, 1000);
-                            this.timersubs = timer.subscribe(t => this.router.navigateByUrl("/home/paciente/(contenido:posts)"));
+                            this.timersubs = timer.subscribe(t => { this.timersubs.unsubscribe();this.router.navigateByUrl("/home/paciente/(contenido:posts)")});
 						}
                     },
                     err => {
@@ -334,6 +337,7 @@ export class PostsComponent implements OnInit {
     }
 
     ngOnDestroy() {
+		console.log('destroy posts');
         if(this.timersubs){
 			this.timersubs.unsubscribe();
 		}

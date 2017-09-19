@@ -26,7 +26,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { PostComponent } from './home/posts/post/post.component';
 import { TagInputModule } from 'ngx-chips';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FlashMessagesModule } from 'ngx-flash-messages';
 import { StompService } from 'ng2-stomp-service';
 import { NotificacionComponent } from './home/navbar/notificacion/notificacion.component';
@@ -71,7 +70,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 	FormsModule,
 	TagInputModule,
 	Ng2Bs3ModalModule,
-	InfiniteScrollModule,
 	FlashMessagesModule
 	],
   providers: [AuthenticationService,PostsService ,{provide: AuthHttp,useFactory: authHttpServiceFactory,deps: [Http, RequestOptions]},CanActivateLogin,CanActivateHome,CanActivateByRole,LoaderService,GlobalService,StompService],

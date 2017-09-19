@@ -15,7 +15,11 @@ import {
 import {
     FlashMessagesService
 } from 'ngx-flash-messages';
-import {Router} from '@angular/router';
+import {
+    Router,
+    ActivatedRoute,
+    Params
+} from '@angular/router';
 
 
 @Component({
@@ -29,10 +33,11 @@ export class NavbarComponent implements OnInit {
     registros: Array < any > = [];
 	contadorNotificaciones:number;
 	subscription:any;
+	inputBuscar:string='';
 
 
     constructor(private authenticationService: AuthenticationService, private stompService: StompService, private postsService: PostsService, private flashMessagesService: FlashMessagesService
-	,private router: Router) {
+	,private router: Router,private activatedRoute: ActivatedRoute) {
         this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
 		
         //TRAE NOTIFICACIONES LA PRIMERA VEZ
@@ -52,6 +57,15 @@ export class NavbarComponent implements OnInit {
 						});}
             }
         );
+		
+		this.activatedRoute.queryParams.subscribe(qparams => {
+			let pacienteParam = this.activatedRoute.snapshot.queryParams['paciente'];
+			if(pacienteParam){
+				console.log('hace filtro');
+				this.inputBuscar=pacienteParam
+			}	
+			
+        });
     }
 
     ngOnInit() {
@@ -152,8 +166,15 @@ export class NavbarComponent implements OnInit {
 	
 	redirectHome(event:any){
 		event.preventDefault();
-		//console.log('hey')
 		this.router.navigateByUrl("/home/paciente/(contenido:posts)");
+	}
+	
+	keyUpFunction(event) {
+	  if(event.keyCode == 13) {
+		this.router.navigateByUrl("/home/paciente/(contenido:posts)?paciente="+this.inputBuscar);
+	  }else if(this.inputBuscar==''){
+		this.router.navigateByUrl("/home/paciente/(contenido:posts)");
+	  }
 	}
 	
 		

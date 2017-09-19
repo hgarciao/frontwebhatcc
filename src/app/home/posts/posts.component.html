@@ -1,8 +1,4 @@
-<div class="row" style="padding-top: 20px;" infiniteScroll
-		    [infiniteScrollDistance]="2"
-		    [infiniteScrollUpDistance]="2"
-		    [infiniteScrollThrottle]="500"
-		    (scrolled)="onScrollDown()">
+<div class="row" style="padding-top: 20px;">
    <div class="col-md-3" style="margin:auto">
    </div>
    <div class="col-md-6 panel panel-default" style="margin:auto;background-color:white">
@@ -59,6 +55,12 @@
          </modal-body>
       </modal>
       <post [registro]="registro" [pacienteSesion]="pacienteSesion" *ngFor='let registro of registros'> </post>
+	  <table width="100%" border="1px" *ngIf="!isPostsLoading" (click)="getOlderPosts()">
+	  <tr><td style="background-color:#94b8b8;height:40px;cursor:pointer;vertical-align: middle;" align="center">
+	  <i class="fa fa fa-refresh fa-1x"></i>&nbsp;<strong>CARGAR MAS {{pacienteParam?' (Busqueda:  ' + pacienteParam+ ')':''}}</strong>
+	  </td></tr>
+	  </table>
+	  <br/>
 	  <div class="spinner-message" style="width:100%;text-align:center;" *ngIf="isPostsLoading">
 		<md-spinner mode="indeterminate" style="margin:0 auto;"></md-spinner>
 		<br/>
