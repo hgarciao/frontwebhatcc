@@ -40,9 +40,9 @@
 						<input type="submit" class="btn btn-info" value="Publicar" >
 						<input type="button" class="btn btn-info" value="Cancelar" (click)="modal.dismiss()">
 					</td>
-					<td width="50%" align="right">
+					<!--td width="50%" align="right">
 						<label class="btn btn-secondary"><input type="checkbox" autocomplete="off" name="oculto" ngModel>&nbsp;Ocultar</label>
-					</td>
+					</td-->
 				</tr>
 			   </table>
             </div>
@@ -55,9 +55,9 @@
          </modal-body>
       </modal>
       <post [registro]="registro" [pacienteSesion]="pacienteSesion" *ngFor='let registro of registros'> </post>
-	  <table width="100%" border="1px" *ngIf="!isPostsLoading" (click)="getOlderPosts()">
-	  <tr><td style="background-color:#94b8b8;height:40px;cursor:pointer;vertical-align: middle;" align="center">
-	  <i class="fa fa fa-refresh fa-1x"></i>&nbsp;<strong>CARGAR MAS {{pacienteParam?' (Busqueda:  ' + pacienteParam+ ')':''}}</strong>
+	  <table width="100%" border="1px" *ngIf="!isPostsLoading && registros.length>0" (click)="getOlderPosts()">
+	  <tr><td style="background-color:#848484;height:40px;cursor:pointer;vertical-align: middle;" align="center">
+	  <i class="fa fa fa-refresh fa-1x"></i>&nbsp;<strong style="color:white">CARGAR MAS {{pacienteParam?' (Busqueda:  ' + pacienteParam+ ')':''}}</strong>
 	  </td></tr>
 	  </table>
 	  <br/>

@@ -1,7 +1,7 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { StompService } from 'ng2-stomp-service';
 import { AuthenticationService} from '../_services/authentication.service';
-
+import { environment } from '../../environments/environment';
 
 
 
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 	   this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
 	  //configuration 
 		  this.stompService.configure({
-			host:'http://localhost:8081/ws',
+			host: environment.urlpostsws,
 			debug:false,
 			queue:{'init':false},
 			headers: {
@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
 			this.stompService.done('init');
 			//console.log('connected');
 		  });
+		
   }
   
    ngOnDestroy (){

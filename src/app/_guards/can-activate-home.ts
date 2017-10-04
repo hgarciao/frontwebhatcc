@@ -11,6 +11,7 @@ export class CanActivateHome implements CanActivate {
 				
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (this.authenticationService.isLoggedIn()) {
+		  if (localStorage.getItem('firsttime')!=0) {
 			let url = state.url.indexOf('/home?')!=-1?state.url.substring(0,state.url.indexOf('?')):state.url ;
 			if( url=="/home" ){
 				var roles = this.authenticationService.decodeToken()['auth'].split(',');
@@ -33,6 +34,12 @@ export class CanActivateHome implements CanActivate {
 				//console.log('ya no redirecciono solo dejo pasar : '+ url)
 				return true;
 			}
+		  }else{
+			  //Redirecciona a la pagina de firsttime
+			  return false;
+		  }
+			
+			
 			
         }else{
 			//console.log('No autenticado intenta acceder al home');

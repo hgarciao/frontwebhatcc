@@ -71,7 +71,7 @@ export class PostsComponent implements OnInit {
 
     constructor(private postsService: PostsService, private authenticationService: AuthenticationService, private globalService: GlobalService, private flashMessagesService: FlashMessagesService, private stompService: StompService, private activatedRoute: ActivatedRoute, private router: Router) {
         this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
-        this.globalService.displayLoader();
+        
 		
 		
         /**/
@@ -79,6 +79,8 @@ export class PostsComponent implements OnInit {
 		
 		
         this.activatedRoute.queryParams.subscribe(qparams => {
+			
+			this.globalService.displayLoader();
 			this.pacienteParam = this.activatedRoute.snapshot.queryParams['paciente'];
 			
 			var parametros: any = {};
@@ -88,7 +90,7 @@ export class PostsComponent implements OnInit {
 			if (this.pacienteParam) {
                 parametros.pacientefiltro=this.pacienteParam;  
             }
-			console.log(parametros);
+			//console.log(parametros);
 
 			// parametros.fechahora; No se setea por ser primera llamada PRIMERA LLAMADA!
             this.postsService.getRegistrosWall(parametros).subscribe(

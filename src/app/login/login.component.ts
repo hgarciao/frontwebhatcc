@@ -63,18 +63,16 @@ export class LoginComponent implements OnInit {
 					let body = res.json();
 					let token = body.id_token;
 					let clickdate = body.clickdate;
+					let firsttime = body.firsttime;
 					if (token) {
 						localStorage.setItem('token',token );
 						if(!clickdate){
 							clickdate = new Date('1968-11-16T00:00:00');
 						}
 						localStorage.setItem('clickdate',clickdate);
+						localStorage.setItem('firsttime',firsttime);
+						//console.log(firsttime);
 						this.msgAlert = "";
-						/*if(this.returnUrlParams){
-							this.router.navigate([this.returnUrl], { queryParams: this.returnUrlParams});
-						}else{
-							this.router.navigate([this.returnUrl]);
-						}*/
 						this.router.navigateByUrl(this.returnUrl);
 					} else {
 						this.msgAlert = "Contraseña y/o Usuario incorrectos";
