@@ -12,11 +12,16 @@ export class CanActivateNews implements CanActivate {
 				
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 	  
-		if (this.authenticationService.isLoggedIn()
-			&& localStorage.getItem('firsttime')=== '0') {
-		 
-			return true;
+		if (this.authenticationService.isLoggedIn())
+		{
 			
+			if(localStorage.getItem('firsttime')=== '0') {
+				return true;
+			}else{
+				this.router.navigate(['/home']);
+				//return false;
+			}
+		
         }else{
 			this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
 			return false;

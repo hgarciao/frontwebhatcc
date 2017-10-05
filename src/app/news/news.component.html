@@ -1,0 +1,70 @@
+<ngx-flash-messages class="fixed-top" style="text-align:center"></ngx-flash-messages>
+<div class="bs-docs-section clearfix" style="margin-top:20px">
+   <div class="container-fluid">
+      <div class="row" style="padding-top: 20px;">
+         <div class="col-md-2" style="margin:auto">
+         </div>
+         <div class="col-md-8 panel panel-default" style="margin:auto;background-color:white">
+            <div style="text-align:center;font:Georgia;font-size:24px;">
+				Antes de comenzar ...
+			</div>
+			<hr/>
+			<br/>
+			<form novalidate #form="ngForm">
+			<md-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true" >
+               <md-expansion-panel-header>
+                  <md-panel-title>
+				     <strong>Términos y condiciones de uso</strong>
+                  </md-panel-title>
+               </md-expansion-panel-header>
+			   <div style="width:100%;text-align:center;height:400px;overflow-y: scroll;">
+					Aqui va el texto de los terminos  formateado en HTML
+			   </div>
+			   <br/>
+			   <br/>
+			   <div style="width:100%;text-align:center">
+			   <md-slide-toggle
+                  class="example-margin"
+                  color="primary"
+				  #terminos
+                  >
+                  He leído y acepto los términos.
+               </md-slide-toggle>
+			   </div>
+            </md-expansion-panel>
+			<md-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
+               <md-expansion-panel-header>
+                  <md-panel-title>
+				    <strong>Normas de convivencia</strong>                   
+                  </md-panel-title>
+               </md-expansion-panel-header>
+			   <div style="width:100%;text-align:center;height:400px;overflow-y: scroll;">
+					Aqui va el texto de los terminos  formateado en HTML
+			   </div>
+			   <br/>
+			   <br/>
+			   <div style="width:100%;text-align:center">
+			   <md-slide-toggle
+                  class="example-margin"
+                  color="primary"
+				  #normas
+                  >
+                   He leído y acepto las normas.
+               </md-slide-toggle>
+			   </div>
+            </md-expansion-panel>
+			<br/>
+			<div style="text-align:center;font:Georgia;font-size:24px;">
+				<input type="submit" class="btn btn-info" value="Publicar" [disabled]="!terminos.checked || !normas.checked" (click)="aceptar()">
+				&nbsp;
+				&nbsp;
+				&nbsp;
+				<input type="submit" class="btn btn-info" value="Cancelar" (click)="cancelar()" >
+			</div>
+			</form>
+         </div>
+         <div class="col-md-2" style="margin:auto">
+         </div>
+      </div>
+   </div>
+</div>

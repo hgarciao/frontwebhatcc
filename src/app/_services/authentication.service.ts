@@ -32,6 +32,9 @@ export class AuthenticationService {
 		return this.authHttp.put(environment.urlgtw+'/users/clickdate/'+user,'');
 	}
 	
+	updateFirstTime(user : string) : Observable<Response> {
+		return this.authHttp.put(environment.urlgtw+'/users/firsttime/'+user,'');
+	}
 	
 	decodeToken(): any{
 		return this.jwtHelper.decodeToken(localStorage.getItem('token'));
