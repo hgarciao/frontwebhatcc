@@ -5,16 +5,19 @@
       <modal #modal (onDismiss)="dismissPostModal()" (onOpen)="cargaFormulario()">
          <modal-body>
             <form novalidate class="form-signin" #form="ngForm" (ngSubmit)="guardaRegistroPost(form)" *ngIf="!isFormLoading && isFormLoaded">
-            <br/>
-            <div class="row panel-body">
+            <!--
+			Por el momento no se posteará POSTS ESCRITOS
+			div class="row panel-body">
                <div class="col-md-12">
                   <md-input-container style="width:100%">
                      <textarea mdInput placeholder="¿Cuéntanos qué pasó?" fz-elastic rows="5" name="post" ngModel></textarea>
                   </md-input-container>
                </div>
-            </div>
+            </div-->
+			<label for="pensamiento" style="width:100%">¿Que estaba pasando?</label>
+			<hr/>
             <div class="flex-container wrap" style="align-items: center;justify-content: center;" >
-               <div class="flex-item" *ngFor='let variable of variables'>
+               <div class="flex-item" *ngFor='let variable of variablesFilterByType("antes")'>
                   <label for="variable.id">{{variable.nombre}}*</label>
                   <ng-select id={{variable.id}} class="flex-item" placeholder="Seleccione" [options]="variable.opciones" [allowClear]="true" noFilter="true"
 				  notFoundMsg="Sin resultados" name={{variable.nombreRegistro}} ngModel required [ngClass]="{'alert-error': variable.invalid && submitted}" (deselected)="onDeselectedVariable(variable.id)"
@@ -23,12 +26,29 @@
                </div>
             </div>
             <br/>
-            <div class="row panel-body">
-               <div class="col-md-12">
-                  <label for="pensamiento" style="width:100%">¿Que piensas o pensaste acerca de esto? *</label>
-                  <textarea id="pensamiento" style="width:100%" fz-elastic ngModel name="pensamiento" required #pensamiento="ngModel" alert-error [ngClass]="{'alert-error': pensamiento.errors && submitted}"></textarea>
+			<label for="pensamiento" style="width:100%">¿Que ocurrió después?</label>
+			<hr/>
+            <div class="flex-container wrap" style="align-items: center;justify-content: center;" >
+               <div class="flex-item" *ngFor='let variable of variablesFilterByType("despues")'>
+                  <label for="variable.id">{{variable.nombre}}*</label>
+                  <ng-select id={{variable.id}} class="flex-item" placeholder="Seleccione" [options]="variable.opciones" [allowClear]="true" noFilter="true"
+				  notFoundMsg="Sin resultados" name={{variable.nombreRegistro}} ngModel required [ngClass]="{'alert-error': variable.invalid && submitted}" (deselected)="onDeselectedVariable(variable.id)"
+				  (selected)="onSelectedVariable(variable.id)">
+				  </ng-select >
                </div>
             </div>
+			<table style="width:100%">
+			   <tr>
+					<td>
+						<label for="pensamiento" style="width:100%;font-size:14px">¿Que pensaste en ese momento? *</label>
+					</td>
+                  <td>
+						<textarea id="pensamiento" style="width:100%" fz-elastic ngModel name="pensamiento" required #pensamiento="ngModel" alert-error [ngClass]="{'alert-error': pensamiento.errors && submitted}"></textarea>
+					</td>
+               </tr>
+			</table>
+			<br/>
+            
             <div style="color:red" 
                *ngIf="!form.valid && submitted">
                Completar los campos obligatorios (*)
@@ -40,9 +60,6 @@
 						<input type="submit" class="btn btn-info" value="Publicar" >
 						<input type="button" class="btn btn-info" value="Cancelar" (click)="modal.dismiss()">
 					</td>
-					<!--td width="50%" align="right">
-						<label class="btn btn-secondary"><input type="checkbox" autocomplete="off" name="oculto" ngModel>&nbsp;Ocultar</label>
-					</td-->
 				</tr>
 			   </table>
             </div>

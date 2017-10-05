@@ -346,5 +346,9 @@ export class PostsComponent implements OnInit {
         this.subscription.unsubscribe();
 		
     }
+	
+	variablesFilterByType(type:string) {
+		return this.variables.filter(variable => variable.tipo === type);
+    }
 
 }
