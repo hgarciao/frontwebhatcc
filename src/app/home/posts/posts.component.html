@@ -14,19 +14,30 @@
                   </md-input-container>
                </div>
             </div-->
-			<label for="pensamiento" style="width:100%">¿Que estaba pasando?</label>
+			<label for="pensamiento" style="width:100%">¿Que pasó? Describe como comenzó : </label>
 			<hr/>
             <div class="flex-container wrap" style="align-items: center;justify-content: center;" >
                <div class="flex-item" *ngFor='let variable of variablesFilterByType("antes")'>
-                  <label for="variable.id">{{variable.nombre}}*</label>
+                  <label for="variable.id">{{variable.nombre}}</label>
                   <ng-select id={{variable.id}} class="flex-item" placeholder="Seleccione" [options]="variable.opciones" [allowClear]="true" noFilter="true"
 				  notFoundMsg="Sin resultados" name={{variable.nombreRegistro}} ngModel required [ngClass]="{'alert-error': variable.invalid && submitted}" (deselected)="onDeselectedVariable(variable.id)"
 				  (selected)="onSelectedVariable(variable.id)">
 				  </ng-select >
                </div>
+			   <table style="width:90%">
+			   <tr>
+				    <td align="right" valign="middle" style="white-space: nowrap;width:1%;">
+						<label for="bpensamiento" style="width:100%;font-size:14px">¿Estabas pensando sobre algo?&nbsp;&nbsp;</label>
+					</td>
+                   <td valign="middle"> 
+						<textarea id="bpensamiento"  rows="2"
+						style="width:100%;font-size:11px;margin-top:5px" fz-elastic ngModel name="bpensamiento" #bpensamiento="ngModel" alert-error [ngClass]="{'alert-error': bpensamiento.errors && submitted}"></textarea>
+				   </td>
+               </tr>
+			 </table>
             </div>
             <br/>
-			<label for="pensamiento" style="width:100%">¿Que ocurrió después?</label>
+			<label for="pensamiento" style="width:100%">Describe que pasó&nbsp;<strong>después</strong>: </label>
 			<hr/>
             <div class="flex-container wrap" style="align-items: center;justify-content: center;" >
                <div class="flex-item" *ngFor='let variable of variablesFilterByType("despues")'>
@@ -36,29 +47,32 @@
 				  (selected)="onSelectedVariable(variable.id)">
 				  </ng-select >
                </div>
-            </div>
-			<table style="width:100%">
+			   <table style="width:90%">
 			   <tr>
-					<td>
-						<label for="pensamiento" style="width:100%;font-size:14px">¿Que pensaste en ese momento? *</label>
+				    <td align="right" valign="middle" style="white-space: nowrap;width:1%;">
+						<label for="pensamiento" style="width:100%;font-size:14px">¿Que pensaste?&nbsp;&nbsp;</label>
 					</td>
-                  <td>
-						<textarea id="pensamiento" style="width:100%" fz-elastic ngModel name="pensamiento" required #pensamiento="ngModel" alert-error [ngClass]="{'alert-error': pensamiento.errors && submitted}"></textarea>
-					</td>
+                   <td valign="middle"> 
+						<textarea id="pensamiento"  rows="2"
+						style="width:100%;font-size:11px;margin-top:5px" fz-elastic ngModel name="pensamiento" required #pensamiento="ngModel" alert-error [ngClass]="{'alert-error': pensamiento.errors && submitted}"></textarea>
+				   </td>
                </tr>
-			</table>
+				</table>
+            </div>
 			<br/>
-            
             <div style="color:red" 
                *ngIf="!form.valid && submitted">
-               Completar los campos obligatorios (*)
+               Completar los campos obligatorios
             </div>
-            <div>
+			<br/>
+            <div style="margin-left: auto;margin-right: auto;max-width: 1000px;float: none;">
                <table width="100%">
 				<tr>
-					<td width="50%">
-						<input type="submit" class="btn btn-info" value="Publicar" >
-						<input type="button" class="btn btn-info" value="Cancelar" (click)="modal.dismiss()">
+					<td width="50%" align="right">
+						<input type="submit" class="btn btn-info" value="Publicar" style="margin-right:10px" >
+					</td>
+					<td width="50%" align="left">
+						<input type="button" class="btn btn-info" value="Cancelar" (click)="modal.dismiss()" style="margin-left:10px">
 					</td>
 				</tr>
 			   </table>

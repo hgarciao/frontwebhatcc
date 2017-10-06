@@ -33,7 +33,6 @@ export class PostComponent implements OnInit {
 
     @Input() registro: any;
     @Input() pacienteSesion: any;
-    tags: Array < string > = [];
 	isCommenting:boolean;
 	mostrarComentarios:boolean;
 	color:string = 'black';
@@ -46,17 +45,6 @@ export class PostComponent implements OnInit {
 
     ngOnInit() {
 		this.mostrarComentarios=false;
-        let tags = this.tags;
-        if (this.registro.campos != null) {
-            this.registro.campos.forEach(function(campo) {
-                let opcs = '';
-                campo.opciones.forEach(function(opcion) {
-                    opcs = opcs + " " + opcion.valor
-                })
-                opcs = campo.nombreRegistroVariable + " :" + opcs;
-                tags.push(opcs);
-            });
-        }
 		this.isCommenting = false;
     }
 
@@ -204,6 +192,25 @@ export class PostComponent implements OnInit {
 	
 	changeStyle($event){
 	  this.color = $event.type == 'mouseover' ? 'blue' : 'black';
+	}
+	
+	generateTagsByType(type:string){
+        let tags = []
+		if (this.registro.campos != null) {
+			
+            this.registro.campos.forEach(function(campo) {
+				if(campo.tipo==type){
+					let opcs = '';
+					campo.opciones.forEach(function(opcion) {
+						opcs = opcs + " " + opcion.valor
+					})
+					opcs = campo.nombreRegistroVariable + " :" + opcs;
+					tags.push(opcs);
+				}
+            });
+			
+        }
+		return tags;
 	}
 
 }

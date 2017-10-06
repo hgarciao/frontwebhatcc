@@ -150,6 +150,7 @@ export class PostsComponent implements OnInit {
 
         this.submitted = true;
         if (form.valid) {
+			console.log(form.value);
             let value = form.value;
             var registro: any = {}
             registro.campos = [];
@@ -168,6 +169,11 @@ export class PostsComponent implements OnInit {
                             registro.pensamiento = value[key]
                             break;
                         }
+					case "bpensamiento":
+                        {
+                            registro.bpensamiento = value[key]
+                            break;
+                        }	
                     case "oculto":
                         {
                             registro.oculto = value.oculto == "" ? false : true;
@@ -179,12 +185,14 @@ export class PostsComponent implements OnInit {
                                 if (value[key] instanceof Array) {
                                     registro.campos.push({
                                         nombreRegistroVariable: key,
-                                        opciones: value[key]
+                                        opciones: value[key],
+										tipo: this.variables.filter(variable => variable.nombreRegistro == key)[0].tipo
                                     });
                                 } else {
                                     registro.campos.push({
                                         nombreRegistroVariable: key,
-                                        opciones: [value[key]]
+                                        opciones: [value[key]],
+										tipo: this.variables.filter(variable => variable.nombreRegistro == key)[0].tipo
                                     });
                                 }
                             }

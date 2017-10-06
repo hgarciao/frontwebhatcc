@@ -32,7 +32,7 @@
 									<br *ngIf="registro.oculto" />
 									<span style="color:#BDBDBD" *ngIf="registro.oculto">( Publicacion oculta )</span>
 									</td>
-									<td valign="middle"  align="left" style="color:#BDBDBD;padding:15px;margin-left:15px">"{{registro.pensamiento}}"</td>
+									<!--td valign="middle"  align="left" style="color:#BDBDBD;padding:15px;margin-left:15px">"{{registro.pensamiento}}"</td-->
 								</tr>
 						   </table>    
                         </td>
@@ -42,31 +42,29 @@
             </div>
             <br/>
             <div class="row">
-               <div class="col-md-12" style="font-size:14px;text-align: center">
-					{{registro.post}}
+               <div class="col-md-12" style="font-size:16px;text-align: left;color:#BDBDBD">
+					¿Que ocurrió?
                </div>
             </div>
 			<br/>
 			<div class="row">
                <div class="col-md-12" style="font-size:14px;text-align: center" >
-				 <h5><span class="badge badge-pill badge-default" *ngFor='let tag of tags' style="margin-left:5px;margin-right:5px">{{tag}}</span></h5>
+				 <h5><span class="badge badge-pill badge-default" *ngFor='let tag of generateTagsByType("antes")' style="margin-left:5px;margin-right:5px">{{tag}}</span></h5>
                </div>
             </div>	
-			
-            <!-- BOTONES
-				<div class="row">
-               <div class="col-md-12 text-right">
-				  <a class="readmore" href="#">
-						Like
-				  </a>
-				  &nbsp;
-				  a class="readmore" href="#">
-						Comentar
-				  </a
-               </div>
-            </div>-->
-			<hr/>
 			<br/>
+            <div class="row">
+               <div class="col-md-12" style="font-size:16px;text-align: left;color:#BDBDBD">
+					Luego ... 
+               </div>
+            </div>
+			<br/>
+			<div class="row">
+               <div class="col-md-12" style="font-size:14px;text-align: center" >
+				 <h5><span class="badge badge-pill badge-default" *ngFor='let tag of  generateTagsByType("despues")' style="margin-left:5px;margin-right:5px">{{tag}}</span></h5>
+               </div>
+            </div>	
+			<hr/>
             <div class="row">
 			   <div class="col-md-12" style="margin-bottom:15px;text-align:center"  
 			   *ngIf="registro.comentarios.length>10">
