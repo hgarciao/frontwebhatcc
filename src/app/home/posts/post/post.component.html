@@ -1,5 +1,5 @@
- <md-card>
-		 <md-card-header *ngIf="pacienteSesion==registro.paciente">
+ <mat-card>
+		 <mat-card-header *ngIf="pacienteSesion==registro.paciente">
 			<div style="width:100%;text-align:right">
 				<div class="dropdown">
 				  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -12,8 +12,8 @@
 				  </div>
 				</div>
 			</div>
-		 </md-card-header>
-         <md-card-content>
+		 </mat-card-header>
+         <mat-card-content>
             <div class="row">
                <div class="col-md-12">
                   <table style="width:100%">
@@ -53,6 +53,12 @@
                </div>
             </div>	
 			<br/>
+			<div class="row" *ngIf="registro.bpensamiento!=null">
+               <div class="col-md-12" style="font-size:14px;text-align: center" >
+					<span style="font-size:16px;color:#848484;font-weight:bold">Me encontraba pensando : "{{registro.bpensamiento}}"</span>
+               </div>
+            </div>
+			<br/>
             <div class="row">
                <div class="col-md-12" style="font-size:16px;text-align: left;color:#BDBDBD">
 					Luego ... 
@@ -63,7 +69,13 @@
                <div class="col-md-12" style="font-size:14px;text-align: center" >
 				 <h5><span class="badge badge-pill badge-default" *ngFor='let tag of  generateTagsByType("despues")' style="margin-left:5px;margin-right:5px">{{tag}}</span></h5>
                </div>
-            </div>	
+            </div>
+			<br/>
+			<div class="row" *ngIf="registro.pensamiento!=null">
+               <div class="col-md-12" style="font-size:14px;text-align: center" >
+					<span style="font-size:16px;color:#848484;font-weight:bold">Luego pensé : "{{registro.pensamiento}}"</span>
+               </div>
+            </div>			
 			<hr/>
             <div class="row">
 			   <div class="col-md-12" style="margin-bottom:15px;text-align:center"  
@@ -128,6 +140,6 @@
                </div>
             </div>
 			<hr/>
-         </md-card-content>
-      </md-card>
+         </mat-card-content>
+      </mat-card>
 	  <br/>

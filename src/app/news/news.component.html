@@ -6,62 +6,186 @@
          </div>
          <div class="col-md-8 panel panel-default" style="margin:auto;background-color:white">
             <div style="text-align:center;font:Georgia;font-size:24px;">
-				Antes de comenzar ...
-			</div>
-			<hr/>
-			<br/>
-			<form novalidate #form="ngForm">
-			<md-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true" >
-               <md-expansion-panel-header>
-                  <md-panel-title>
-				     <strong>Términos y condiciones de uso</strong>
-                  </md-panel-title>
-               </md-expansion-panel-header>
-			   <div style="width:100%;text-align:center;height:400px;overflow-y: scroll;">
-					Aqui va el texto de los terminos  formateado en HTML
-			   </div>
-			   <br/>
-			   <br/>
-			   <div style="width:100%;text-align:center">
-			   <md-slide-toggle
-                  class="example-margin"
-                  color="primary"
-				  #terminos
-                  >
-                  He leído y acepto los términos.
-               </md-slide-toggle>
-			   </div>
-            </md-expansion-panel>
-			<md-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
-               <md-expansion-panel-header>
-                  <md-panel-title>
-				    <strong>Normas de convivencia</strong>                   
-                  </md-panel-title>
-               </md-expansion-panel-header>
-			   <div style="width:100%;text-align:center;height:400px;overflow-y: scroll;">
-					Aqui va el texto de los terminos  formateado en HTML
-			   </div>
-			   <br/>
-			   <br/>
-			   <div style="width:100%;text-align:center">
-			   <md-slide-toggle
-                  class="example-margin"
-                  color="primary"
-				  #normas
-                  >
-                   He leído y acepto las normas.
-               </md-slide-toggle>
-			   </div>
-            </md-expansion-panel>
-			<br/>
-			<div style="text-align:center;font:Georgia;font-size:24px;">
-				<input type="submit" class="btn btn-info" value="Publicar" [disabled]="!terminos.checked || !normas.checked" (click)="aceptar()">
-				&nbsp;
-				&nbsp;
-				&nbsp;
-				<input type="submit" class="btn btn-info" value="Cancelar" (click)="cancelar()" >
-			</div>
-			</form>
+               Antes de comenzar ...
+            </div>
+            <hr/>
+            <br/>
+            <form novalidate #form="ngForm">
+               <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true" >
+               <mat-expansion-panel-header>
+                  <mat-panel-title>
+                     <strong>Consentimiento informado</strong>
+                  </mat-panel-title>
+               </mat-expansion-panel-header>
+               <div style="width:100%;text-align:center">
+                  <div style="text-align: center;">
+                     <span style="font-size:18px;"><strong>Consentimiento Informado para Investigaci&oacute;n</strong></span>
+                  </div>
+                  <div>
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify;">
+                     Se&ntilde;or(a), buen d&iacute;a; usted viene a este establecimiento de Salud para recibir atenciones sanitarias, las mismas que ser&aacute;n brindadas por un profesional m&eacute;dico y/o de las ciencias de la salud; este profesional y los administradores de e-Continua, recopilar&aacute;n informaci&oacute;n sobre las situaciones que atreviese a trav&eacute;s de un diario electr&oacute;nico, cuya disponibilidad ser&aacute; de 24/7 durante el periodo de prueba (Oct2017-Abr-2018); usted deber&aacute; usarlo seg&uacute;n indicaciones de su m&eacute;dico para su posterior almacemiento y procesamiento de su informaci&oacute;n.
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify;">
+                     Estas actividades de investigaci&oacute;n se realizan respetando sus derechos establecidos en la Ley N&deg; 29414, Ley que establece los derechos de las personas usuarias de los servicios de salud, y su reglamento, aprobado por Decreto Supremo N&deg; 027-2015-SA; sobre el cual aclararemos toda la duda o inquietud que usted pueda tener al respecto. Tenga la plena seguridad que al amparo de la Ley N&deg; 29733, Ley de Protecci&oacute;n de Datos Personales y su Reglamento aprobado mediante Decreto Supremo N&deg; 003-2013-JUS;&nbsp; resguardaremos en todo momento su intimidad, confidencialidad de sus datos personales, informaci&oacute;n sobre su enfermedad, creencias, orientaci&oacute;n sexual, religi&oacute;n, h&aacute;bitos o costumbres culturales, en cumplimiento de las Leyes y Reglamentos en menci&oacute;n.
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify;">
+                     Considerando que el Reglamento de la Ley N&deg; 29414, se&ntilde;ala que toda persona tiene derecho a otorgar o negar su consentimiento de forma libre y voluntaria, para la explotaci&oacute;n, tratamiento o exhibici&oacute;n de la informaci&oacute;n brindada, le solicitamos su CONSENTIMIENTO si as&iacute; usted lo considera, para que los administradores de e-Continua participen en su atenci&oacute;n. Su autorizaci&oacute;n Contribuye a que en un futuro cercano, ya sustentado y aprobado el proyecto de investigaci&oacute;n, tambi&eacute;n pueda apoyar adecudamente a otras personas.
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify;">
+                     Si posteriormente decidiera no continuar con la participaci&oacute;n de alumnos, hable con su m&eacute;dico tratante para REVOCAR o DESAUTORIZAR en cualquier momento el consentimiento que usted brind&oacute; anteriormente. Cualquiera fuera su decisi&oacute;n, &eacute;sta no afectar&aacute; la calidad de atenci&oacute;n a la que usted tiene derecho.
+                  </div>
+                  <div>
+                     &nbsp;
+                  </div>
+                  <div style="text-align: center;">
+                     <strong><span style="font-size:16px;">EXPRESI&Oacute;N DEL CONSENTIMIENTO INFORMADO</span></strong>
+                  </div>
+                  <div>
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify;">
+                     Yo declaro haber sido informado(a) de las actividades de investigaci&oacute;n que se realizar&aacute;n durante mi atenci&oacute;n en el establecimiento de salud y resueltas todas mis inquietudes y preguntas al respecto, consciente de mis derechos y en forma voluntaria, en cumplimiento de articulo N&deg; 119 del Decreto Supremo 013-2006-SA; S&Iacute; doy mi consentimiento para que dos tesistas (02) de ciencias inform&aacute;ticas almacenen mi informaci&oacute;n sobre mi conducta y hechos relacionadas a determinadas situaciones a trav&eacute;s de un diario electr&oacute;nico cuyo uso me fue previamente explicado.
+                  </div>
+               </div>
+               <br/>
+               <br/>
+               <div style="width:100%;text-align:center">
+                  <mat-slide-toggle
+                     class="example-margin"
+                     color="primary"
+                     #terminos
+                     >
+                     He leído y acepto los términos del consentimiento informado
+                  </mat-slide-toggle>
+               </div>
+               </mat-expansion-panel>
+               <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
+               <mat-expansion-panel-header>
+                  <mat-panel-title>
+                     <strong>Políticas de uso</strong>                   
+                  </mat-panel-title>
+               </mat-expansion-panel-header>
+               <div style="width:100%;text-align:center;">
+                  <div style="text-align: center;">
+                     <strong><span style="font-size:18px;">Pol&iacute;ticas de Uso en e-Contin&uacute;a</span></strong>
+                  </div>
+                  <div>
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify;">
+                     Para que este canal sea &uacute;til para todos, es necesario respetar unas reglas b&aacute;sicas. Debes leer con atenci&oacute;n las siguientes normas de uso antes de empezar a participar:&nbsp;
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify; margin-left: 40px;">
+                     1. Recuerda que este es un foro p&uacute;blico. Por el hecho de agregar cualquier dato, comentario o informaci&oacute;n, asumes que &eacute;ste puede ser visto por los restantes usuarios de esta red social m&eacute;dica y los administradores de e-Contin&uacute;a menteniendo el anonimato y cuya identidad solo conoce su profesional m&eacute;dico.
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify; margin-left: 40px;">
+                     2. Te pedimos que hables en primera persona y que trates de aportar valor en tus comentarios, facilitando informaciones y perspectivas contrastadas. Recuerda que eres responsable de tus aportaciones y de las eventuales consecuencias.
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify; margin-left: 40px;">
+                     3. Este espacio constituye un foro de intercambio de opiniones o para el debate constructivo, pero no es el &aacute;mbito apropiado para crear pol&eacute;mica, descalificar a otros usuarios o a terceros, ni para presentar quejas y reclamaciones que deben canalizarse a trav&eacute;s de las v&iacute;as espec&iacute;ficas que su m&eacute;dico explic&oacute; previamente.
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify; margin-left: 40px;">
+                     4. Trata con respeto a los otros usuarios; usa un lenguaje apropiado y correcto y act&uacute;a como si estuvieras en presencia de la otra persona.
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify; margin-left: 40px;">
+                     5. No publiques material publicitario ni hagas uso de este perfil para lucrarte o hacer negocio, ni compares o valores productos o servicios de otras entidades. Tampoco es este el foro para promocionarte o buscar empleo.
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify; margin-left: 40px;">
+                     6. Queda totalmente prohibido la publicaci&oacute;n de cualquier informaci&oacute;n, imagen o video relacionado al funcionamiento interno de la Red.
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify; margin-left: 40px;">
+                     7. Cualquier logotipo que utilizamos en este perfil son marcas registradas. Tambi&eacute;n son titularidad de e-Continua y nos reservamos todos los derechos de propiedad intelectual e industrial asociados a los mismos. Debes comprometerte a respetarlos y a no utilizarlos sin la debida autorizaci&oacute;n cualquiera que sea el medio.
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify; margin-left: 40px;">
+                     8. Solo debes descargar los contenidos, copiar o imprimir cualquier contribuci&oacute;n, para tu uso personal y privado.
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify; margin-left: 40px;">
+                     9. Te informamos que desde este perfil en esta red social, en ning&uacute;n caso se te solicitir&aacute; tus claves de acceso ni tu n&uacute;mero de tarjeta o cualquier otra credencial personal.
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify; margin-left: 40px;">
+                     10. Tenemos que preservar el buen uso de este perfil y, por ello, e-Contin&uacute;a, como administrador, se reserva el derecho a eliminar, sin derecho a r&eacute;plica, cualquier aportaci&oacute;n que:&nbsp;
+                  </div>
+                  <div style="text-align: justify;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify; margin-left: 80px;">
+                     -Considere ilegal, irrespetuosa, amenazante, infundada, calumniosa, inapropiada, &eacute;tica o socialmente discriminatoria o laboralmente reprochable o que, de alguna forma, pueda ocasionar da&ntilde;os y perjuicios materiales o morales a e-Contin&uacute;a, sus administradores, colaboradores o terceros.
+                  </div>
+                  <div style="text-align: justify; margin-left: 80px;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify; margin-left: 80px;">
+                     -Incorpore datos de terceros sin su autorizaci&oacute;n.
+                  </div>
+                  <div style="text-align: justify; margin-left: 80px;">
+                     &nbsp;
+                  </div>
+                  <div style="text-align: justify; margin-left: 80px;">
+                     -No est&eacute; relacionada con la finalidad de la p&aacute;gina.
+                  </div>
+               </div>
+               <br/>
+               <br/>
+               <div style="width:100%;text-align:center">
+                  <mat-slide-toggle
+                     class="example-margin"
+                     color="primary"
+                     #normas
+                     >
+                     He leído y acepto las politicas de uso
+                  </mat-slide-toggle>
+               </div>
+               </mat-expansion-panel>
+               <br/>
+               <div style="text-align:center;font:Georgia;font-size:24px;">
+                  <input type="submit" class="btn btn-info" value="Aceptar" [disabled]="!terminos.checked || !normas.checked" (click)="aceptar()">
+                  &nbsp;
+                  &nbsp;
+                  &nbsp;
+                  <input type="submit" class="btn btn-info" value="Cancelar" (click)="cancelar()" >
+               </div>
+            </form>
          </div>
          <div class="col-md-2" style="margin:auto">
          </div>

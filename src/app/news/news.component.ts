@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MdExpansionModule} from '@angular/material';
+import {MatExpansionModule} from '@angular/material';
 import {
     AuthenticationService
 } from '../_services/authentication.service';

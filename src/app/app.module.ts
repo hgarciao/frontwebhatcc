@@ -16,7 +16,7 @@ import { CanActivateHome} from './_guards/can-activate-home';
 import { CanActivateLogin} from './_guards/can-activate-login';
 import { CanActivateByRole} from './_guards/can-activate-by-role';
 import { CanActivateNews} from './_guards/can-activate-news';
-import { MaterialModule } from '@angular/material';
+//import { MaterialModule } from '@angular/material';
 import { ElasticModule } from 'angular2-elastic';
 import { Http, RequestOptions } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
@@ -32,6 +32,8 @@ import { NotificacionComponent } from './home/navbar/notificacion/notificacion.c
 import { SingleComponent } from './home/single/single.component';
 import { ProfileComponent } from './home/profile/profile.component';
 import { NewsComponent } from './news/news.component';
+import {MatProgressSpinnerModule,MatExpansionModule,MatSlideToggleModule,MatCardModule,MatButtonModule} from '@angular/material';
+
 
 
 
@@ -65,13 +67,18 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     BrowserModule,
     HttpModule,
 	routes,
-	MaterialModule,
+	//MaterialModule,
 	ElasticModule,
 	SelectModule,
 	FormsModule,
 	TagInputModule,
 	Ng2Bs3ModalModule,
-	FlashMessagesModule
+	FlashMessagesModule,
+	MatProgressSpinnerModule,
+	MatExpansionModule,
+	MatSlideToggleModule,
+	MatCardModule,
+	MatButtonModule
 	],
   providers: [AuthenticationService,PostsService ,{provide: AuthHttp,useFactory: authHttpServiceFactory,deps: [Http, RequestOptions]},CanActivateLogin,CanActivateHome,CanActivateByRole,CanActivateNews,LoaderService,GlobalService,StompService],
   bootstrap: [AppComponent]

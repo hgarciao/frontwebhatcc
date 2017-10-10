@@ -8,9 +8,6 @@ import {
 	
 } from '@angular/core';
 import {
-    MaterialModule
-} from '@angular/material';
-import {
     Registro
 } from '../../../_domain/registro';
 import {
@@ -204,7 +201,7 @@ export class PostComponent implements OnInit {
 					campo.opciones.forEach(function(opcion) {
 						opcs = opcs + " " + opcion.valor
 					})
-					opcs = campo.nombreRegistroVariable + " :" + opcs;
+					opcs = campo.nombrePost + " :" + opcs;
 					tags.push(opcs);
 				}
             });

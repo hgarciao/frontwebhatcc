@@ -15,10 +15,7 @@ import {
     GlobalService
 } from '../../_services/global.service';
 import {
-    MdProgressSpinnerModule
-} from '@angular/material';
-import {
-    MaterialModule
+    MatProgressSpinnerModule
 } from '@angular/material';
 import {
     AuthenticationService
@@ -186,13 +183,15 @@ export class PostsComponent implements OnInit {
                                     registro.campos.push({
                                         nombreRegistroVariable: key,
                                         opciones: value[key],
-										tipo: this.variables.filter(variable => variable.nombreRegistro == key)[0].tipo
+										tipo: this.variables.filter(variable => variable.nombreRegistro == key)[0].tipo,
+										nombrePost: this.variables.filter(variable => variable.nombreRegistro == key)[0].nombrePost
                                     });
                                 } else {
                                     registro.campos.push({
                                         nombreRegistroVariable: key,
                                         opciones: [value[key]],
-										tipo: this.variables.filter(variable => variable.nombreRegistro == key)[0].tipo
+										tipo: this.variables.filter(variable => variable.nombreRegistro == key)[0].tipo,
+										nombrePost: this.variables.filter(variable => variable.nombreRegistro == key)[0].nombrePost
                                     });
                                 }
                             }
