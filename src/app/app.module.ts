@@ -25,7 +25,7 @@ import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { PostComponent } from './home/posts/post/post.component';
 import { TagInputModule } from 'ngx-chips';
-import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { Ng2Bs3ModalModule  } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { FlashMessagesModule } from 'ngx-flash-messages';
 import { StompService } from 'ng2-stomp-service';
 import { NotificacionComponent } from './home/navbar/notificacion/notificacion.component';
@@ -33,6 +33,9 @@ import { SingleComponent } from './home/single/single.component';
 import { ProfileComponent } from './home/profile/profile.component';
 import { NewsComponent } from './news/news.component';
 import {MatProgressSpinnerModule,MatExpansionModule,MatSlideToggleModule,MatCardModule,MatButtonModule} from '@angular/material';
+import { PostsUnfvComponent } from './home/posts-unfv/posts-unfv.component';
+import { PostUnfvComponent } from './home/posts-unfv/post-unfv/post-unfv.component';
+import { PostsUnfv2Component } from './home/posts-unfv2/posts-unfv2.component';
 
 
 
@@ -60,7 +63,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     NotificacionComponent,
     SingleComponent,
     ProfileComponent,
-    NewsComponent
+    NewsComponent,
+    PostsUnfvComponent,
+    PostUnfvComponent,
+    PostsUnfv2Component
   ],
   imports: [
     BrowserAnimationsModule,

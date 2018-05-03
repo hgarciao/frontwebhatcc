@@ -1,8 +1,8 @@
 <div class="row" style="padding-top: 20px;">
    <div class="col-md-3" style="margin:auto">
    </div>
-   <div class="col-md-6 panel panel-default" style="margin:auto;background-color:white">
-      <modal #modal (onDismiss)="dismissPostModal()" (onOpen)="cargaFormulario()">
+   <div class="col-md-6 panel panel-default" style="margin:auto;background-color:white" aria-hidden="true">
+      <modal #modal (onDismiss)="dismissPostModal()" (onOpen)="cargaFormulario()" >
          <modal-body>
             <form novalidate class="form-signin" #form="ngForm" (ngSubmit)="guardaRegistroPost(form)" *ngIf="!isFormLoading && isFormLoaded">
             <!--
@@ -14,10 +14,10 @@
                   </md-input-container>
                </div>
             </div-->
-			<label for="pensamiento" style="width:100%">¿Que pasó? Describe como comenzó : </label>
+			<label for="pensamiento" style="width:100%">¿Qué pasó? Describe como comenzó : </label>
 			<hr/>
             <div class="flex-container wrap" style="align-items: center;justify-content: center;" >
-               <div class="flex-item" *ngFor='let variable of variablesFilterByType("antes")'>
+               <div class="flex-item" *ngFor='let variable of variablesFilterByType("1")'>
                   <label for="variable.id">{{variable.nombre}}</label>
                   <ng-select id={{variable.id}} class="flex-item" placeholder="Seleccione" [options]="variable.opciones" [allowClear]="true" noFilter="true"
 				  notFoundMsg="Sin resultados" name={{variable.nombreRegistro}} ngModel required [ngClass]="{'alert-error': variable.invalid && submitted}" (deselected)="onDeselectedVariable(variable.id)"
@@ -27,7 +27,7 @@
 			   <table style="width:90%">
 			   <tr>
 				    <td align="right" valign="middle" style="white-space: nowrap;width:1%;">
-						<label for="bpensamiento" style="width:100%;font-size:14px">¿Estabas pensando sobre algo?&nbsp;&nbsp;</label>
+						<label for="bpensamiento" style="width:100%;font-size:14px">¿Estabas pensando en algo?&nbsp;&nbsp;</label>
 					</td>
                    <td valign="middle"> 
 						<textarea id="bpensamiento"  rows="2"
@@ -40,7 +40,7 @@
 			<label for="pensamiento" style="width:100%">Describe que pasó&nbsp;<strong>después</strong>: </label>
 			<hr/>
             <div class="flex-container wrap" style="align-items: center;justify-content: center;" >
-               <div class="flex-item" *ngFor='let variable of variablesFilterByType("despues")'>
+               <div class="flex-item" *ngFor='let variable of variablesFilterByType("2")'>
                   <label for="variable.id">{{variable.nombre}}*</label>
                   <ng-select id={{variable.id}} class="flex-item" placeholder="Seleccione" [options]="variable.opciones" [allowClear]="true" noFilter="true"
 				  notFoundMsg="Sin resultados" name={{variable.nombreRegistro}} ngModel required [ngClass]="{'alert-error': variable.invalid && submitted}" (deselected)="onDeselectedVariable(variable.id)"
@@ -50,7 +50,7 @@
 			   <table style="width:90%">
 			   <tr>
 				    <td align="right" valign="middle" style="white-space: nowrap;width:1%;">
-						<label for="pensamiento" style="width:100%;font-size:14px">¿Que pensaste?&nbsp;&nbsp;</label>
+						<label for="pensamiento" style="width:100%;font-size:14px">¿Qué pensaste?&nbsp;&nbsp;</label>
 					</td>
                    <td valign="middle"> 
 						<textarea id="pensamiento"  rows="2"
@@ -87,8 +87,8 @@
       </modal>
       <post [registro]="registro" [pacienteSesion]="pacienteSesion" *ngFor='let registro of registros'> </post>
 	  <table width="100%" border="1px" *ngIf="!isPostsLoading && registros.length>0" (click)="getOlderPosts()">
-	  <tr><td style="background-color:#848484;height:40px;cursor:pointer;vertical-align: middle;" align="center">
-	  <i class="fa fa fa-refresh fa-1x"></i>&nbsp;<strong style="color:white">CARGAR MAS {{pacienteParam?' (Busqueda:  ' + pacienteParam+ ')':''}}</strong>
+	  <tr><td style="background-color:#FAFAFA;height:40px;cursor:pointer;vertical-align: middle;" align="center">
+	  <i class="fa fa fa-refresh fa-1x"></i>&nbsp;<strong style="color:black">CARGAR MAS {{pacienteParam?' (Busqueda:  ' + pacienteParam+ ')':''}}</strong>
 	  </td></tr>
 	  </table>
 	  <br/>

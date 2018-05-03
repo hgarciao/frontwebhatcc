@@ -4,23 +4,28 @@
       <div class="row" style="padding-top: 20px;">
          <div class="col-md-2" style="margin:auto">
          </div>
-         <div class="col-md-8 panel panel-default" style="margin:auto;background-color:white">
+         <div class="col-md-8 panel panel-default" style="margin:auto;background-color:white;overflow-y:hidden">
             <div style="text-align:center;font:Georgia;font-size:24px;">
                Antes de comenzar ...
             </div>
             <hr/>
             <br/>
-            <form novalidate #form="ngForm">
                <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true" >
-               <mat-expansion-panel-header>
+               <mat-expansion-panel-header style="background-color:#CEECF5">
                   <mat-panel-title>
-                     <strong>Consentimiento informado</strong>
+					  <table style="width:100%">
+						 <tr>
+							 <td style="text-align: left;background-color">
+								 <strong><span style="font-size:18px;">Consentimiento Informado para Investigaci&oacute;n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></strong>[Click extender/recoger]
+							  </td>   
+							 <td style="text-align: right;background-color">
+								 <i class="fa fa-caret-down fa-2x" aria-hidden="true"></i>
+							 </td>
+						</tr>					 
+					</table>
                   </mat-panel-title>
                </mat-expansion-panel-header>
-               <div style="width:100%;text-align:center">
-                  <div style="text-align: center;">
-                     <span style="font-size:18px;"><strong>Consentimiento Informado para Investigaci&oacute;n</strong></span>
-                  </div>
+               <div style="width:100%;text-align:center;overflow-y:scroll;height:400px">
                   <div>
                      &nbsp;
                   </div>
@@ -59,7 +64,6 @@
                   </div>
                </div>
                <br/>
-               <br/>
                <div style="width:100%;text-align:center">
                   <mat-slide-toggle
                      class="example-margin"
@@ -71,15 +75,21 @@
                </div>
                </mat-expansion-panel>
                <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
-               <mat-expansion-panel-header>
+               <mat-expansion-panel-header style="background-color:#CEECF5">
                   <mat-panel-title>
-                     <strong>Políticas de uso</strong>                   
+				    <table style="width:100%">
+						 <tr>
+							 <td style="text-align: left;background-color">
+								 <strong><span style="font-size:18px;">Pol&iacute;ticas de Uso en e-Contin&uacute;a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></strong>[Click extender/recoger]
+							  </td>   
+							 <td style="text-align: right;background-color">
+								 <i class="fa fa-caret-down fa-2x" aria-hidden="true"></i>
+							 </td>
+						</tr>					 
+					</table>
                   </mat-panel-title>
                </mat-expansion-panel-header>
-               <div style="width:100%;text-align:center;">
-                  <div style="text-align: center;">
-                     <strong><span style="font-size:18px;">Pol&iacute;ticas de Uso en e-Contin&uacute;a</span></strong>
-                  </div>
+               <div style="width:100%;text-align:center;height:400px;overflow-y:scroll">
                   <div>
                      &nbsp;
                   </div>
@@ -166,7 +176,6 @@
                   </div>
                </div>
                <br/>
-               <br/>
                <div style="width:100%;text-align:center">
                   <mat-slide-toggle
                      class="example-margin"
@@ -185,7 +194,6 @@
                   &nbsp;
                   <input type="submit" class="btn btn-info" value="Cancelar" (click)="cancelar()" >
                </div>
-            </form>
          </div>
          <div class="col-md-2" style="margin:auto">
          </div>

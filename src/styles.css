@@ -157,3 +157,6 @@ div.num {
   background-color: black;
   left: 1.3em;
 }
+div.mat-expansion-panel-body{
+	overflow-y:hidden;
+}

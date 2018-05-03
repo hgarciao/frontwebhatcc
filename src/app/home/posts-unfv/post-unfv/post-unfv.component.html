@@ -1,0 +1,160 @@
+ <mat-card>
+		 <mat-card-header *ngIf="pacienteSesion==registro.paciente">
+			<div style="width:100%;text-align:right">
+				<div class="dropdown">
+				  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				 	<img src="assets/dots.png" width="15px" height="20px"/>
+				  </button>
+				  <div class="dropdown-menu dropdown-menu-right" style="font-size:12px"  aria-labelledby="dropdownMenuButton">
+				 	<a class="dropdown-item" href="#" (click)="mostrarPost($event)" *ngIf="registro.oculto" >Mostrar</a>
+					<a class="dropdown-item" href="#" (click)="ocultarPost($event)" *ngIf="!registro.oculto" >Ocultar</a>
+				 	<a class="dropdown-item" href="#" (click)="eliminarPost($event)">Eliminar</a>
+				  </div>
+				</div>
+			</div>
+		 </mat-card-header>
+         <mat-card-content>
+            <div class="row">
+               <div class="col-md-12">
+                  <table style="width:100%">
+                     <tr>
+                        <td width="60px" align="center">
+                           <img src="../../../../assets/profile-pictures/{{registro.paciente}}.jpg"
+                              class="rounded-circle" width="50px" height="50px"/>
+                        </td>
+                        <td>
+						   <table>
+								<tr>
+									<td valign="middle" align="left" style="margin-left:15px"><span style="font-size:20px;cursor: pointer;" [style.color]="color" 
+									(click)="filtrar($event)" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"> {{registro.paciente | uppercase}}</span>
+									<br/>
+									<span style="color:#BDBDBD">{{registro.fechahora |  date:'dd/MM/yyyy HH:mm:ss '}}</span>
+									<br *ngIf="registro.oculto" />
+									<span style="color:#BDBDBD" *ngIf="registro.oculto">( Publicacion oculta )</span>
+									</td>
+									<!--td valign="middle"  align="left" style="color:#BDBDBD;padding:15px;margin-left:15px">"{{registro.pensamiento}}"</td-->
+								</tr>
+						   </table>    
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+            <br/>
+            <div class="row">
+               <div class="col-md-12" style="font-size:16px;text-align: left;color:#BDBDBD">
+					¿Que ocurrió?
+               </div>
+            </div>
+			<br/>
+			<div class="row">
+               <div class="col-md-12" style="font-size:14px;text-align: center" >
+				 <h5><span class="badge badge-pill badge-default" *ngFor='let tag of generateTagsByType("A")' style="margin-left:5px;margin-right:5px">{{tag}}</span></h5>
+               </div>
+            </div>	
+			<br/>
+			<!--
+			Pensamiento ANTERIOR es ELIMINADO
+			div class="row" *ngIf="registro.bpensamiento!=null">
+               <div class="col-md-12" style="font-size:14px;text-align: center" >
+					<span style="font-size:16px;color:#848484;font-weight:bold">Me encontraba pensando : "{{registro.bpensamiento}}"</span>
+               </div>
+            </div-->
+            <div class="row">
+               <div class="col-md-12" style="font-size:16px;text-align: left;color:#BDBDBD">
+					Pensé
+               </div>
+            </div>
+			<br/>
+			<div class="row" *ngIf="registro.pensamiento!=null">
+               <div class="col-md-12" style="font-size:14px;text-align: center" >
+					<span style="font-size:16px;color:#848484;font-weight:bold">"{{registro.pensamiento}}"</span>
+               </div>
+            </div>
+			<br/>
+            <div class="row">
+               <div class="col-md-12" style="font-size:16px;text-align: left;color:#BDBDBD">
+					¿Que hice?
+               </div>
+            </div>
+			<br/>
+			<div class="row">
+               <div class="col-md-12" style="font-size:14px;text-align: center" >
+				 <h5><span class="badge badge-pill badge-default" *ngFor='let tag of  generateTagsByType("C")' style="margin-left:5px;margin-right:5px">{{tag}}</span></h5>
+               </div>
+            </div>
+			<br/>
+			<!--
+			SE COMENTA PORQUE SE COLOCA AL MEDIO DEL "POST"
+			div class="row" *ngIf="registro.pensamiento!=null">
+               <div class="col-md-12" style="font-size:14px;text-align: center" >
+					<span style="font-size:16px;color:#848484;font-weight:bold">Luego pensé : "{{registro.pensamiento}}"</span>
+               </div>
+            </div-->			
+			<hr/>
+            <div class="row">
+			   <div class="col-md-12" style="margin-bottom:15px;text-align:center"  
+			   *ngIf="registro.comentarios.length>10">
+				<p *ngIf="!mostrarComentarios" style="color:black;text-decoration: underline;cursor:pointer;font-weight:bold" (click)="mostrarComentarios=true">Mostrar comentarios anteriores</p>
+				<p *ngIf="mostrarComentarios"  style="color:black;text-decoration: underline;cursor:pointer;font-weight:bold" (click)="mostrarComentarios=false">Ocultar comentarios anteriores</p>
+			   </div>
+               <div class="col-md-12 text-right" style="margin-bottom:15px" 
+			   *ngFor='let comentario of devuelveComentariosFiltrados(registro.comentarios)'>
+                  <div class="row">
+                     <div class="col-md-12">
+                        <table style="width:100%;table-layout:fixed">
+                           <tr>
+                              <td width="40px" valign="top" rowspan="2">
+                                 <img src="../../../../assets/profile-pictures/{{comentario.paciente}}.jpg" 
+                                   width="40px" height="40px"/>
+                              </td>
+                              <td align="left"  valign="bottom" style="padding-left:10px">
+								 <div>{{comentario.paciente}} <span style="color:#BDBDBD;font-size:12px;margin-left:8px">{{comentario.fechaHora |  date:'dd/MM/yyyy HH:mm:ss '}}</span></div>
+                              </td>
+							  <td width="36px"  rowspan="2" valign="top">
+								<div class="dropdown" *ngIf="pacienteSesion==comentario.paciente">
+								  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<img src="assets/dots.png" width="15px" height="20px"/>
+								  </button>
+								  <div class="dropdown-menu dropdown-menu-right" style="font-size:12px"  aria-labelledby="dropdownMenuButton">
+									<!--a class="dropdown-item" href="#">Editar</a-->
+									<a class="dropdown-item" href="#" (click)="eliminarComentario(comentario.id,$event)">Eliminar</a>
+								  </div>
+								</div>
+							  </td>
+                           </tr>
+						   <tr>
+                              <td align="left" valign="top" style="padding-left:10px">
+                                 <div style="font-size:12px;overflow:hidden;word-wrap: break-word;width: 100%;">{{comentario.contenido}}</div>
+                              </td>
+                           </tr>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+			   <div class="col-md-12 text-right" style="margin-bottom:15px">
+                  <div class="row">
+                     <div class="col-md-12">
+						<table style="width:100%">
+							   <tr>
+								  <td width="40px" valign="top">
+									 <img src="../../../../assets/profile-pictures/{{pacienteSesion}}.jpg" 
+									   width="40px" height="40px"/>
+								  </td>
+								  <td align="left" style="padding-left:10px">
+									 <div style="font-size:12px;width:100%">
+									 <textarea style="width:100%" fz-elastic placeholder="Escribe un comentario ..." #comentario 
+									 (keydown.enter)="enviaComentario(comentario);false"
+									 (keydown.alt.Enter)="saltoLinea(comentario)"  [disabled]="isCommenting" ></textarea>
+									 </div>
+								  </td>
+							   </tr>
+						</table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+			<hr/>
+         </mat-card-content>
+      </mat-card>
+	  <br/>
