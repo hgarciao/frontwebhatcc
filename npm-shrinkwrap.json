@@ -2908,9 +2908,9 @@
       "resolved": "https://registry.npmjs.org/ng-select/-/ng-select-1.0.0-beta.5.tgz"
     },
     "ng2-bs3-modal": {
-      "version": "0.11.5",
-      "from": "ng2-bs3-modal@0.11.5",
-      "resolved": "https://registry.npmjs.org/ng2-bs3-modal/-/ng2-bs3-modal-0.11.5.tgz"
+      "version": "0.10.4",
+      "from": "ng2-bs3-modal@0.10.4",
+      "resolved": "https://registry.npmjs.org/ng2-bs3-modal/-/ng2-bs3-modal-0.10.4.tgz"
     },
     "ng2-material-dropdown": {
       "version": "0.7.7",
