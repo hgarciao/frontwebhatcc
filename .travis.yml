@@ -13,3 +13,6 @@ script:
 after_success:
     - cd dist
     - ls
+    - tar -cf frontwebhatcc.tgz *.*
+    - export SSHPASS=$DEPLOY_PASS
+    - sshpass -e scp -o StrictHostKeyChecking=no frontwebhatcc.tgz $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/$TRAVIS_BRANCH/deploy/frontwebhatcc
