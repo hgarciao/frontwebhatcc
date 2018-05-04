@@ -3,6 +3,11 @@ language: node_js
 node_js:
   - "6.11.4"
   
+addons:
+    apt:
+        packages:
+            - sshpass
+
 before_script:
   - npm install -g @angular/cli@1.4.5
   - npm install
@@ -11,8 +16,6 @@ script:
   - ng build --environment qa
   
 after_success:
-    - cd dist
-    - ls
-    - tar -cf frontwebhatcc.tgz *.*
+    - tar -cf frontwebhatcc.tgz dist
     - export SSHPASS=$DEPLOY_PASS
     - sshpass -e scp -o StrictHostKeyChecking=no frontwebhatcc.tgz $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/$TRAVIS_BRANCH/deploy/frontwebhatcc
