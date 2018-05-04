@@ -1,14 +1,14 @@
 language: node_js
 
 node_js:
-  - "6.11.0"
+  - "6.11.4"
   
 before_script:
-  - npm install -g @angular/cli
+  - npm install -g @angular/cli@1.4.5
   - npm install
   
 script:
-  - ng build
+  - ng build --environment qa
   
 after_success:
   - echo 'ok'
