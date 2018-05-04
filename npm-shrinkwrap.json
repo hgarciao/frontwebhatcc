@@ -2903,9 +2903,9 @@
       "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-0.6.1.tgz"
     },
     "ng-select": {
-      "version": "1.0.0-beta.5",
-      "from": "ng-select@1.0.0-beta.5",
-      "resolved": "https://registry.npmjs.org/ng-select/-/ng-select-1.0.0-beta.5.tgz"
+      "version": "1.0.0-rc.5",
+      "from": "ng-select@1.0.0-rc.5",
+      "resolved": "https://registry.npmjs.org/ng-select/-/ng-select-1.0.0-rc.5.tgz"
     },
     "ng2-bs3-modal": {
       "version": "0.10.4",
