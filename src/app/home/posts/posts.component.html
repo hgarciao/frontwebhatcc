@@ -1,53 +1,107 @@
-<div class="row" style="padding-top: 20px">
+<div class="row" style="padding-top: 20px;">
    <div class="col-md-3" style="margin:auto">
    </div>
-   <div class="col-md-6 panel panel-default" style="margin:auto;background-color:white">
-      <modal #modal (onDismiss)="dismissPostModal()">
+   <div class="col-md-6 panel panel-default" style="margin:auto;background-color:white" aria-hidden="true">
+      <modal #modal (onDismiss)="dismissPostModal()" (onOpen)="cargaFormulario()" >
          <modal-body>
-            <form novalidate class="form-signin" #form="ngForm" (ngSubmit)="guardaRegistroPost(form)">
-            <br/>
-            <div class="row panel-body">
+            <form novalidate class="form-signin" #form="ngForm" (ngSubmit)="guardaRegistroPost(form)" *ngIf="!isFormLoading && isFormLoaded">
+            <!--
+			Por el momento no se posteará POSTS ESCRITOS
+			div class="row panel-body">
                <div class="col-md-12">
                   <md-input-container style="width:100%">
                      <textarea mdInput placeholder="¿Cuéntanos qué pasó?" fz-elastic rows="5" name="post" ngModel></textarea>
                   </md-input-container>
                </div>
-            </div>
+            </div-->
+			<label for="pensamiento" style="width:100%">¿Qué pasó? Describe como comenzó : </label>
+			<hr/>
             <div class="flex-container wrap" style="align-items: center;justify-content: center;" >
-               <div class="flex-item" *ngFor='let variable of variables'>
+               <div class="flex-item" *ngFor='let variable of variablesFilterByType("1")'>
+                  <label for="variable.id">{{variable.nombre}}</label>
+                  <ng-select id={{variable.id}} class="flex-item" placeholder="Seleccione" [options]="variable.opciones" [allowClear]="true" noFilter="true"
+				  notFoundMsg="Sin resultados" name={{variable.nombreRegistro}} ngModel required [ngClass]="{'alert-error': variable.invalid && submitted}" (deselected)="onDeselectedVariable(variable.id)"
+				  (selected)="onSelectedVariable(variable.id)">
+				  </ng-select >
+               </div>
+			   <table style="width:90%">
+			   <tr>
+				    <td align="right" valign="middle" style="white-space: nowrap;width:1%;">
+						<label for="bpensamiento" style="width:100%;font-size:14px">¿Estabas pensando en algo?&nbsp;&nbsp;</label>
+					</td>
+                   <td valign="middle"> 
+						<textarea id="bpensamiento"  rows="2"
+						style="width:100%;font-size:11px;margin-top:5px" fz-elastic ngModel name="bpensamiento" #bpensamiento="ngModel" alert-error [ngClass]="{'alert-error': bpensamiento.errors && submitted}"></textarea>
+				   </td>
+               </tr>
+			 </table>
+            </div>
+            <br/>
+			<label for="pensamiento" style="width:100%">Describe que pasó&nbsp;<strong>después</strong>: </label>
+			<hr/>
+            <div class="flex-container wrap" style="align-items: center;justify-content: center;" >
+               <div class="flex-item" *ngFor='let variable of variablesFilterByType("2")'>
                   <label for="variable.id">{{variable.nombre}}*</label>
-                  <ng-select id={{variable.id}} class="flex-item" placeholder="Seleccione" [options]="variable.opciones" [allowClear]="true" noFilter="true" notFoundMsg="Sin resultados" name={{variable.nombreRegistro}} ngModel required>
-                  </ng-select >
+                  <ng-select id={{variable.id}} class="flex-item" placeholder="Seleccione" [options]="variable.opciones" [allowClear]="true" noFilter="true"
+				  notFoundMsg="Sin resultados" name={{variable.nombreRegistro}} ngModel required [ngClass]="{'alert-error': variable.invalid && submitted}" (deselected)="onDeselectedVariable(variable.id)"
+				  (selected)="onSelectedVariable(variable.id)">
+				  </ng-select >
                </div>
+			   <table style="width:90%">
+			   <tr>
+				    <td align="right" valign="middle" style="white-space: nowrap;width:1%;">
+						<label for="pensamiento" style="width:100%;font-size:14px">¿Qué pensaste?&nbsp;&nbsp;</label>
+					</td>
+                   <td valign="middle"> 
+						<textarea id="pensamiento"  rows="2"
+						style="width:100%;font-size:11px;margin-top:5px" fz-elastic ngModel name="pensamiento" required #pensamiento="ngModel" alert-error [ngClass]="{'alert-error': pensamiento.errors && submitted}"></textarea>
+				   </td>
+               </tr>
+				</table>
             </div>
-            <br/>
-            <div class="row panel-body">
-               <div class="col-md-12">
-                  <label for="pensamiento" style="width:100%">¿Que piensas o pensaste acerca de esto? *</label>
-                  <textarea id="pensamiento" style="width:100%" fz-elastic ngModel name="pensamiento" required #pensamiento="ngModel"></textarea>
-               </div>
-            </div>
+			<br/>
             <div style="color:red" 
-               *ngIf="!form.valid && form.submitted">
-               Completar los campos obligatorios (*)
+               *ngIf="!form.valid && submitted">
+               Completar los campos obligatorios
             </div>
-            <br/>
-            <br/>
-            <div>
-               <input type="submit" class="btn btn-info" value="Publicar" >
-               <input type="button" class="btn btn-info" value="Cancelar" (click)="modal.dismiss()">
+			<br/>
+            <div style="margin-left: auto;margin-right: auto;max-width: 1000px;float: none;">
+               <table width="100%">
+				<tr>
+					<td width="50%" align="right">
+						<input type="submit" class="btn btn-info" value="Publicar" style="margin-right:10px" >
+					</td>
+					<td width="50%" align="left">
+						<input type="button" class="btn btn-info" value="Cancelar" (click)="modal.dismiss()" style="margin-left:10px">
+					</td>
+				</tr>
+			   </table>
             </div>
             <br/>
             </form>
+			<div class="spinner-message" style="width:100%;text-align:center;" *ngIf="isFormLoading">
+				<mat-spinner mode="indeterminate" style="margin:0 auto;"></mat-spinner>
+				<br/>
+			</div>
          </modal-body>
       </modal>
-      <post [registro]="registro" *ngFor='let registro of registros'> </post>
+      <post [registro]="registro" [pacienteSesion]="pacienteSesion" *ngFor='let registro of registros'> </post>
+	  <table width="100%" border="1px" *ngIf="!isPostsLoading && registros.length>0" (click)="getOlderPosts()">
+	  <tr><td style="background-color:#FAFAFA;height:40px;cursor:pointer;vertical-align: middle;" align="center">
+	  <i class="fa fa fa-refresh fa-1x"></i>&nbsp;<strong style="color:black">CARGAR MAS {{pacienteParam?' (Busqueda:  ' + pacienteParam+ ')':''}}</strong>
+	  </td></tr>
+	  </table>
+	  <br/>
+	  <div class="spinner-message" style="width:100%;text-align:center;" *ngIf="isPostsLoading">
+		<mat-spinner mode="indeterminate" style="margin:0 auto;"></mat-spinner>
+		<br/>
+	  </div>
    </div>
    <div class="col-md-3" style="margin:auto">
    </div>
-   <span style="width:100%;position: fixed;bottom:0%;text-align:right" >
-   <a md-fab routerLink="." style="margin:20px;background-color:#81BEF7;" (click)="modal.open('lg')">
-	<img src="/assets/post.png" width="100%" height="100%"><img/>
-   </a>
+   <span style="width:60px;height:60px;position: fixed;bottom:0%;right:4%;margin-bottom:20px;" >
+	   <a mat-fab routerLink="." style="background-color:#81BEF7;width:100%;height:100%" (click)="modal.open('lg')">
+		<img src="assets/post.png" width="100%" height="100%" style="margin-top:-25%"  mat-fab-image><img/>
+	   </a>
    </span>
 </div>

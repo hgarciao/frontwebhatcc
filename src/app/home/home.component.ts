@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
+import { StompService } from 'ng2-stomp-service';
+import { AuthenticationService} from '../_services/authentication.service';
+import { environment } from '../../environments/environment';
 
 
 
@@ -8,11 +11,35 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+  
+  pacienteSesion: string;
+  
+  
+  constructor(private authenticationService : AuthenticationService,private stompService: StompService) { }
 
   ngOnInit() {
+	   this.pacienteSesion = this.authenticationService.decodeToken()['sub'];
+	  //configuration 
+		  this.stompService.configure({
+			host: environment.urlpostsws,
+			debug:false,
+			queue:{'init':false},
+			headers: {
+                Authorization: this.authenticationService.getToken()
+            }
+		  });
+		
+		  this.stompService.startConnect().then(() => {
+			this.stompService.done('init');
+			//console.log('connected');
+		  });
+		
   }
+  
+   ngOnDestroy (){
+		console.log('destruyendo HOMEEEEE');
+	}
+	
   
   private _opened: boolean = false;
   private _modeNum: number = 0;

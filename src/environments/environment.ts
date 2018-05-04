@@ -4,5 +4,9 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  urlgtw: 'http://localhost:8080/api',
+  urlmsposts: 'http://localhost:8080/mspostsdev/api',
+  urlpostsws:'http://localhost:8081/ws',
+  postpagesize: 2
 };

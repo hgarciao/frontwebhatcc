@@ -11,29 +11,41 @@ export class CanActivateHome implements CanActivate {
 				
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (this.authenticationService.isLoggedIn()) {
+		  if (localStorage.getItem('firsttime')!= '0') {
 			
-			if(state.url=="/home"){
+			let url = state.url.indexOf('/home?')!=-1?state.url.substring(0,state.url.indexOf('?')):state.url ;
+			if( url=="/home" ){
 				var roles = this.authenticationService.decodeToken()['auth'].split(',');
 				if (roles.indexOf('ROLE_ADMIN')!=-1){
-					console.log('admin home');
+					//console.log('admin home');
 					this.router.navigate(['/home/admin']);
 				}
 				if (roles.indexOf('ROLE_PACIENTE')!=-1){
-					console.log('admin paciente');				
+					//console.log('admin paciente');		
+					//console.log(route);
 					this.router.navigate(['/home/paciente']);
+					//this.router.navigateByUrl("/home/paciente(contenido:posts)");
 				}
 				if (roles.indexOf('ROLE_TERAPEUTA')!=-1){
-					console.log('admin terapeuta');			
+					//console.log('admin terapeuta');			
 					this.router.navigate(['/home/terapeuta']);
 				}
 				return false;
 			}else{
-				console.log('ya no redirecciono solo dejo pasar')
+				//console.log('ya no redirecciono solo dejo pasar : '+ url)
 				return true;
 			}
 			
+		  }else{
+			  this.router.navigate(['/news']);
+			  return false;
+		  }
+			
+			
+			
         }else{
-			console.log('No autenticado intenta acceder al home - redirijo');
+			//console.log('No autenticado intenta acceder al home');
+			//console.log(state);
 			this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
 			return false;
 		}

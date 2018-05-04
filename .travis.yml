@@ -1,0 +1,14 @@
+language: node_js
+
+node_js:
+  - "6.11.0"
+  
+before_script:
+  - npm install -g @angular/cli
+  - npm install
+  
+script:
+  - ng build
+  
+after_success:
+  - echo 'ok'

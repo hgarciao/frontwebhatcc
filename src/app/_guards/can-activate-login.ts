@@ -10,7 +10,6 @@ export class CanActivateLogin implements CanActivate {
 				
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (this.authenticationService.isLoggedIn()) {
-			console.log('Login')
 			this.router.navigate(['/home']); 
             return false;
         }else{

@@ -130,3 +130,33 @@
     margin: 0 auto;
 	background-color:black;
 }
+.alert-error{
+   border:1px solid red;
+}
+.dropdown-toggle::after {
+    display:none
+}
+.btn{
+  border:0px solid transparent; /* this was 1px earlier */
+ }
+.dropdown-menu {
+  min-width: 0px;
+}
+a.fa-bell {
+  position: relative;
+  font-size: 2em;
+  color: grey;
+  cursor: pointer;
+  margin-right:50px;
+}
+div.num {
+  position: absolute;
+  font-size: 0.8em;
+  font-weight:bold;
+  top: 1px;
+  background-color: black;
+  left: 1.3em;
+}
+div.mat-expansion-panel-body{
+	overflow-y:hidden;
+}

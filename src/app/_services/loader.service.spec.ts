@@ -10,7 +10,7 @@ describe('LoaderService', () => {
     });
   });
 
-  it('should ...', inject([LoaderService], (service: LoaderService) => {
+  it('should ...', inject([LoaderService], (LoaderService) => {
     expect(service).toBeTruthy();
   }));
 });
