@@ -11,4 +11,5 @@ script:
   - ng build --environment qa
   
 after_success:
-  - echo 'ok'
+    - cd dist
+    - ls
