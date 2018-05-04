@@ -401,6 +401,7 @@ export class PostsUnfv2Component implements OnInit {
 
     public anadirOpcion(){
         console.log("Añadir a lista y crear mecanismo de guardado EN VARIABLE para : " + this.val_noOptions);
+        console.log("HOORAYY!");
     }
 
     addOptionEnabler(id){
