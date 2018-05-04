@@ -16,6 +16,8 @@ script:
   - ng build --environment qa
   
 after_success:
-    - tar -cf frontwebhatcc.tgz dist
+    - name=$(date '+%Y-%m-%d')
+    - tar -cf frontwebhatcc-$name.tgz dist
     - export SSHPASS=$DEPLOY_PASS
-    - sshpass -e scp -o StrictHostKeyChecking=no frontwebhatcc.tgz $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/$TRAVIS_BRANCH/deploy/frontwebhatcc
+    - sshpass -e scp -o StrictHostKeyChecking=no frontwebhatcc-$name.tgz $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/$TRAVIS_BRANCH/deploy/frontwebhatcc
+    - sshpass -e ssh -f -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST mkdir /home/ubuntu/ambientes/dev/deploy/frontwebhatcc/pruebita
