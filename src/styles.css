@@ -1,5 +1,7 @@
 /*Para lista de variables acomodadas*/
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~font-awesome/css/font-awesome.css';
+$fa-font-path: '~font-awesome/fonts';
 
 .btn-round {
     width: 40px;

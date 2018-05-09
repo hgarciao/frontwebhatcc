@@ -42,7 +42,7 @@
     "exports-loader": "0.6.4",
     "extract-text-webpack-plugin": "2.1.0",
     "file-loader": "0.10.1",
-    "font-awesome": "^4.7.0",
+    "font-awesome": "https://registry.npmjs.org/font-awesome/-/font-awesome-4.7.0.tgz",
     "hammerjs": "https://registry.npmjs.org/hammerjs/-/hammerjs-2.0.8.tgz",
     "html-webpack-plugin": "2.28.0",
     "inflection": "1.12.0",
