@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {
     GlobalService
 } from './_services/global.service';
