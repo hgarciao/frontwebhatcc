@@ -21,4 +21,4 @@ after_success:
     - export SSHPASS=$DEPLOY_PASS
     - sshpass -e scp -o StrictHostKeyChecking=no frontwebhatcc-$fecha.tgz $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/$TRAVIS_BRANCH/deploy/frontwebhatcc
     - test $TRAVIS_BRANCH != "dev" && sshpass -e ssh -q $DEPLOY_USER@$DEPLOY_HOST 'cd '$DEPLOY_PATH'/'$TRAVIS_BRANCH'/'deploy'/'frontwebhatcc \ 
-    '&& tar -xvf frontwebhatcc-'$fecha'.tgz'
+    '&& tar -xvf frontwebhatcc-'$fecha'.tgz && rm -rf /var/www/hatcc.'$TRAVIS_BRANCH'/dist && mv dist /var/www/hatcc.'$TRAVIS_BRANCH'/dist'
