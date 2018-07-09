@@ -43,6 +43,7 @@ import { PostsUnfv2Component } from './home/posts-unfv2/posts-unfv2.component';
 
 
 
+
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
 		tokenName: 'token',
@@ -84,7 +85,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 	MatExpansionModule,
 	MatSlideToggleModule,
 	MatCardModule,
-	MatButtonModule
+	MatButtonModule,
 	],
   providers: [AuthenticationService,PostsService ,{provide: AuthHttp,useFactory: authHttpServiceFactory,deps: [Http, RequestOptions]},CanActivateLogin,CanActivateHome,CanActivateByRole,CanActivateNews,LoaderService,GlobalService,StompService],
   bootstrap: [AppComponent]
