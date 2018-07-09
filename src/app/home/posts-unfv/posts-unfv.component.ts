@@ -51,6 +51,7 @@ import {
 export class PostsUnfvComponent implements OnInit {
 
     variables: Array < any > = [];
+    nivelEmocionInvalid:boolean;
     registros: Array < any > = [];
     @ViewChild('form') form;
     @ViewChild('modal') modal;
@@ -62,6 +63,17 @@ export class PostsUnfvComponent implements OnInit {
     subscription: any;
 	timersubs: any;
 	pacienteParam:string;
+    levels: Array<any> =[
+    {value:1,label:"1"},
+    {value:2,label:"2"},
+    {value:3,label:"3"},
+    {value:4,label:"4"},
+    {value:5,label:"5"},
+    {value:6,label:"6"},
+    {value:7,label:"7"},
+    {value:8,label:"8"},
+    {value:9,label:"9"},
+    {value:10,label:"10"}];
 
 
     constructor(private postsService: PostsService, private authenticationService: AuthenticationService, private globalService: GlobalService, private flashMessagesService: FlashMessagesService, private stompService: StompService, private activatedRoute: ActivatedRoute, private router: Router) {
@@ -174,9 +186,24 @@ export class PostsUnfvComponent implements OnInit {
                             registro.oculto = value.oculto == "" ? false : true;
                             break;
                         }
+                    case "Emociones":
+                        {
+                            //Solo cuando no es multivariable
+                            registro.campos.push({
+                                        nombreRegistroVariable: key,
+                                        opciones: [value[key]],
+                                        tipo: this.variables.filter(variable => variable.nombreRegistro == key)[0].tipo,
+                                        nombrePost: this.variables.filter(variable => variable.nombreRegistro == key)[0].nombrePost,
+                                        nivel: value["Nivel-Emocion"]
+                                    });
+
+                            //console.log(value["Nivel-Emocion"]);
+                            break;
+                        }
                     default:
                         {
-                            if (value[key] != "") {
+                            if (value[key] != "" && key!="Nivel-Emocion") {
+                                /*Tengo miedito cuando sea multiple*/
                                 if (value[key] instanceof Array) {
                                     registro.campos.push({
                                         nombreRegistroVariable: key,
@@ -205,6 +232,9 @@ export class PostsUnfvComponent implements OnInit {
             registro.comentarios = [];
             registro.pacienteUpdate = this.pacienteSesion;
             this.isFormLoading = true;
+             
+            console.log(registro); 
+
             this.postsService.saveRegistroFormulario(JSON.stringify(registro)).subscribe(
                 res => {
                     this.isFormLoading = false;
@@ -238,6 +268,7 @@ export class PostsUnfvComponent implements OnInit {
         this.variables.forEach(function(p, i, vars) {
             vars[i].invalid = true;
         });
+        this.nivelEmocionInvalid=true;
     }
 
     onSelectedVariable(id: string) {
@@ -247,6 +278,16 @@ export class PostsUnfvComponent implements OnInit {
     onDeselectedVariable(id: string) {
         this.variables.filter(variable => variable.id == id)[0].invalid = true;
     }
+
+    onSelectedVariableNivel() {
+       this.nivelEmocionInvalid=false;
+    }
+
+    onDeselectedVariableNivel() {
+         this.nivelEmocionInvalid=true;
+    }
+
+    
 
     onScrollDown() {
         /*if (window.pageYOffset + window.innerHeight >= document.body.offsetHeight && !this.isPostsLoading) {
@@ -296,6 +337,7 @@ export class PostsUnfvComponent implements OnInit {
             this.postsService.getVariablesFormulario().subscribe(
                 res1 => {
                     this.variables = res1.json();
+                    this.nivelEmocionInvalid = true;
                     this.variables.forEach(function(p, i, vars) {
                         vars[i].invalid = true;
                         if (vars[i].opciones != null) {

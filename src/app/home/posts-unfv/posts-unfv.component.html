@@ -100,10 +100,33 @@
 		              		<td>
 				              	<div class="flex-item" *ngFor='let variable of variablesFilterByType("C")'>
 					                  <label for="variable.id">{{variable.nombre}}</label>
-					                  <ng-select id={{variable.id}} class="flex-item" placeholder="Seleccione" [options]="variable.opciones" [allowClear]="true" noFilter="true"
-									  notFoundMsg="Sin resultados" name={{variable.nombreRegistro}} ngModel required [ngClass]="{'alert-error': variable.invalid && submitted}" (deselected)="onDeselectedVariable(variable.id)"
-									  (selected)="onSelectedVariable(variable.id)">
-									  </ng-select >
+					                  <table width="90%">
+					                  	<tr>
+					                  		<td>
+					                  			<ng-select id={{variable.id}} class="flex-item" placeholder="Seleccione" [options]="variable.opciones" [allowClear]="true" noFilter="true"
+												  notFoundMsg="Sin resultados" name={{variable.nombreRegistro}} ngModel required [ngClass]="{'alert-error': variable.invalid && submitted}" (deselected)="onDeselectedVariable(variable.id)"
+												  (selected)="onSelectedVariable(variable.id)">
+												 					                  			</ng-select >
+
+					                  		</td>
+					                  		<td>
+												   <ng-select
+												   placeholder="Nivel"
+												   name="Nivel-Emocion"
+												   ngModel
+												   required
+												   *ngIf="variable.nombreRegistro == 'Emociones'"
+												   [ngClass]="{'alert-error': nivelEmocionInvalid && submitted}"
+												   (deselected)="onDeselectedVariableNivel()"
+												   (selected)="onSelectedVariableNivel()"
+												   [allowClear]="true" 
+												   [options]="levels"
+												   [disabled]="variable.invalid"
+												   >
+												   </ng-select>
+					                  		</td>
+					                  	</tr>
+					                  </table>		 
 				                </div>
 		              		</td>
 		              	</tr>
