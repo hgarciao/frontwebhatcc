@@ -5,8 +5,9 @@
 
 export const environment = {
   production: false,
-  urlgtw: 'http://localhost:8080/api',
-  urlmsposts: 'http://localhost:8080/mspostsdev/api',
-  urlpostsws:'http://localhost:8081/ws',
-  postpagesize: 2
+  urlgtw: 'http://172.17.100.115:8080/api',
+  urlmsposts: 'http://172.17.100.115:8080/mspostsdev/api',
+  urlpostsws:'http://172.17.100.115:8081/ws',
+  postpagesize: 2,
+  registriespagesize: 3
 };

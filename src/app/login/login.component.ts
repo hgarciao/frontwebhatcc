@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit {
 					let token = body.id_token;
 					let clickdate = body.clickdate;
 					let firsttime = body.firsttime;
+					let socialnetflag = body.socialnetflag;
 					if (token) {
 						localStorage.setItem('token',token );
 						if(!clickdate){
@@ -71,7 +72,8 @@ export class LoginComponent implements OnInit {
 						}
 						localStorage.setItem('clickdate',clickdate);
 						localStorage.setItem('firsttime',firsttime);
-						//console.log(firsttime);
+						localStorage.setItem('socialnetflag',socialnetflag);
+						//console.log(socialnetflag);
 						this.msgAlert = "";
 						this.router.navigateByUrl(this.returnUrl);
 					} else {

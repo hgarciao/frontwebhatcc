@@ -16,9 +16,17 @@ export class CanActivateByRole implements CanActivate {
 				this.router.navigate(['/home']);
 				return false
 			}else{
-				if (state.url=='/home/paciente'){
-					this.router.navigateByUrl("/home/paciente/(contenido:posts)");
+				if (roles.indexOf('ROLE_PACIENTE')!=-1){
+					if (state.url=='/home/paciente'){
+						this.router.navigateByUrl("/home/paciente/(contenido:posts)");
+					}
+
+					if(state.url=='/home/paciente/(contenido:single)' && localStorage.getItem('socialnetflag')!='1'){
+						this.router.navigateByUrl("/home/paciente/(contenido:posts)");
+					}
 				}
+
+
 			}
 			return true
         }else{

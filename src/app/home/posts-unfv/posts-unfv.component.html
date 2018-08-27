@@ -161,8 +161,91 @@
 			</div>
          </modal-body>
       </modal>
-      <post-unfv [registro]="registro" [pacienteSesion]="pacienteSesion" *ngFor='let registro of registros'> </post-unfv>
-	  <table width="100%" border="1px" *ngIf="!isPostsLoading && registros.length>0" (click)="getOlderPosts()">
+      <post-unfv [registro]="registro" [pacienteSesion]="pacienteSesion" *ngFor='let registro of registros' [hidden]="socialnetflag!=1"> </post-unfv>
+	  
+
+
+      <ng-container *ngIf="socialnetflag==0">
+
+		  <form novalidate #filterform="ngForm" (ngSubmit)="filtraRegistros(filterform)">
+			  
+			  <table style="width: 100%">
+				  	<tr>
+				  				<td width="70%" align="center">
+				  					<input placeholder="Ingrese filtro por cualquier campo" style="width: 100%" [disabled]="registros.length==0" ngModel name="filtro">
+				  				</td>
+				  				<td width="20%" align="right"> 
+				  					<input matInput [matDatepicker]="picker" placeholder="Elige una fecha" ngModel name="fecha" readonly>
+				  				</td>
+				  				<td width="10%" align="left"> 
+				  					<mat-datepicker-toggle matSuffix [for]="picker" [disabled]="registros.length==0"></mat-datepicker-toggle>
+									<mat-datepicker #picker [disabled]="registros.length==0"></mat-datepicker>
+				  				</td>
+				  	</tr>
+				  	<tr>
+				  				<td align="right" colspan="3">
+				  					<input type="submit" value="Filtrar" class="btn btn-success" [disabled]="registros.length==0">
+				  					&nbsp;
+				  					<input type="button" value="Limpiar" class="btn btn-danger" (click)="clearFilterForm(filterform)">
+				  				</td>
+
+				  	</tr>
+			  </table>
+		 </form>
+
+			  <br/>
+			  <table style="width: 100%;">
+					 <tr *ngIf="registros.length>0">
+					  				<td align="right">
+					  					<button class="btn btn-default btn-sm" aria-label="Left Align" (click)="paginaIzquierda(filterform)">
+											<span class="fa fa-arrow-circle-left" aria-hidden="true"></span>
+										</button>
+					  				</td>
+					  				<td width="30px" align="center"> 
+					  					<span>{{pagenumber}}</span>
+					  				</td>
+					  				<td align="left"> 
+					  					<button class="btn btn-default btn-sm" aria-label="Left Align" (click)="paginaDerecha(filterform)">
+											<span class="fa fa-arrow-circle-right" aria-hidden="true"></span>
+										</button>
+					  				</td>
+					 </tr>
+					 <tr *ngIf="registros.length==0">
+					  				<td align="center" colspan="3">
+					  					<span>No se encontraron registros</span>
+					  				</td>
+					 </tr>
+			  </table>
+
+		  <br/>
+		  <table width="100%" style="height: 70vh;display: block;overflow-y: scroll;">
+		 		<tr *ngFor='let registro of registros'>
+			  		<td>
+			  			<mat-expansion-panel>
+								  <mat-expansion-panel-header>
+								    <mat-panel-title>
+								      {{registro.fechahora |  date:'dd/MM/yyyy HH:mm:ss '}}
+								    </mat-panel-title>
+								    <mat-panel-description>
+								      {{registro.pensamiento}}
+								    </mat-panel-description>
+								  </mat-expansion-panel-header>	  
+								  <mat-card class="example-card">
+									  <mat-card-content>
+									    <p>
+									      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+									      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+									      bred for hunting.
+									    </p>
+									  </mat-card-content>
+									</mat-card>
+						</mat-expansion-panel>
+			  		</td>
+			  	</tr>
+		 </table>   
+
+	 </ng-container>
+	  <table width="100%" border="1px" *ngIf="!isPostsLoading && registros.length>0" (click)="getOlderPosts()" [hidden]="socialnetflag!=1">
 	  <tr><td style="background-color:#FAFAFA;height:40px;cursor:pointer;vertical-align: middle;" align="center">
 	  <i class="fa fa fa-refresh fa-1x"></i>&nbsp;<strong style="color:black">CARGAR MAS {{pacienteParam?' (Busqueda:  ' + pacienteParam+ ')':''}}</strong>
 	  </td></tr>

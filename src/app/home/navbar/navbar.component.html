@@ -11,11 +11,11 @@
   </a>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
 	<ul class="navbar-nav  ml-auto">
-	  <input style="width:200px;font-size:14px" class="nav-item" type="text" placeholder="Buscar" 
-	  [(ngModel)]="inputBuscar" value="{{inputBuscar}}" (keyup)="keyUpFunction($event)">
+	  <input style="width:200px;font-size:14px" class="nav-item" type="text" placeholder="Buscar"
+	  [(ngModel)]="inputBuscar" value="{{inputBuscar}}" (keyup)="keyUpFunction($event)" [hidden]="socialnetflag!=1">
 	  &nbsp;
 	  &nbsp;
-	  <li class="nav-item dropdown" (click)="vioNotificaciones()">
+	  <li class="nav-item dropdown" (click)="vioNotificaciones()" [hidden]="socialnetflag!=1">
         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:16px;color:white">
           <i class="fa fa-bell"  style="font-size:20px;"><div class="num" *ngIf="contadorNotificaciones>0">{{contadorNotificaciones}}</div></i>
         </a>

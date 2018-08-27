@@ -74,6 +74,8 @@ export class PostsUnfvComponent implements OnInit {
     {value:8,label:"8"},
     {value:9,label:"9"},
     {value:10,label:"10"}];
+    socialnetflag = localStorage.getItem('socialnetflag');
+    pagenumber = 1;
 
 
     constructor(private postsService: PostsService, private authenticationService: AuthenticationService, private globalService: GlobalService, private flashMessagesService: FlashMessagesService, private stompService: StompService, private activatedRoute: ActivatedRoute, private router: Router) {
@@ -83,57 +85,56 @@ export class PostsUnfvComponent implements OnInit {
 		
         /**/
 		
+		if(this.socialnetflag=='1'){
 		
-		
-        this.activatedRoute.queryParams.subscribe(qparams => {
-			
-			this.globalService.displayLoader();
-			this.pacienteParam = this.activatedRoute.snapshot.queryParams['paciente'];
-			
-			var parametros: any = {};
-            parametros.paciente = this.pacienteSesion;
-            parametros.pagesize = environment.postpagesize;
-            
-			if (this.pacienteParam) {
-                parametros.pacientefiltro=this.pacienteParam;  
-            }
-			//console.log(parametros);
+            this.activatedRoute.queryParams.subscribe(qparams => {
+    			
+    			this.globalService.displayLoader();
+    			this.pacienteParam = this.activatedRoute.snapshot.queryParams['paciente'];
+    			
+    			var parametros: any = {};
+                parametros.paciente = this.pacienteSesion;
+                parametros.pagesize = environment.postpagesize;
+                
+    			if (this.pacienteParam) {
+                    parametros.pacientefiltro=this.pacienteParam;  
+                }
+    			//console.log(parametros);
 
-			// parametros.fechahora; No se setea por ser primera llamada PRIMERA LLAMADA!
-            this.postsService.getRegistrosWall(parametros).subscribe(
-                    res => {
-                        this.registros = res.json();
-                        this.globalService.hideLoader();
-						if(this.pacienteParam && this.registros.length==0){
-							this.flashMessagesService.show('El usuario "' + this.pacienteParam + '" no tiene publicaciones', {
-                                classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-                                timeout: 2000, // Default is 3000
-                            });
-							let timer = Observable.timer(2000, 1000);
-                            this.timersubs = timer.subscribe(t => { this.timersubs.unsubscribe();this.router.navigateByUrl("/home/paciente/(contenido:posts)")});
-						}
-                    },
-                    err => {
-                        this.globalService.hideLoader();
-                        if (!this.authenticationService.isLoggedIn()) {
-                            window.location.reload();
-                        } else {
-                            this.flashMessagesService.show('Error! No se pudieron cargar las publicaciones', {
-                                classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
-                                timeout: 2000, // Default is 3000
-                            });
+    			// parametros.fechahora; No se setea por ser primera llamada PRIMERA LLAMADA!
+                this.postsService.getRegistrosWall(parametros).subscribe(
+                        res => {
+                            this.registros = res.json();
+                            this.globalService.hideLoader();
+    						if(this.pacienteParam && this.registros.length==0){
+    							this.flashMessagesService.show('El usuario "' + this.pacienteParam + '" no tiene publicaciones', {
+                                    classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+                                    timeout: 2000, // Default is 3000
+                                });
+    							let timer = Observable.timer(2000, 1000);
+                                this.timersubs = timer.subscribe(t => { this.timersubs.unsubscribe();this.router.navigateByUrl("/home/paciente/(contenido:posts)")});
+    						}
+                        },
+                        err => {
+                            this.globalService.hideLoader();
+                            if (!this.authenticationService.isLoggedIn()) {
+                                window.location.reload();
+                            } else {
+                                this.flashMessagesService.show('Error! No se pudieron cargar las publicaciones', {
+                                    classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+                                    timeout: 2000, // Default is 3000
+                                });
+                            }
                         }
-                    }
-             );
-			 window.scrollTo(0, 0)
+                 );
+    			 window.scrollTo(0, 0)
 
-        });
+            });
 
-        /**/
-
-
-
-
+        }else{
+                
+                this.getRegistriesPerPage(this.pacienteSesion,environment.registriespagesize,this.pagenumber+"","","",null);
+        }
     }
 
 
@@ -143,11 +144,13 @@ export class PostsUnfvComponent implements OnInit {
         this.isFormLoading = false;
         this.isPostsLoading = false;
         if (this.authenticationService.isLoggedIn()) {
-            this.stompService.after('init').then(() => {
-                this.subscription = this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
-                    Authorization: this.authenticationService.getToken()
+            if(this.socialnetflag=='1'){
+                this.stompService.after('init').then(() => {
+                    this.subscription = this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
+                        Authorization: this.authenticationService.getToken()
+                    });
                 });
-            });
+            }
         } else {
             window.location.reload();
         }
@@ -296,8 +299,6 @@ export class PostsUnfvComponent implements OnInit {
     }
 	
 	
-
-	
 	//Modificar
     getOlderPosts() {
         this.isPostsLoading = true;
@@ -385,6 +386,114 @@ export class PostsUnfvComponent implements OnInit {
 
     }
 
+    paginaIzquierda(form:any){
+       if(this.pagenumber>1){
+
+            this.pagenumber = this.pagenumber - 1;
+            var parametros: any = {};
+            parametros.pacient = this.pacienteSesion;
+            parametros.pagesize = environment.registriespagesize;
+            parametros.filter = form.value.filtro;
+            parametros.orderby = "";
+            parametros.pagenumber= this.pagenumber+"";
+            parametros.date = form.value.fecha;
+
+            this.postsService.getRegistrosByPaciente(parametros).subscribe(
+              res => {
+                  this.registros = res.json();
+              },
+              err => {
+                  if (!this.authenticationService.isLoggedIn()) {
+                      window.location.reload();
+                  } else {
+                      this.flashMessagesService.show('Error! No se pudieron cargar las publicaciones', {
+                          classes: ['alert', 'alert-danger'],
+                          timeout: 2000,
+                      });
+                  }
+              }
+            );
+
+        }else{
+             this.flashMessagesService.show('Ya estas en la primera pagina de registros', {
+                          classes: ['alert', 'alert-success'],
+                          timeout: 2000,
+                        });
+        }
+    }
+
+    paginaDerecha(form:any){
+
+        let pagenumberTMP = this.pagenumber + 1;
+        var parametros: any = {};
+        parametros.pacient = this.pacienteSesion;
+        parametros.pagesize = environment.registriespagesize;
+        parametros.filter = form.value.filtro;
+        parametros.orderby = "";
+        parametros.pagenumber= pagenumberTMP+"";
+        parametros.date = form.value.fecha;
+
+        this.postsService.getRegistrosByPaciente(parametros).subscribe(
+              res => {
+                  
+                  let registrostmp = res.json();
+                  if(registrostmp.length==0 ){
+                        this.flashMessagesService.show('No hay mas registros', {
+                          classes: ['alert', 'alert-success'],
+                          timeout: 2000,
+                        });
+                  }else{
+                      this.registros = registrostmp;
+                      this.pagenumber = pagenumberTMP;
+                  }
+                  
+              },
+              err => {
+                  if (!this.authenticationService.isLoggedIn()) {
+                      window.location.reload();
+                  } else {
+                      this.flashMessagesService.show('Error! No se pudieron cargar las publicaciones', {
+                          classes: ['alert', 'alert-danger'], 
+                          timeout: 2000,
+                      });
+                  }
+              }
+       );
+    }
+
+    getRegistriesPerPage(pacient:string,pagesize:number,pagenumber:string,filter:string,orderby:string,date:Date){
+
+      //this.globalService.displayLoader();                
+       
+      var parametros: any = {};
+      parametros.pacient = pacient;
+      parametros.pagesize = pagesize;
+      parametros.filter = filter;
+      parametros.orderby = orderby;
+      parametros.pagenumber= pagenumber;
+      parametros.date = date;
+
+      this.postsService.getRegistrosByPaciente(parametros).subscribe(
+              res => {
+
+                      this.registros = res.json();
+              },
+              err => {
+                  //this.globalService.hideLoader();
+                  if (!this.authenticationService.isLoggedIn()) {
+                      window.location.reload();
+                  } else {
+                      this.flashMessagesService.show('Error! No se pudieron cargar las publicaciones', {
+                          classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+                          timeout: 2000, // Default is 3000
+                      });
+                  }
+              }
+       );
+
+       window.scrollTo(0, 0)
+    }
+
     ngOnDestroy() {
 		console.log('destroy posts');
         if(this.timersubs){
@@ -397,5 +506,18 @@ export class PostsUnfvComponent implements OnInit {
 	variablesFilterByType(type:string) {
 		return this.variables.filter(variable => variable.tipo === type);
     }
+
+    clearFilterForm(form:any){
+        form.reset();
+        this.pagenumber = 1;
+        this.getRegistriesPerPage(this.pacienteSesion,environment.registriespagesize,this.pagenumber+"","","",null);
+        
+    }
+
+    filtraRegistros(form:any){
+        this.pagenumber = 1;
+        this.getRegistriesPerPage(this.pacienteSesion,environment.registriespagesize,this.pagenumber+"",form.value.filtro,"",form.value.fecha);
+    }
+
 
 }
