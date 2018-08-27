@@ -21,7 +21,6 @@ export class PostsService {
   }
   
   
-  
   saveRegistroFormulario(post: any) : Observable<Response> {
 	 return this.authHttp.post(environment.urlmsposts+'/registros', post);
   }
@@ -31,9 +30,19 @@ export class PostsService {
     return this.authHttp.get(environment.urlmsposts+'/registros/'+paciente+'/'+id);
   }	
 
+  //Trae el registro de single
+  getRegistroByPaciente(paciente:string): Observable<Response> {
+    return this.authHttp.get(environment.urlmsposts+'/registros/paciente/'+paciente);
+  }  
+
   //Trae registros del muro  
   getRegistrosWall(parametros:any): Observable<Response> {
 	  return this.authHttp.post(environment.urlmsposts+'/registros/pacientes/wall',parametros);	    
+  }
+
+  //Trae registros para la interfaz solo para paciente  
+  getRegistrosByPaciente(parametros:any): Observable<Response> {
+    return this.authHttp.post(environment.urlmsposts+'/registros/paciente',parametros);      
   }
   
   //Trae notificaciones

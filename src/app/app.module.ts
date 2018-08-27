@@ -28,15 +28,14 @@ import { TagInputModule } from 'ngx-chips';
 import { Ng2Bs3ModalModule  } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { FlashMessagesModule } from 'ngx-flash-messages';
 import { StompService } from 'ng2-stomp-service';
-import { NotificacionComponent } from './home/navbar/notificacion/notificacion.component';
+import { NotificacionComponent } from './home/navbar/notificacion/notificacion.component'; 
 import { SingleComponent } from './home/single/single.component';
 import { ProfileComponent } from './home/profile/profile.component';
 import { NewsComponent } from './news/news.component';
-import {MatProgressSpinnerModule,MatExpansionModule,MatSlideToggleModule,MatCardModule,MatButtonModule} from '@angular/material';
+import {MatProgressSpinnerModule,MatExpansionModule,MatSlideToggleModule,MatCardModule,MatButtonModule,MatTableModule,MatDatepickerModule,MatNativeDateModule} from '@angular/material';
 import { PostsUnfvComponent } from './home/posts-unfv/posts-unfv.component';
 import { PostUnfvComponent } from './home/posts-unfv/post-unfv/post-unfv.component';
 import { PostsUnfv2Component } from './home/posts-unfv2/posts-unfv2.component';
-
 
 
 
@@ -84,8 +83,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 	MatProgressSpinnerModule,
 	MatExpansionModule,
 	MatSlideToggleModule,
+  MatTableModule,
 	MatCardModule,
 	MatButtonModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 	],
   providers: [AuthenticationService,PostsService ,{provide: AuthHttp,useFactory: authHttpServiceFactory,deps: [Http, RequestOptions]},CanActivateLogin,CanActivateHome,CanActivateByRole,CanActivateNews,LoaderService,GlobalService,StompService],
   bootstrap: [AppComponent]

@@ -34,6 +34,9 @@ export class NavbarComponent implements OnInit {
 	contadorNotificaciones:number;
 	subscription:any;
 	inputBuscar:string='';
+	socialnetflag = localStorage.getItem('socialnetflag');
+
+
 
 
     constructor(private authenticationService: AuthenticationService, private stompService: StompService, private postsService: PostsService, private flashMessagesService: FlashMessagesService
@@ -61,7 +64,7 @@ export class NavbarComponent implements OnInit {
 		this.activatedRoute.queryParams.subscribe(qparams => {
 			let pacienteParam = this.activatedRoute.snapshot.queryParams['paciente'];
 			if(pacienteParam){
-				console.log('hace filtro');
+				//console.log('hace filtro');
 				this.inputBuscar=pacienteParam
 			}	
 			
@@ -70,12 +73,14 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit() {
 		if(this.authenticationService.isLoggedIn()){
-			this.stompService.after('init').then(() => {
-            //console.log("suscribiendo navbar");
-            this.subscription= this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
-                Authorization: this.authenticationService.getToken()
-            });
-        });
+		  if(this.socialnetflag=='1'){
+				this.stompService.after('init').then(() => {
+	            //console.log("suscribiendo navbar");
+	            this.subscription= this.stompService.subscribe('/topic/registros', this.procesaNotificacion, {
+	                Authorization: this.authenticationService.getToken()
+	            });
+	        });
+		   }
 		}else{
 			window.location.reload();
 		}
