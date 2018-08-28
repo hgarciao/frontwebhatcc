@@ -36,6 +36,7 @@ import {MatProgressSpinnerModule,MatExpansionModule,MatSlideToggleModule,MatCard
 import { PostsUnfvComponent } from './home/posts-unfv/posts-unfv.component';
 import { PostUnfvComponent } from './home/posts-unfv/post-unfv/post-unfv.component';
 import { PostsUnfv2Component } from './home/posts-unfv2/posts-unfv2.component';
+import { RegistryUnfvComponent } from './home/posts-unfv/registry-unfv/registry-unfv.component';
 
 
 
@@ -66,7 +67,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     NewsComponent,
     PostsUnfvComponent,
     PostUnfvComponent,
-    PostsUnfv2Component
+    PostsUnfv2Component,
+    RegistryUnfvComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -216,34 +216,9 @@
 					  				</td>
 					 </tr>
 			  </table>
-
-		  <br/>
-		  <table width="100%" style="height: 70vh;display: block;overflow-y: scroll;">
-		 		<tr *ngFor='let registro of registros'>
-			  		<td>
-			  			<mat-expansion-panel>
-								  <mat-expansion-panel-header>
-								    <mat-panel-title>
-								      {{registro.fechahora |  date:'dd/MM/yyyy HH:mm:ss '}}
-								    </mat-panel-title>
-								    <mat-panel-description>
-								      {{registro.pensamiento}}
-								    </mat-panel-description>
-								  </mat-expansion-panel-header>	  
-								  <mat-card class="example-card">
-									  <mat-card-content>
-									    <p>
-									      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-									      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-									      bred for hunting.
-									    </p>
-									  </mat-card-content>
-									</mat-card>
-						</mat-expansion-panel>
-			  		</td>
-			  	</tr>
-		 </table>   
-
+			  <br/>
+			  <registry-unfv [registro]="registro"  *ngFor='let registro of registros' (updated)="updateRegistries($event)"> </registry-unfv>
+		  <br/>  
 	 </ng-container>
 	  <table width="100%" border="1px" *ngIf="!isPostsLoading && registros.length>0" (click)="getOlderPosts()" [hidden]="socialnetflag!=1">
 	  <tr><td style="background-color:#FAFAFA;height:40px;cursor:pointer;vertical-align: middle;" align="center">
