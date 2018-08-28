@@ -54,6 +54,7 @@ export class PostsUnfvComponent implements OnInit {
     nivelEmocionInvalid:boolean;
     registros: Array < any > = [];
     @ViewChild('form') form;
+    @ViewChild('filterform') filterform;
     @ViewChild('modal') modal;
     submitted: boolean;
     pacienteSesion: string;
@@ -242,10 +243,12 @@ export class PostsUnfvComponent implements OnInit {
                 res => {
                     this.isFormLoading = false;
                     this.modal.dismiss();
+                    this.updateRegistriesNoEvent();
                     this.flashMessagesService.show('Se realizó publicación', {
                         classes: ['alert', 'alert-success'], // You can pass as many classes as you need
                         timeout: 2000, // Default is 3000
                     });
+
                 },
                 err => {
                     this.isFormLoading = false;
@@ -517,6 +520,69 @@ export class PostsUnfvComponent implements OnInit {
     filtraRegistros(form:any){
         this.pagenumber = 1;
         this.getRegistriesPerPage(this.pacienteSesion,environment.registriespagesize,this.pagenumber+"",form.value.filtro,"",form.value.fecha);
+    }
+
+    updateRegistries(event:any){
+
+        var parametros: any = {};
+        parametros.pacient = this.pacienteSesion;
+        parametros.pagesize = environment.registriespagesize;
+        parametros.filter = this.filterform.value.filtro;
+        parametros.orderby = "";
+        parametros.pagenumber= this.pagenumber+"";
+        parametros.date = this.filterform.value.fecha;
+
+        this.postsService.getRegistrosByPaciente(parametros).subscribe(
+              res => {
+                  this.registros = res.json();
+                  if(this.registros.length==0 && this.pagenumber>1){
+                      this.paginaIzquierda(this.filterform);
+                  }
+              },
+              err => {
+                  if (!this.authenticationService.isLoggedIn()) {
+                      window.location.reload();
+                  } else {
+                      this.flashMessagesService.show('Error! No se pudieron cargar las publicaciones', {
+                          classes: ['alert', 'alert-danger'], 
+                          timeout: 2000,
+                      });
+                  }
+              }
+       );
+
+    }
+
+
+    updateRegistriesNoEvent(){
+
+        var parametros: any = {};
+        parametros.pacient = this.pacienteSesion;
+        parametros.pagesize = environment.registriespagesize;
+        parametros.filter = this.filterform.value.filtro;
+        parametros.orderby = "";
+        parametros.pagenumber= this.pagenumber+"";
+        parametros.date = this.filterform.value.fecha;
+
+        this.postsService.getRegistrosByPaciente(parametros).subscribe(
+              res => {
+                  this.registros = res.json();
+                  if(this.registros.length==0 && this.pagenumber>1){
+                      this.paginaIzquierda(this.filterform);
+                  }
+              },
+              err => {
+                  if (!this.authenticationService.isLoggedIn()) {
+                      window.location.reload();
+                  } else {
+                      this.flashMessagesService.show('Error! No se pudieron cargar las publicaciones', {
+                          classes: ['alert', 'alert-danger'], 
+                          timeout: 2000,
+                      });
+                  }
+              }
+       );
+
     }
 
 

@@ -1,0 +1,25 @@
+<mat-expansion-panel>
+					<mat-expansion-panel-header class="w-120">
+						  <mat-panel-title>
+						     {{registro.fechahora |  date:'dd/MM/yyyy HH:mm:ss '}}
+						  </mat-panel-title>
+						  <mat-panel-description>
+						     {{registro.pensamiento}}
+						  </mat-panel-description>
+					</mat-expansion-panel-header>	  
+					<mat-card>
+						  <div class="flex-container" style="border: none;vertical-align: top" >
+				               <div class="flex-item" *ngFor='let campo of registro.campos' style="font-size: 14px">
+							           	  <label for="campo.nombreRegistroVariable">{{campo.nombreRegistroVariable}}</label>
+							           	  <span id={{campo.nombreRegistroVariable}} class="flex-item badge badge-pill badge-default" *ngFor='let opcion of campo.opciones'
+							           	  style="font-size: 14px">{{opcion.valor}}</span>
+							    </div>
+				          </div>
+				    </mat-card>
+				    <mat-action-row>
+				    <form novalidate #{{registro.id}}="ngForm">
+				      <button [ngClass]="deleteConfirm!=true ? 'btn btn-primary btn-sm' : 'btn btn-danger btn-sm'"  (click)="eliminarRegistro($event)">{{ deleteConfirm!=true?'Eliminar':'Estás seguro?'}}</button>
+				      <button class="btn btn-primary btn-sm" [hidden]="deleteConfirm!=true" (click)="deleteConfirm=false">Conservar</button>
+				    </form>
+				    </mat-action-row>
+</mat-expansion-panel>
