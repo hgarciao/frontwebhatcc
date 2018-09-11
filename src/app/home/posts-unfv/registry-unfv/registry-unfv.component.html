@@ -1,12 +1,17 @@
-<mat-expansion-panel>
+<mat-expansion-panel (opened)="panelOpened()" (closed)="panelClosed()">
 					<mat-expansion-panel-header class="w-120">
 						  <mat-panel-title>
 						     {{registro.fechahora |  date:'dd/MM/yyyy HH:mm:ss '}}
 						  </mat-panel-title>
 						  <mat-panel-description>
-						     {{registro.pensamiento}}
+						     <span *ngIf="!opened" >{{registro.pensamiento | slice:0:100 }} {{ '...'}}</span>
 						  </mat-panel-description>
-					</mat-expansion-panel-header>	  
+					</mat-expansion-panel-header>
+					<mat-card>
+						  <div style="border: none;vertical-align: top;width: 100%" >
+				               {{registro.pensamiento}}
+				          </div>
+				    </mat-card>	  
 					<mat-card>
 						  <div class="flex-container" style="border: none;vertical-align: top" >
 				               <div class="flex-item" *ngFor='let campo of registro.campos' style="font-size: 14px">
