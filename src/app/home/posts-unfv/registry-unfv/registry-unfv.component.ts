@@ -26,6 +26,7 @@ export class RegistryUnfvComponent implements OnInit {
   @Input() registro: any;
   deleteConfirm:boolean;
   @Output() updated = new EventEmitter<string>();
+  opened : boolean = false;
 
   constructor(private postsService: PostsService,private flashMessagesService: FlashMessagesService
 	,private _el: ElementRef, private authenticationService: AuthenticationService,private router: Router) {
@@ -58,5 +59,13 @@ export class RegistryUnfvComponent implements OnInit {
 
   		}
 		
+	}
+
+	panelOpened(){
+		this.opened = true;
+	}
+
+	panelClosed(){
+		this.opened = false;
 	}
 }
