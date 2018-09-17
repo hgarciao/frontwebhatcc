@@ -13,7 +13,7 @@ before_script:
   - npm install
   
 script:
-  - ng build --environment qa
+  - ng build --environment qa --output-hashing=all
   
 after_success:
     - fecha=$(date '+%Y-%m-%d-%H-%M')
